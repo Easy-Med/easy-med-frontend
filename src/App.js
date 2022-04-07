@@ -1,10 +1,13 @@
-import {Typography} from "@mui/material";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from "./easymed/Home";
 
 function App() {
   return (
-    <div>
-      <Typography variant={"h2"}>Here will be our App! 🩺</Typography>
-    </div>
+      <Router>
+          <Routes>
+              <Route path={"/"} element={<Home />} />
+          </Routes>
+      </Router>
   );
 }
 
