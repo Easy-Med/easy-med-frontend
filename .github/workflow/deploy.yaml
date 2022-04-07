@@ -5,7 +5,7 @@ name: Github Page Deploy Workflow
 
 on:
   push:
-    branches: [feature/EAS-44]
+    branches: [develop]
 
 jobs:
   deploy:
