@@ -1,16 +1,19 @@
-import React, { useMemo } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React, {useMemo} from "react";
+import {createTheme, responsiveFontSizes, ThemeProvider} from "@mui/material/styles";
 import ColorModeContext from "./ColorModeContext";
-import {blue, lightGreen} from "@mui/material/colors";
-import { useMediaQuery } from "@mui/material";
+import {useMediaQuery} from "@mui/material";
 
 const getDesignTokens = (mode) => ({
     palette: {
         mode,
         ...(mode === "light"
             ? {
-                primary: lightGreen,
-                secondary: blue,
+                primary: {
+                    main: '#009B9B'
+                },
+                secondary: {
+                    main: '#BA5252'
+                },
             }
             : {}),
     },
@@ -28,7 +31,7 @@ const ThemeWrapper = (props) => {
         []
     );
 
-    const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+    const theme = useMemo(() => responsiveFontSizes(createTheme(getDesignTokens(mode))), [mode]);
 
     return (
         <ColorModeContext.Provider value={colorMode}>
