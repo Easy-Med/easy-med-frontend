@@ -1,7 +1,9 @@
+import {Typography} from "@mui/material";
+
 function App() {
   return (
-    <div className="App">
-      Here will be our App
+    <div>
+      <Typography variant={"h2"}>Here will be our App! 🩺</Typography>
     </div>
   );
 }
