@@ -17,7 +17,7 @@ const Patient = () => {
                         />
                         <TextField
                               label="Surname"
-                              defaultValue="Michal"
+                              defaultValue="FereniecjestKoksem"
                               InputProps={{
                                     readOnly: true,
                               }}
