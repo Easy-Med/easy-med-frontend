@@ -9,7 +9,7 @@ const Patient = () => {
                         <Typography variant="h5">Patient's information</Typography>
                         <TextField
                               label="Name"
-                              defaultValue="Michal"
+                              defaultValue="Michał"
                               InputProps={{
                                     readOnly: true,
                               }}
@@ -25,7 +25,7 @@ const Patient = () => {
                         />
                         <TextField
                               label="Age"
-                              defaultValue="22"
+                              defaultValue="21"
                               InputProps={{
                                     readOnly: true,
                               }}
