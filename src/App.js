@@ -4,6 +4,8 @@ import ChooseLoginOption from "./app/auth/login/ChooseLoginOption";
 import Register from "./app/auth/register/Register";
 import LoginAsDoctor from "./app/auth/login/LoginAsDoctor";
 import LoginAsPatient from "./app/auth/login/LoginAsPatient";
+import Prescriptions from './app/prescription/Prescriptions';
+
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
               <Route path={"/login/doctor"} element={<LoginAsDoctor />} />
               <Route path={"/login/patient"} element={<LoginAsPatient />} />
               <Route path={"/register"} element={<Register />} />
+              <Route path={"/pre"} element={<Prescriptions />} />
           </Routes>
       </Router>
   );
