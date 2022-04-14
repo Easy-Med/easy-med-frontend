@@ -1,12 +1,7 @@
-import React from 'react';
-import MenuWrap from "../../app/menu/MenuWrap";
+import React from "react";
 
 const DoctorReservedVisits = () => {
-  return (
-    <div>
-      Reserved Visits
-    </div>
-  );
+  return <div>Reserved Visits</div>;
 };
 
-export default MenuWrap(DoctorReservedVisits, 'doctor');
+export default DoctorReservedVisits;

@@ -1,7 +1,7 @@
 import React from "react";
 
-const DoctorReviews = () => {
+const PatientReviews = () => {
   return <div>Reviews</div>;
 };
 
-export default DoctorReviews;
+export default PatientReviews;

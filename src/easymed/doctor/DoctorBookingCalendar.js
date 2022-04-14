@@ -1,12 +1,7 @@
-import React from 'react';
-import MenuWrap from "../../app/menu/MenuWrap";
+import React from "react";
 
 const DoctorBookingCalendar = () => {
-  return (
-    <div>
-      Calendar
-    </div>
-  );
+  return <div>Calendar</div>;
 };
 
-export default MenuWrap(DoctorBookingCalendar, 'doctor');
+export default DoctorBookingCalendar;

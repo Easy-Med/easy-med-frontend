@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Divider, Grid, Paper, Typography } from "@mui/material";
 import AuthInput from "../AuthInput";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   name: "",
@@ -48,7 +48,7 @@ const LoginForm = () => {
       console.log("Sign up");
     } else {
       console.log("Sign in");
-      navigate('/')
+      navigate("/");
     }
   };
 
