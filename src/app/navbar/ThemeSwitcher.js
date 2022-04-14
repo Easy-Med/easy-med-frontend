@@ -4,7 +4,7 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@emotion/react";
-import ColorModeContext from "../../theme/ColorModeContext";
+import ColorModeContext from "../theme/ColorModeContext";
 
 const ThemeSwitcher = ({ ...props }) => {
   const theme = useTheme();

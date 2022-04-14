@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Divider, Grid, Paper, Typography } from "@mui/material";
 import AuthInput from "../AuthInput";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   name: "",
@@ -20,6 +21,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setError({});
@@ -46,6 +48,7 @@ const LoginForm = () => {
       console.log("Sign up");
     } else {
       console.log("Sign in");
+      navigate("/");
     }
   };
 
