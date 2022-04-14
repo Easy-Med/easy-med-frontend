@@ -1,8 +1,8 @@
 import React from 'react';
-import MenuWrap from "../app/menu/MenuWrap";
-import {Typography} from "@mui/material";
+import MenuWrap from "../../app/menu/MenuWrap";
+import {Box, Typography} from "@mui/material";
 
-const Dashboard = () => {
+const DoctorDashboard = () => {
     return (
         <div>
             <Typography paragraph>
@@ -36,4 +36,4 @@ const Dashboard = () => {
     );
 };
 
-export default MenuWrap(Dashboard);
+export default MenuWrap(DoctorDashboard, 'doctor');

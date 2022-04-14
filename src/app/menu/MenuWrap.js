@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Box } from "@mui/material";
+import { Box, ListItem } from "@mui/material";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -17,6 +17,16 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import MedicationIcon from '@mui/icons-material/Medication';
+import RateReviewIcon from '@mui/icons-material/RateReview';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SearchBar from "./SearchBar";
+import ThemeSwitcher from "../navbar/desktop/ThemeSwitcher";
+import {useNavigate} from "react-router-dom";
+import {capitalize} from "../utils/stringUtils";
 
 const drawerWidth = 240;
 
@@ -59,8 +69,9 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    // Uncomment to move upper drawer when side menu is opened
+    // marginLeft: drawerWidth,
+    // width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -85,55 +96,102 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const MenuWrap = (Component) =>
+const LogoBox = styled('div', {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  display: "flex",
+  flexDirection: 'column',
+  alignItems: "center",
+  width: drawerWidth,
+  transition: theme.transitions.create(["width"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    transition: theme.transitions.create(["width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+  ...(!open && {
+    width: '150px',
+  }),
+}));
+
+const mainSideMenuOptions = [
+  {
+    name: 'Dashboard',
+    link: '',
+    icon: <DashboardIcon />
+  },
+  {
+    name: 'Reserved visits',
+    link: 'reserved-visits',
+    icon: <EventSeatIcon />
+  },
+  {
+    name: 'Booking calendar',
+    link: 'booking-calendar',
+    icon: <CalendarMonthIcon />
+  },
+  {
+    name: 'Prescriptions',
+    link: 'prescriptions',
+    icon: <MedicationIcon />
+  },
+  {
+    name: 'Reviews',
+    link: 'reviews',
+    icon: <RateReviewIcon />
+  }
+]
+
+const secondarySideMenuOptions = [
+  {
+    name: 'Settings',
+    link: 'settings',
+    icon: <SettingsIcon />
+  }
+]
+
+const MenuWrap = (Component, role) =>
   function HOC() {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate()
+    const [open, setOpen] = React.useState(true);
 
-    const handleDrawerOpen = () => {
-      setOpen(true);
+    const handleDrawer = () => {
+      setOpen(prevState => !prevState);
     };
 
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
+    const handleMenuItemClick = (menuItem) => {
+      navigate(`/${role.toLowerCase()}/${menuItem.link}`)
+    }
 
     return (
       <Box sx={{ display: "flex" }}>
-        <AppBar position="fixed" open={open}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{
-                marginRight: 5,
-                ...(open && { display: "none" }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Mini variant drawer
-            </Typography>
+        <AppBar position="fixed" open={open} color={'default'}>
+          <Toolbar disableGutters={true}>
+            <LogoBox open={open}>
+              <Typography variant="h5" fontWeight={'bold'} color={'primary'} noWrap component="div">
+                EasyMed
+              </Typography>
+              <Typography variant={'body1'} color={'primary'}>
+                {role ? capitalize(role) : ''}
+              </Typography>
+            </LogoBox>
+            <SearchBar />
+            <ThemeSwitcher />
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </DrawerHeader>
+          <DrawerHeader />
           <Divider />
           <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+            {mainSideMenuOptions.map((menuItem, index) => (
               <ListItemButton
-                key={text}
+                key={menuItem.name}
+                onClick={() => handleMenuItemClick(menuItem)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -147,17 +205,18 @@ const MenuWrap = (Component) =>
                     justifyContent: "center",
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {menuItem.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={menuItem.name} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             ))}
           </List>
           <Divider />
           <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
+            {secondarySideMenuOptions.map((menuItem, index) => (
               <ListItemButton
-                key={text}
+                key={menuItem.name}
+                onClick={() => handleMenuItemClick(menuItem)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -171,11 +230,34 @@ const MenuWrap = (Component) =>
                     justifyContent: "center",
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {menuItem.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={menuItem.name} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             ))}
+          </List>
+          <Box sx={{ height: "100%" }} />
+          <Divider />
+          <List>
+            <ListItem sx={{ justifyContent: open ? "flex-end" : "center" }}>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawer}
+              >
+                {open ? (
+                  <>
+                    {theme.direction === "rtl" ? (
+                      <ChevronRightIcon />
+                    ) : (
+                      <ChevronLeftIcon />
+                    )}
+                  </>
+                ) : (
+                  <MenuIcon />
+                )}
+              </IconButton>
+            </ListItem>
           </List>
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1 }}>
