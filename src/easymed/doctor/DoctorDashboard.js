@@ -1,10 +1,10 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import {Box, Typography} from "@mui/material";
 
 const DoctorDashboard = () => {
   return (
-    <div>
-      <Typography paragraph>
+    <Box sx={{flex: 1, bgcolor: 'grey.200'}}>
+      <Typography variant={"h2"}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
         non enim praesent elementum facilisis leo vel. Risus at ultrices mi
@@ -32,7 +32,7 @@ const DoctorDashboard = () => {
         maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin
         aliquam ultrices sagittis orci a.
       </Typography>
-    </div>
+    </Box>
   );
 };
 

@@ -123,7 +123,7 @@ const Navbar = ({ role, ...props }) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: {xs: 'auto', md: '100vh'} }}>
       <AppBar position="fixed" open={open} color={"default"}>
         <Toolbar disableGutters={true}>
           <LogoBox open={open}>
@@ -184,9 +184,9 @@ const Navbar = ({ role, ...props }) => {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1 }}>
+      <Box component="main" sx={{ display: 'flex', flexDirection: 'column' }}>
         <DrawerHeader />
-        <Outlet />
+        <Outlet  />
       </Box>
     </Box>
   );
