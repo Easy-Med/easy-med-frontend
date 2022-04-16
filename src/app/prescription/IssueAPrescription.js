@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, Stack, Divider, Grid, ListSubheader, ListItemText, List, Autocomplete, TextField} from "@mui/material";
+import {Button, Stack, Divider, Grid, ListSubheader, ListItemText, List, Autocomplete, TextField} from "@mui/material";
 import PrescriptionInput from './PrescriptionInput';
-import PrescribedMedicines from "./PrescribedMedicines"; 
 
 const initialState = {
     patientName: "",
@@ -27,7 +26,6 @@ const IssueAPrescription = () => {
         e.preventDefault();
         setPrescriptions(prev => [...prescriptions, formData]);
         setFormData(initialState);
-
         console.log("Prescription added!");
     };
 
@@ -77,6 +75,7 @@ const IssueAPrescription = () => {
                                 disablePortal
                                 options={nameTable}
                                 name="patientName"
+                                inputValue={formData.patientName}
                                 onChange={(event: any, value: string | null) => 
                                     setFormData({...formData, "patientName": value})}
                                 sx={{pl: 2, width: "100%"}}
