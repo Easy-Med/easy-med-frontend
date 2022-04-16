@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SearchBar from "./SearchBar";
-import { Outlet } from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import { capitalize } from "../utils/stringUtils";
 import PropTypes from "prop-types";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -94,17 +94,21 @@ const LogoBox = styled("div", {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  cursor: 'pointer',
   width: drawerWidth,
-  transition: theme.transitions.create(["width"], {
+  transition: theme.transitions.create(["width", "opacity"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  '&:hover': {
+    opacity: 0.8
+  },
   [theme.breakpoints.down("sm")]: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
   },
   ...(open && {
-    transition: theme.transitions.create(["width"], {
+    transition: theme.transitions.create(["width", "opacity"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -116,6 +120,7 @@ const LogoBox = styled("div", {
 
 const Navbar = ({ role, ...props }) => {
   const theme = useTheme();
+  const navigate = useNavigate()
   const [open, setOpen] = React.useState(true);
 
   const handleDrawer = () => {
@@ -123,10 +128,10 @@ const Navbar = ({ role, ...props }) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: {xs: 'auto', md: '100vh'} }}>
       <AppBar position="fixed" open={open} color={"default"}>
         <Toolbar disableGutters={true}>
-          <LogoBox open={open}>
+          <LogoBox open={open} onClick={() => navigate(`/${role}`)}>
             <Typography
               variant="h5"
               fontWeight={"bold"}
@@ -184,9 +189,9 @@ const Navbar = ({ role, ...props }) => {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1 }}>
+      <Box component="main" sx={{ display: 'flex', flexDirection: 'column' }}>
         <DrawerHeader />
-        <Outlet />
+        <Outlet  />
       </Box>
     </Box>
   );
