@@ -1,134 +1,130 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, Stack, Divider, Grid, ListSubheader, ListItem, List} from "@mui/material";
-import PrescriptionInput from './PrescriptionInput'; 
-import PrescribedMedicines from './PrescribedMedicines'
+import {Box, Button, Stack, Divider, Grid, ListSubheader, ListItemText, List, Autocomplete, TextField} from "@mui/material";
+import PrescriptionInput from './PrescriptionInput';
+import PrescribedMedicines from "./PrescribedMedicines"; 
 
 const initialState = {
-    patient: "",
+    patientName: "",
     medicineName: "",
     medicineCapacity: "",
 };
 
-const listI = [
-  {
-    med: 'a',
-    name: 'Robin',
-  },
-  {
-    med: 'b',
-    name: 'Dennis',
-  },
-];
-
-
-const prescription = [
-    {patient: "",},
-    {medicineName: "",},
-    {medicineCapacity: "",},
-];
-
 const IssueAPrescription = () => {
-    
-    // There will go errors from server
     const [error, setError] = useState({})
-    const [prescriptionData, setPrescriptionData] = useState(prescription);
-    
-    const [name, setName] = useState({})
 
     const [formData, setFormData] = useState(initialState);
+    const [prescriptions, setPrescriptions] = useState([]);
 
     useEffect(() => {
         setError({})
     }, [])
 
-    const handleChange = (e) => {
-        setName(e.target.value);
-        setPrescriptionData({...prescriptionData, [e.target.name]: e.target.value});
-        setPrescriptionData(prescriptionData.concat({[e.target.name]: e.target.value});
+    const onChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
     };
 
     const addPrescription = (e) => {
         e.preventDefault();
-        setPrescriptionData(...prescriptionData, prescriptionData);
+        setPrescriptions(prev => [...prescriptions, formData]);
+        setFormData(initialState);
+
         console.log("Prescription added!");
     };
 
     const addAllPrescriptions = (e) => {
         e.preventDefault();
-        
         console.log("Prescriptions added!");
     };
 
     const styles = {
         root: theme => ({
             [theme.breakpoints.up('md')]: {
-                width: 500,
+                width: '100%',
             },
-            width: 400,
+            width: 800,
             py: theme.spacing(4),
             px: theme.spacing(5),
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: 'center',
-            padding:"10px"
+            justifyContent: 'center'
         }),
         button: {
-            mt: 8,
-            mb: 15,
+            my: 3,
+            ml: 2,
+            mr: 4,
         },
+        listItem: {
+            display: 'list-item', 
+            ml: 4,
+        },
+        list: {
+            listStyleType: 'circle',
+        },
+        topLabel: {
+            mt: -2,
+            ml: -1,
+            fontSize: 24,
+        }
     };
-
     return (
-        <form style={{width: '100%'}} onSubmit={addAllPrescriptions}>
-            <Grid container spacing={{columnGap: 30,}}>
+        <Grid sx={{backgroundColor: 'lightgray'}}>
+            <Grid container spacing={{columnGap: 30,}} sx={{backgroundColor: 'white', pb: 2}}>
                 <Grid item>
-                    <form style={{width: '100%'}} onSubmit={addPrescription}>
+                    <form style={{paddingLeft: 20}} onSubmit={addPrescription}>
                         <Grid container spacing={2}>
-                            <PrescriptionInput
+                            <Autocomplete 
+                                disablePortal
+                                options={nameTable}
                                 name="patientName"
-                                label={"Patient name"}
-                                handleChange={handleChange}
-                                autoFocus
-                                error={Boolean(error?.patientName)}
-                                helperText={error?.patientName}
-                            />
-                            <Divider flexItem/>
+                                onChange={(event: any, value: string | null) => 
+                                    setFormData({...formData, "patientName": value})}
+                                sx={{pl: 2, width: "100%"}}
+                                renderInput={(params) => (
+                                    <TextField {...params} 
+                                        label='Patient name'
+                                        variant="standard"/>)}
+                                />
                             <PrescriptionInput
                                 name="medicineName"
+                                value={formData.medicineName}
                                 label={"Medicine Name"}
-                                handleChange={handleChange}
+                                onChange={onChange}
                                 error={Boolean(error?.medicineName)}
                                 helperText={error?.medicineName}
                             />
                             <PrescriptionInput
                                 name="medicineCapacity"
+                                value={formData.medicineCapacity}
                                 label={"Medicine Capacity"}
-                                handleChange={handleChange}
+                                onChange={onChange}
                                 error={Boolean(error?.medicineCapacity)}
                                 helperText={error?.medicineCapacity}
                             />
+                            <Button
+                                type="submit"
+                                variant="outlined"
+                                color="primary"
+                                sx={styles.button}>
+                                ADD MEDICINE
+                            </Button>
                         </Grid>
                     </form>
-                    
-                    <Button
-                        type="submit"
-                        variant="outlined"
-                        color="primary"
-                        sx={styles.button}
-                    >
-                        ADD MEDICINE
-                    </Button>
                 </Grid>
                 
-                <Divider orientation="vertical" flexItem/>
-                <Grid item sx={6}>
-                    <List sx={{ listStyleType: 'list-item' }}>
+                <Divider orientation="vertical" flexItem  sx={{backgroundColor: "darkgrey"}}/>
+                <Grid item>
+                    <List sx={styles.list}>
                         <ListSubheader sx={styles.topLabel}>
                             Prescribed medicines:
                         </ListSubheader>
-                        <ListItem>{prescriptionData.patient}</ListItem>
+                        {prescriptions.map((item) => (
+                            <ListItemText sx={styles.listItem}>
+                                <div>{item.patientName}</div>
+                                <div>{item.medicineName}</div>
+                                <div>{item.medicineCapacity}</div>
+                            </ListItemText>
+                        ))}
                     </List>
                 </Grid>
             </Grid>
@@ -137,13 +133,14 @@ const IssueAPrescription = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    sx={styles.button}
-                >
+                    sx={styles.button}>
                     SUBMIT
                 </Button>
             </Stack>
-        </form>
+        </Grid>
     );
 };
+
+const nameTable = ['Adrian Milewski', 'Franciszel Mały', 'Bogdan Bojny'];
 
 export default IssueAPrescription;
