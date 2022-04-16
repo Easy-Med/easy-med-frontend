@@ -1,10 +1,8 @@
-import {Grid, IconButton, InputAdornment, TextField} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {Grid, TextField} from "@mui/material";
 
 const PrescriptionInput = ({
     name,
     label,
-    variant,
     autoFocus,
     error,
     onChange,

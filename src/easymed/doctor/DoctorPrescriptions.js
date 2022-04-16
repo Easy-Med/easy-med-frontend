@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {Box, Button, Divider, Grid, Paper, Typography} from "@mui/material";
-import IssueAPrescription from './IssueAPrescription'; 
+import React from "react";
+import {Paper, Typography} from "@mui/material";
+import IssueAPrescription from './prescription/IssueAPrescription'; 
 
-const Prescriptions = () => {
+const DoctorPrescriptions = () => {
     
 
     const styles = {
@@ -10,16 +10,18 @@ const Prescriptions = () => {
             [theme.breakpoints.up('md')]: {
                 width: '100%',
             },
-            width: 800,
-            py: theme.spacing(4),
-            px: theme.spacing(5),
+            width: '100%',
+            py: theme.spacing(3),
+            px: theme.spacing(2),
             display: "flex",
             flexDirection: "column",
             justifyContent: 'center',
+            backgroundColor: '#eee',
         }),
         topLabel: {
             alignSelf: "left",
-            mb: 8,
+            color: "#777",
+            mb: 2,
         }
     };
 
@@ -33,4 +35,4 @@ const Prescriptions = () => {
     );
 };
 
-export default Prescriptions;
+export default DoctorPrescriptions;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Paper } from "@mui/material";
 import AuthInput from "../AuthInput";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,9 @@ const initialState = {
   masterPassword: "",
 };
 
-const LoginForm = () => {
+const RegisterForm = () => {
+  const navigate = useNavigate();
+
   // There will be loading status from server
   const loading = false;
 
@@ -19,9 +21,7 @@ const LoginForm = () => {
   const [error, setError] = useState({});
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setError({});
@@ -35,27 +35,20 @@ const LoginForm = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  const switchMode = () => {
-    setFormData(initialState);
-    setIsSignup((prevIsSignup) => !prevIsSignup);
-    setShowPassword(false);
+  const navigateToLogin = () => {
+    navigate("/login");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (isSignup) {
-      console.log("Sign up");
-    } else {
-      console.log("Sign in");
-      navigate("/");
-    }
+    console.log("Sign up");
   };
 
   const styles = {
     root: (theme) => ({
       [theme.breakpoints.up("md")]: {
-        maxWidth: 500,
+        minWidth: 500,
       },
       maxWidth: 400,
       minWidth: 350,
@@ -65,14 +58,11 @@ const LoginForm = () => {
       alignItems: "center",
       justifyContent: "center",
     }),
-    topLabel: {
-      mb: 8,
-    },
     submitButton: {
-      mt: 8,
+      mt: 4,
       mb: 15,
     },
-    signUpArea: {
+    signInArea: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -88,32 +78,25 @@ const LoginForm = () => {
 
   return (
     <Paper elevation={3} sx={styles.root}>
-      <Typography variant="h5" sx={styles.topLabel}>
-        {isSignup ? "Sign up" : "Sign in"}
-      </Typography>
       <form style={{ width: "100%" }} onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          {isSignup && (
-            <>
-              <AuthInput
-                name="firstName"
-                label={"First name"}
-                handleChange={handleChange}
-                autoFocus
-                half
-                error={Boolean(error?.firstName)}
-                helperText={error?.firstName}
-              />
-              <AuthInput
-                name="lastName"
-                label={"Last name"}
-                handleChange={handleChange}
-                half
-                error={Boolean(error?.lastName)}
-                helperText={error?.lastName}
-              />
-            </>
-          )}
+          <AuthInput
+            name="firstName"
+            label={"First name"}
+            handleChange={handleChange}
+            autoFocus
+            half
+            error={Boolean(error?.firstName)}
+            helperText={error?.firstName}
+          />
+          <AuthInput
+            name="lastName"
+            label={"Last name"}
+            handleChange={handleChange}
+            half
+            error={Boolean(error?.lastName)}
+            helperText={error?.lastName}
+          />
           <AuthInput
             name="email"
             label={"Email"}
@@ -133,19 +116,15 @@ const LoginForm = () => {
             autoComplete={"current-password"}
             handleShowPassword={handleShowPassword}
           />
-          {isSignup && (
-            <>
-              <AuthInput
-                name="confirmPassword"
-                label={"Confirm password"}
-                handleChange={handleChange}
-                error={Boolean(error?.confirmPassword)}
-                helperText={error?.confirmPassword}
-                type="password"
-                autoComplete={"password"}
-              />
-            </>
-          )}
+          <AuthInput
+            name="confirmPassword"
+            label={"Confirm password"}
+            handleChange={handleChange}
+            error={Boolean(error?.confirmPassword)}
+            helperText={error?.confirmPassword}
+            type="password"
+            autoComplete={"password"}
+          />
         </Grid>
         <Button
           type="submit"
@@ -155,14 +134,12 @@ const LoginForm = () => {
           sx={styles.submitButton}
           disabled={loading}
         >
-          {isSignup ? "Sign up" : "Sign in"}
+          Sign up
         </Button>
-        <Box sx={styles.signUpArea}>
+        <Box sx={styles.signInArea}>
           <Divider sx={styles.divider} />
-          <Button onClick={switchMode} sx={styles.switchButton}>
-            {isSignup
-              ? "Already have an account? Sign In"
-              : "Don't have an account? Sign Up"}
+          <Button onClick={navigateToLogin} sx={styles.switchButton}>
+            Already have an account? Sign In
           </Button>
         </Box>
       </form>
@@ -170,4 +147,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

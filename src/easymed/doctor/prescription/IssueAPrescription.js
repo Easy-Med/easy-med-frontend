@@ -39,18 +39,18 @@ const IssueAPrescription = () => {
             [theme.breakpoints.up('md')]: {
                 width: '100%',
             },
-            width: 800,
+            width: '100%',
             py: theme.spacing(4),
             px: theme.spacing(5),
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: 'center'
+            justifyContent: 'center',
+            padding: 20,
         }),
         button: {
-            my: 3,
-            ml: 2,
-            mr: 4,
+            my: 2,
+            mx: 2,
         },
         listItem: {
             display: 'list-item', 
@@ -66,9 +66,9 @@ const IssueAPrescription = () => {
         }
     };
     return (
-        <Grid sx={{backgroundColor: 'lightgray'}}>
-            <Grid container spacing={{columnGap: 30,}} sx={{backgroundColor: 'white', pb: 2}}>
-                <Grid item>
+        <Grid sx={{backgroundColor: '#ddd', border: 1, borderColor: '#ccc', px: -50}}>
+            <Grid container spacing={{columnGap: 30,}} sx={{backgroundColor: 'white', py: 3}}>
+                <Grid item sx={{width: '50%'}}>
                     <form style={{paddingLeft: 20}} onSubmit={addPrescription}>
                         <Grid container spacing={2}>
                             <Autocomplete 
