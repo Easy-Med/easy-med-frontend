@@ -1,13 +1,12 @@
 import React from "react";
 import { Paper, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
-const ReserveVisitOptionTile = ({ title, imgUrl, imgAlt, redirectUrl, ...props }) => {
+const ReserveVisitOptionTile = ({ title, imgUrl, imgAlt, redirectUrl, option, optionFunc,...props }) => {
 
   return (
     <Paper
       elevation={10}
-      onClick={null}
+      onClick={() => optionFunc(option)}
       sx={{
         width: "250px",
         height: "400px",

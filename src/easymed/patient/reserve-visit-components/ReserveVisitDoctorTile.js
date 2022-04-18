@@ -2,7 +2,7 @@ import React from "react";
 import ReserveVisitOptionTile from "./ReserveVisitOptionTile";
 import { motion } from "framer-motion";
 
-const ReserveVisitDateTile = () => {
+const ReserveVisitDateTile = (props) => {
   return (
     <motion.div
       whileInView={{ y: [100, 0], opacity: [0, 1] }}
@@ -14,6 +14,8 @@ const ReserveVisitDateTile = () => {
         imgUrl={"/images/doctor/doctor-login-screen.png"}
         imgAlt={"doctor-image-tile"}
         redirectUrl={""}
+        optionFunc={props.optionFunc}
+        option={"doctor"}
       />
     </motion.div>
   );
