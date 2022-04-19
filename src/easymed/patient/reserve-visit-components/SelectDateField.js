@@ -8,10 +8,11 @@ export default function SelectDateField({currentDate, onChange}) {
     return  <>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker label="Select date" 
-                              renderInput={(params) => <TextField {...params}/>} 
+                              renderInput={(params) => <TextField fullWidth {...params}/>} 
                               value={currentDate}
                               onChange={onChange}
-                              disablePast/>
+                              disablePast
+                              />
                 </LocalizationProvider>
             </>
 }
