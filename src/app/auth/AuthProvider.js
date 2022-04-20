@@ -6,27 +6,24 @@ import { getStorageItem, setStorageItem } from "../utils/storage";
 const AuthProvider = ({ children }) => {
   const [authData, setAuthData] = useState(getStorageItem("authData"));
 
+  const handleResponse = (response) => {
+    const { data } = response;
+    data.role = data.role.toLowerCase()
+    setAuthData(data);
+    setStorageItem("authData", data);
+
+    return data;
+  }
+
   const signIn = (formData) => {
     return UserService.signIn(formData, {
-      onSuccess: (response) => {
-        const { data } = response;
-        setAuthData(data);
-        setStorageItem("authData", data);
-
-        return data;
-      },
+      onSuccess: handleResponse,
     });
   };
 
   const signUp = (formData) => {
     return UserService.signUp(formData, {
-      onSuccess: (response) => {
-        const { data } = response;
-        setAuthData(data);
-        setStorageItem("authData", data);
-
-        return data;
-      },
+      onSuccess: handleResponse,
     });
   };
 

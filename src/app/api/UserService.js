@@ -8,15 +8,7 @@ export default class UserService {
         method: "POST",
         data: formData,
       },
-      {
-        onSuccess: (response) => {
-          const { data } = response;
-
-          console.log("success!", data);
-
-          return data;
-        },
-      }
+      options
     );
   }
 

@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Box, ListItem } from "@mui/material";
+import {Avatar, Box, Button, ListItem} from "@mui/material";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -155,7 +155,8 @@ const Navbar = () => {
           <Avatar sx={{ mx: 2, display: { xs: "none", sm: "inherit" } }}>
             A
           </Avatar>
-          <Typography sx={{ mr: { xs: 2, sm: 5 } }}>Adrian Kunsz</Typography>
+          <Typography sx={{ mr: { xs: 2, sm: 4 } }}>Adrian Kunsz</Typography>
+          <Button variant={"outlined"} sx={{mr: 2}} onClick={auth.signOut}>Sign out</Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

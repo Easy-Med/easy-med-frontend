@@ -20,7 +20,6 @@ export const request = async function (requestConfig, options) {
     return Promise.reject(error.response);
   };
 
-  console.log(requestConfig);
   return client(requestConfig)
     .then(options?.onSuccess ? options.onSuccess : defaultOnSuccess)
     .catch(options?.onError ? options.onError : defaultOnError);
