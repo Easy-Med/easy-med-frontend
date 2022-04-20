@@ -20,41 +20,66 @@ import PatientPrescriptions from "./easymed/patient/PatientPrescriptions";
 import PatientReviews from "./easymed/patient/PatientReviews";
 import PatientSettings from "./easymed/patient/PatientSettings";
 import PathNotFound from "./app/error/PathNotFound";
+import AuthProvider from "./app/auth/AuthProvider";
+import Home from "./easymed/Home";
+import RequireAuth from "./app/auth/RequireAuth";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path={"/"} element={<ChooseLoginOption />} />
-        <Route path={"/login"} element={<ChooseLoginOption />} />
-        <Route path={"/login/doctor"} element={<LoginAsDoctor />} />
-        <Route path={"/login/patient"} element={<LoginAsPatient />} />
-        <Route path={"/register"} element={<Register />} />
+      <AuthProvider>
+        <Routes>
+          <Route path={"/"} element={<Home />} />
+          <Route path={"/login"} element={<ChooseLoginOption />} />
+          <Route path={"/login/doctor"} element={<LoginAsDoctor />} />
+          <Route path={"/login/patient"} element={<LoginAsPatient />} />
+          <Route path={"/register"} element={<Register />} />
 
-        <Route path={"/doctor/"} element={<Navbar role={"doctor"} />}>
-          <Route path={""} element={<DoctorDashboard />} />
-          <Route path={"reserved-visits"} element={<DoctorReservedVisits />} />
           <Route
-            path={"booking-calendar"}
-            element={<DoctorBookingCalendar />}
-          />
-          <Route path={"prescriptions"} element={<DoctorPrescriptions />} />
-          <Route path={"reviews"} element={<DoctorReviews />} />
-          <Route path={"settings"} element={<DoctorSettings />} />
-        </Route>
+            path={"/doctor/"}
+            element={
+              <RequireAuth role={"doctor"}>
+                <Navbar />
+              </RequireAuth>
+            }
+          >
+            <Route path={""} element={<DoctorDashboard />} />
+            <Route
+              path={"reserved-visits"}
+              element={<DoctorReservedVisits />}
+            />
+            <Route
+              path={"booking-calendar"}
+              element={<DoctorBookingCalendar />}
+            />
+            <Route path={"prescriptions"} element={<DoctorPrescriptions />} />
+            <Route path={"reviews"} element={<DoctorReviews />} />
+            <Route path={"settings"} element={<DoctorSettings />} />
+          </Route>
 
-        <Route path={"/patient/"} element={<Navbar role={"patient"} />}>
           <Route
-            path={""}
-            element={<Navigate to={"reserved-visits"} replace />}
-          />
-          <Route path={"reserved-visits"} element={<PatientReservedVisits />} />
-          <Route path={"prescriptions"} element={<PatientPrescriptions />} />
-          <Route path={"reviews"} element={<PatientReviews />} />
-          <Route path={"settings"} element={<PatientSettings />} />
-          <Route path={"*"} element={<PathNotFound />} />
-        </Route>
-      </Routes>
+            path={"/patient/"}
+            element={
+              <RequireAuth role={"patient"}>
+                <Navbar />
+              </RequireAuth>
+            }
+          >
+            <Route
+              path={""}
+              element={<Navigate to={"reserved-visits"} replace />}
+            />
+            <Route
+              path={"reserved-visits"}
+              element={<PatientReservedVisits />}
+            />
+            <Route path={"prescriptions"} element={<PatientPrescriptions />} />
+            <Route path={"reviews"} element={<PatientReviews />} />
+            <Route path={"settings"} element={<PatientSettings />} />
+            <Route path={"*"} element={<PathNotFound />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }

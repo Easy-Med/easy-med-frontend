@@ -4,7 +4,7 @@ import EventSeatIcon from "@mui/icons-material/EventSeat";
 import MedicationIcon from "@mui/icons-material/Medication";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import SettingsIcon from "@mui/icons-material/Settings";
-import {Box, Button, IconButton} from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 
 const mainSideMenuOptions = [
   {

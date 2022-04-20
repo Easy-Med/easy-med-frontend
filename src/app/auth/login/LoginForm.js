@@ -1,31 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box, Button, Divider, Grid, Paper, Typography } from "@mui/material";
 import AuthInput from "../AuthInput";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import useAuth from "../UseAuth";
 
 const initialState = {
-  name: "",
-  email: "",
+  firstName: "",
+  lastName: "",
+  emailAddress: "",
   password: "",
-  confirmPassword: "",
-  masterPassword: "",
+  repeatPassword: "",
 };
 
-const LoginForm = () => {
-  // There will be loading status from server
-  const loading = false;
-
-  // There will go errors from server
-  const [error, setError] = useState({});
-
+const LoginForm = ({ role, ...props }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const [error, setError] = useState({});
+  const auth = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setError({});
-  }, []);
+  const mutation = useMutation(
+    () => {
+      return isSignup ? auth.signUp(formData) : auth.signIn(formData);
+    },
+    {
+      onSuccess: (data, variables, context) => {
+        navigate(`/${data.role.toLowerCase()}/`);
+      },
+      onError: (error, variables, context) => {
+        if (typeof error.data === "string" || error.data instanceof String) {
+          setError({ EmailAddress: error.data });
+        } else {
+          let errors = error.data.errors;
+          for (const key in errors) {
+            if (errors.hasOwnProperty(key)) {
+              errors[key] = errors[key].reduce(
+                (total, desc) => total + ", " + desc
+              );
+            }
+          }
+          setError(errors);
+        }
+      },
+    }
+  );
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,17 +59,12 @@ const LoginForm = () => {
     setFormData(initialState);
     setIsSignup((prevIsSignup) => !prevIsSignup);
     setShowPassword(false);
+    setError({});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (isSignup) {
-      console.log("Sign up");
-    } else {
-      console.log("Sign in");
-      navigate("/");
-    }
+    mutation.mutate();
   };
 
   const styles = {
@@ -101,34 +116,34 @@ const LoginForm = () => {
                 handleChange={handleChange}
                 autoFocus
                 half
-                error={Boolean(error?.firstName)}
-                helperText={error?.firstName}
+                error={Boolean(error?.FirstName)}
+                helperText={error?.FirstName}
               />
               <AuthInput
                 name="lastName"
                 label={"Last name"}
                 handleChange={handleChange}
                 half
-                error={Boolean(error?.lastName)}
-                helperText={error?.lastName}
+                error={Boolean(error?.LastName)}
+                helperText={error?.LastName}
               />
             </>
           )}
           <AuthInput
-            name="email"
+            name="emailAddress"
             label={"Email"}
             handleChange={handleChange}
             type="email"
-            error={Boolean(error?.email)}
-            helperText={error?.email}
+            error={Boolean(error?.EmailAddress)}
+            helperText={error?.EmailAddress}
             autoComplete={"email"}
           />
           <AuthInput
             name="password"
             label={"Password"}
             handleChange={handleChange}
-            error={Boolean(error?.password)}
-            helperText={error?.password}
+            error={Boolean(error?.Password)}
+            helperText={error?.Password}
             type={showPassword ? "text" : "password"}
             autoComplete={"current-password"}
             handleShowPassword={handleShowPassword}
@@ -136,11 +151,11 @@ const LoginForm = () => {
           {isSignup && (
             <>
               <AuthInput
-                name="confirmPassword"
-                label={"Confirm password"}
+                name="repeatPassword"
+                label={"Repeat password"}
                 handleChange={handleChange}
-                error={Boolean(error?.confirmPassword)}
-                helperText={error?.confirmPassword}
+                error={Boolean(error?.RepeatPassword)}
+                helperText={error?.RepeatPassword}
                 type="password"
                 autoComplete={"password"}
               />
@@ -153,7 +168,7 @@ const LoginForm = () => {
           variant="contained"
           color="primary"
           sx={styles.submitButton}
-          disabled={loading}
+          disabled={mutation.isLoading}
         >
           {isSignup ? "Sign up" : "Sign in"}
         </Button>

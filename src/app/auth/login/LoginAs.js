@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 import { useTheme } from "@emotion/react";
 import LoginLabel from "./LoginLabel";
 
-const LoginAs = ({ imgUrl, imgAlt, ...props }) => {
+const LoginAs = ({ imgUrl, imgAlt, role, ...props }) => {
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -37,7 +37,7 @@ const LoginAs = ({ imgUrl, imgAlt, ...props }) => {
         }}
       >
         {!matchesDesktop && <LoginLabel />}
-        <LoginForm />
+        <LoginForm role={role} />
       </Box>
     </Box>
   );

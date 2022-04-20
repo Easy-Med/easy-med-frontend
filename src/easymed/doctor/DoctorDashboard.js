@@ -1,9 +1,9 @@
 import React from "react";
-import {Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const DoctorDashboard = () => {
   return (
-    <Box sx={{flex: 1, bgcolor: 'grey.200'}}>
+    <Box sx={{ flex: 1, bgcolor: "grey.200" }}>
       <Typography variant={"h2"}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus

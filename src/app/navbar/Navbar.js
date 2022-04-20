@@ -13,12 +13,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SearchBar from "./SearchBar";
-import {Outlet, useNavigate} from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { capitalize } from "../utils/stringUtils";
-import PropTypes from "prop-types";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import DoctorMenuItems from "./DoctorMenuItems";
 import PatientMenuItems from "./PatientMenuItems";
+import useAuth from "../auth/UseAuth";
 
 const drawerWidth = 240;
 
@@ -94,14 +94,14 @@ const LogoBox = styled("div", {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  cursor: 'pointer',
+  cursor: "pointer",
   width: drawerWidth,
   transition: theme.transitions.create(["width", "opacity"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  '&:hover': {
-    opacity: 0.8
+  "&:hover": {
+    opacity: 0.8,
   },
   [theme.breakpoints.down("sm")]: {
     marginLeft: theme.spacing(2),
@@ -118,9 +118,11 @@ const LogoBox = styled("div", {
   }),
 }));
 
-const Navbar = ({ role, ...props }) => {
+const Navbar = () => {
   const theme = useTheme();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const auth = useAuth();
+  const role = auth.authData.role;
   const [open, setOpen] = React.useState(true);
 
   const handleDrawer = () => {
@@ -128,7 +130,7 @@ const Navbar = ({ role, ...props }) => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: {xs: 'auto', md: '100vh'} }}>
+    <Box sx={{ display: "flex", height: { xs: "auto", md: "100vh" } }}>
       <AppBar position="fixed" open={open} color={"default"}>
         <Toolbar disableGutters={true}>
           <LogoBox open={open} onClick={() => navigate(`/${role}`)}>
@@ -189,16 +191,12 @@ const Navbar = ({ role, ...props }) => {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box component="main" sx={{ display: "flex", flexDirection: "column" }}>
         <DrawerHeader />
-        <Outlet  />
+        <Outlet />
       </Box>
     </Box>
   );
-};
-
-Navbar.propTypes = {
-  role: PropTypes.string.isRequired,
 };
 
 export default Navbar;
