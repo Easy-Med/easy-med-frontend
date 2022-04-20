@@ -121,7 +121,7 @@ function PatientReserveVisitPopup({
                 valueChanger={setSelectedSpecialization}
                 options={specializationsList}
               />
-              {selectedSpecialization !== "" ? (
+              {selectedSpecialization ? (
                 <SelectOptionField
                   type="doctor"
                   label="Select doctor"
@@ -131,7 +131,7 @@ function PatientReserveVisitPopup({
                 />
               ) : null}
 
-              {selectedDoctor !== "" && selectedSpecialization !== "" ? (
+              {selectedDoctor && selectedSpecialization ? (
                 <SelectOptionField
                   type="date"
                   value={selectedDate}
