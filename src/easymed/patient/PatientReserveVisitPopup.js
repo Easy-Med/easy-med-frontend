@@ -37,7 +37,6 @@ function PatientReserveVisitPopup({
 
   const { isLoading, data } = useFetch(apiEndpoint);
 
-
   React.useEffect(() => {
     if (data && apiEndpoint.startsWith(apiEndpoints.specialization)) {
       setSpecializationsList(data);
@@ -50,7 +49,6 @@ function PatientReserveVisitPopup({
     if (data && apiEndpoint.startsWith(`${apiEndpoints.doctorWithSpec}?`)) {
       setDoctorsList(data);
     }
-
   }, [data, apiEndpoint]);
 
   const handleClose = () => {
@@ -72,9 +70,6 @@ function PatientReserveVisitPopup({
   return (
     <>
       <Dialog open={openDialog} onClose={handleClose} fullWidth maxWidth="md">
-        {isLoading ? (
-          <CircularProgress />
-        ) : (
           <Box
             sx={{
               width: "100%",
@@ -112,73 +107,75 @@ function PatientReserveVisitPopup({
                     setSelectedSpecialization(null);
                     setApiEndpoint(apiEndpoints.specialization);
                   }}
+                  displayCondition={true}
+                  loading={isLoading}
                 />
-                {selectedDate && (
-                  <SelectOptionField
-                    type="specialization"
-                    label="Select specialization"
-                    value={selectedSpecialization}
-                    valueChanger={(spec) => {
-                      setSelectedSpecialization(spec);
-                      setSelectedDoctor(null);
-                      setSelectedTerm(null);
-                      if (spec) {
-                        setApiEndpoint(
-                          `${apiEndpoints.doctorWithSpec}?specialization=${spec}`
-                        );
-                      } else {
-                        setApiEndpoint(apiEndpoints.specialization);
-                      }
-                    }}
-                    options={specializationsList}
-                    getOptionLabel={(option) => option.toString()}
-                    loading={isLoading}
-                  />
-                )}
-                {selectedDate && selectedSpecialization && (
-                  <SelectOptionField
-                    type="doctor"
-                    label="Select doctor"
-                    value={selectedDoctor}
-                    valueChanger={(doctor) => {
-                      setSelectedDoctor(doctor);
-                      setSelectedTerm(null);
-                      if (doctor) {
-                        setApiEndpoint(
-                          `${apiEndpoints.doctorFreeTerms}?doctorId=${
-                            doctor.id
-                          }&visitDateTime=${moment(
-                            selectedDate,
-                            "DD/MM/YYYY"
-                          ).format("YYYY-MM-DD")}`
-                        );
-                      } else {
-                        setApiEndpoint(
-                          `${apiEndpoints.doctorWithSpec}?specialization=${selectedSpecialization}`
-                        );
-                      }
-                    }}
-                    options={doctorsList}
-                    getOptionLabel={(option) =>
-                      `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
+                <SelectOptionField
+                  type="specialization"
+                  label="Select specialization"
+                  value={selectedSpecialization}
+                  valueChanger={(spec) => {
+                    setSelectedSpecialization(spec);
+                    setSelectedDoctor(null);
+                    setSelectedTerm(null);
+                    if (spec) {
+                      setApiEndpoint(
+                        `${apiEndpoints.doctorWithSpec}?specialization=${spec}`
+                      );
+                    } else {
+                      setApiEndpoint(apiEndpoints.specialization);
                     }
-                    loading={isLoading}
-                  />
-                )}
+                  }}
+                  options={specializationsList}
+                  getOptionLabel={(option) => option.toString()}
+                  loading={isLoading}
+                  displayCondition={selectedDate}
+                />
 
-                {selectedDate && selectedSpecialization && selectedDoctor && (
-                  <SelectOptionField
-                    type="term"
-                    label="Select term"
-                    value={selectedTerm}
-                    valueChanger={setSelectedTerm}
-                    options={termsAvailable}
-                    getOptionLabel={(option) =>
-                      `${option.visitDateTime}, ${option.dayOfWeek}`
+                <SelectOptionField
+                  type="doctor"
+                  label="Select doctor"
+                  value={selectedDoctor}
+                  valueChanger={(doctor) => {
+                    setSelectedDoctor(doctor);
+                    setSelectedTerm(null);
+                    if (doctor) {
+                      setApiEndpoint(
+                        `${apiEndpoints.doctorFreeTerms}?doctorId=${
+                          doctor.id
+                        }&visitDateTime=${moment(
+                          selectedDate,
+                          "DD/MM/YYYY"
+                        ).format("YYYY-MM-DD")}`
+                      );
+                    } else {
+                      setApiEndpoint(
+                        `${apiEndpoints.doctorWithSpec}?specialization=${selectedSpecialization}`
+                      );
                     }
-                    loading={isLoading}
-                  />
-                )}
+                  }}
+                  options={doctorsList}
+                  getOptionLabel={(option) =>
+                    `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
+                  }
+                  loading={isLoading}
+                  displayCondition={selectedDate && selectedSpecialization}
+                />
+
+                <SelectOptionField
+                  type="term"
+                  label="Select term"
+                  value={selectedTerm}
+                  valueChanger={setSelectedTerm}
+                  options={termsAvailable}
+                  getOptionLabel={(option) =>
+                    `${option.visitDateTime}, ${option.dayOfWeek}`
+                  }
+                  loading={isLoading}
+                  displayCondition={
+                    selectedDate && selectedSpecialization && selectedDoctor
+                  }
+                />
 
                 {isAllDataComplete && (
                   <Button
@@ -239,7 +236,6 @@ function PatientReserveVisitPopup({
               </Box>
             )}
           </Box>
-        )}
       </Dialog>
     </>
   );
