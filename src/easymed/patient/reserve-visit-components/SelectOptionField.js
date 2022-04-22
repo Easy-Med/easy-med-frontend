@@ -2,7 +2,7 @@ import React from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { TextField, Autocomplete, MenuItem } from "@mui/material";
+import { TextField, Autocomplete, CircularProgress } from "@mui/material";
 
 export default function SelectOptionField({
   type,
@@ -12,10 +12,14 @@ export default function SelectOptionField({
   label,
   getOptionLabel,
   loading,
+  displayCondition,
 }) {
-  if (type === "term") {
-    console.log(options);
+
+  if (loading) {
+    return <CircularProgress/>;
   }
+ 
+  
   return (
     <>
       {type === "date" ? (
@@ -30,6 +34,7 @@ export default function SelectOptionField({
             }}
             onError={(reason, value) => valueChanger(null)}
             disablePast
+            disabled={!displayCondition}
           />
         </LocalizationProvider>
       ) : (
@@ -42,12 +47,7 @@ export default function SelectOptionField({
             valueChanger(newValue);
           }}
           getOptionLabel={getOptionLabel}
-          loading={loading}
-          loadingText={
-            type === "specialization"
-              ? "Checking specializations... "
-              : type === "doctor" ? "Searching for doctors..." : "Preparing free terms..."
-          }
+          disabled={!displayCondition}
         />
       )}
     </>
