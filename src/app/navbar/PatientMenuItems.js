@@ -4,6 +4,7 @@ import EventSeatIcon from "@mui/icons-material/EventSeat";
 import MedicationIcon from "@mui/icons-material/Medication";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import SettingsIcon from "@mui/icons-material/Settings";
+import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import { Box, Button, IconButton } from "@mui/material";
 
 const mainSideMenuOptions = [
@@ -33,16 +34,24 @@ const secondarySideMenuOptions = [
 ];
 
 const PatientMenuItems = ({ open, ...props }) => {
+  const handleReserveVisit = () => {};
+
   return (
     <Box>
       <Box
         sx={{ width: "100%", mt: 1, display: "flex", justifyContent: "center" }}
       >
         {open ? (
-          <Button variant={"contained"}>Reserve visit</Button>
+          <Button onClick={handleReserveVisit} variant={"contained"}>
+            Reserve visit
+          </Button>
         ) : (
-          <IconButton size={"medium"} color={"primary"}>
-            <EventSeatIcon />
+          <IconButton
+            onClick={handleReserveVisit}
+            size={"medium"}
+            color={"primary"}
+          >
+            <BookOnlineIcon />
           </IconButton>
         )}
       </Box>

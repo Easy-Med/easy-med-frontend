@@ -1,4 +1,4 @@
-const storage = sessionStorage;
+const storage = localStorage;
 
 export const getStorageItem = (key) => {
   try {

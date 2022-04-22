@@ -8,12 +8,12 @@ const AuthProvider = ({ children }) => {
 
   const handleResponse = (response) => {
     const { data } = response;
-    data.role = data.role.toLowerCase()
+    data.role = data.role.toLowerCase();
     setAuthData(data);
     setStorageItem("authData", data);
 
     return data;
-  }
+  };
 
   const signIn = (formData) => {
     return UserService.signIn(formData, {

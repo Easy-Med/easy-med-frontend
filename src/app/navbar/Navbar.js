@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import {Avatar, Box, Button, ListItem} from "@mui/material";
+import { Avatar, Box, Button, ListItem, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -103,10 +103,6 @@ const LogoBox = styled("div", {
   "&:hover": {
     opacity: 0.8,
   },
-  [theme.breakpoints.down("sm")]: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-  },
   ...(open && {
     transition: theme.transitions.create(["width", "opacity"], {
       easing: theme.transitions.easing.sharp,
@@ -116,6 +112,11 @@ const LogoBox = styled("div", {
   ...(!open && {
     width: "150px",
   }),
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    width: "auto",
+  },
 }));
 
 const Navbar = () => {
@@ -123,6 +124,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const role = auth.authData.role;
+  const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const [open, setOpen] = React.useState(true);
 
   const handleDrawer = () => {
@@ -149,14 +151,34 @@ const Navbar = () => {
           </LogoBox>
           <SearchBar />
           <Box sx={{ flex: 1 }} />
-          <IconButton>
+          <IconButton sx={{ display: { xs: "none", sm: "inherit" } }}>
             <NotificationsIcon />
           </IconButton>
-          <Avatar sx={{ mx: 2, display: { xs: "none", sm: "inherit" } }}>
+          <Avatar
+            sx={{
+              mx: { xs: 1, sm: 2 },
+              display: { xs: "none", sm: "inherit" },
+            }}
+          >
             A
           </Avatar>
-          <Typography sx={{ mr: { xs: 2, sm: 4 } }}>Adrian Kunsz</Typography>
-          <Button variant={"outlined"} sx={{mr: 2}} onClick={auth.signOut}>Sign out</Button>
+          <Typography
+            sx={{
+              mx: 1,
+              flexShrink: 0,
+              display: { xs: "none", sm: "inherit" },
+            }}
+          >
+            Adrian Kunsz
+          </Typography>
+          <Button
+            variant={"outlined"}
+            size={matchesDesktop ? "medium" : "small"}
+            sx={{ mx: 2, flexShrink: "0" }}
+            onClick={auth.signOut}
+          >
+            Sign out
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

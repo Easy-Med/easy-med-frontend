@@ -21,7 +21,7 @@ ReactDOM.render(
       <ThemeWrapper>
         <App />
       </ThemeWrapper>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
