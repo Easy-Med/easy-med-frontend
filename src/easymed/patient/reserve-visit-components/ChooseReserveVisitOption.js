@@ -1,7 +1,7 @@
 import React from 'react';
 import ReserveVisitDateTile from './ReserveVisitDateTile';
 import ReserveVisitDoctorTile from './ReserveVisitDoctorTile'; 
-import { Box, Typography }  from '@mui/material';
+import { Box }  from '@mui/material';
 
 
 export default function ChooseReserveVisitOption({ setReservationOption }) {
@@ -19,9 +19,6 @@ export default function ChooseReserveVisitOption({ setReservationOption }) {
                 }}
               >
                 <ReserveVisitDateTile optionFunc={setReservationOption} />
-                <Typography varaint="h3" color={"primary.main"} fontWeight={"bold"}>
-                  OR
-                </Typography>
                 <ReserveVisitDoctorTile optionFunc={setReservationOption} />
               </Box>
             </>
