@@ -1,17 +1,9 @@
 import * as React from "react";
 import { Box, Dialog, Button, CircularProgress } from "@mui/material";
-import SelectOptionField from "./reserve-visit-components/SelectOptionField";
 import ReserveVisitTitle from "./reserve-visit-components/ReserveVisitTitle";
 import ChooseReserveVisitOption from "./reserve-visit-components/ChooseReserveVisitOption";
 import useFetch from "react-fetch-hook";
-import moment from "moment";
-
-const apiEndpoints = {
-  specialization:
-    "https://easy-med-api.herokuapp.com/api/doctor/specializations",
-  doctorWithSpec: "https://easy-med-api.herokuapp.com/api/doctor",
-  doctorFreeTerms: "https://easy-med-api.herokuapp.com/api/doctor/freeterms",
-};
+import ReserveVisitByOption from "./reserve-visit-components/ReserveVisitByOption";
 
 function PatientReserveVisitPopup({
   openDialog,
@@ -67,175 +59,57 @@ function PatientReserveVisitPopup({
     handleClose();
   };
 
+  const values = {
+    date: selectedDate,
+    specialization: selectedSpecialization,
+    doctor: selectedDoctor,
+    term: selectedTerm,
+  };
+  const valueChangers = {
+    date: setSelectedDate,
+    specialization: setSelectedSpecialization,
+    doctor: setSelectedDoctor,
+    term: setSelectedTerm,
+    api: setApiEndpoint,
+  };
+
+  const lists = {
+    specializations: specializationsList,
+    doctors: doctorsList,
+    terms: termsAvailable,
+  };
+
   return (
     <>
       <Dialog open={openDialog} onClose={handleClose} fullWidth maxWidth="md">
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              mt: 2,
-              mb: 2,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <ReserveVisitTitle />
-            {reservationOption === "default" ? (
-              <ChooseReserveVisitOption
-                setReservationOption={setReservationOption}
-              />
-            ) : reservationOption === "date" ? (
-              <Box
-                sx={{
-                  width: "80%",
-                  mt: 4,
-                  mb: 4,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 5,
-                }}
-              >
-                <SelectOptionField
-                  type="date"
-                  label="Select date"
-                  value={selectedDate}
-                  valueChanger={(date) => {
-                    setSelectedDate(date);
-                    setSelectedSpecialization(null);
-                    setApiEndpoint(apiEndpoints.specialization);
-                  }}
-                  displayCondition={true}
-                  loading={isLoading}
-                />
-                <SelectOptionField
-                  type="specialization"
-                  label="Select specialization"
-                  value={selectedSpecialization}
-                  valueChanger={(spec) => {
-                    setSelectedSpecialization(spec);
-                    setSelectedDoctor(null);
-                    setSelectedTerm(null);
-                    if (spec) {
-                      setApiEndpoint(
-                        `${apiEndpoints.doctorWithSpec}?specialization=${spec}`
-                      );
-                    } else {
-                      setApiEndpoint(apiEndpoints.specialization);
-                    }
-                  }}
-                  options={specializationsList}
-                  getOptionLabel={(option) => option.toString()}
-                  loading={isLoading}
-                  displayCondition={selectedDate}
-                />
-
-                <SelectOptionField
-                  type="doctor"
-                  label="Select doctor"
-                  value={selectedDoctor}
-                  valueChanger={(doctor) => {
-                    setSelectedDoctor(doctor);
-                    setSelectedTerm(null);
-                    if (doctor) {
-                      setApiEndpoint(
-                        `${apiEndpoints.doctorFreeTerms}?doctorId=${
-                          doctor.id
-                        }&visitDateTime=${moment(
-                          selectedDate,
-                          "DD/MM/YYYY"
-                        ).format("YYYY-MM-DD")}`
-                      );
-                    } else {
-                      setApiEndpoint(
-                        `${apiEndpoints.doctorWithSpec}?specialization=${selectedSpecialization}`
-                      );
-                    }
-                  }}
-                  options={doctorsList}
-                  getOptionLabel={(option) =>
-                    `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
-                  }
-                  loading={isLoading}
-                  displayCondition={selectedDate && selectedSpecialization}
-                />
-
-                <SelectOptionField
-                  type="term"
-                  label="Select term"
-                  value={selectedTerm}
-                  valueChanger={setSelectedTerm}
-                  options={termsAvailable}
-                  getOptionLabel={(option) =>
-                    `${option.visitDateTime}, ${option.dayOfWeek}`
-                  }
-                  loading={isLoading}
-                  displayCondition={
-                    selectedDate && selectedSpecialization && selectedDoctor
-                  }
-                />
-
-                {isAllDataComplete && (
-                  <Button
-                    variant="contained"
-                    color={"primary"}
-                    onClick={handleSubmitVisit}
-                  >
-                    CONFIRM VISIT
-                  </Button>
-                )}
-              </Box>
-            ) : (
-              <Box
-                sx={{
-                  width: "80%",
-                  mt: 4,
-                  mb: 4,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 5,
-                }}
-              >
-                <SelectOptionField
-                  type="specialization"
-                  label="Select specialization"
-                  value={selectedSpecialization}
-                  valueChanger={setSelectedSpecialization}
-                  options={data}
-                />
-                {selectedSpecialization && (
-                  <SelectOptionField
-                    type="doctor"
-                    label="Select doctor"
-                    value={selectedDoctor}
-                    valueChanger={setSelectedDoctor}
-                    options={data}
-                  />
-                )}
-
-                {selectedDoctor && selectedSpecialization && (
-                  <SelectOptionField
-                    type="date"
-                    value={selectedDate}
-                    valueChanger={setSelectedDate}
-                  />
-                )}
-
-                {isAllDataComplete && (
-                  <Button
-                    variant="contained"
-                    color={"primary"}
-                    onClick={handleSubmitVisit}
-                  >
-                    CONFIRM VISIT
-                  </Button>
-                )}
-              </Box>
-            )}
-          </Box>
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            mt: 2,
+            mb: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <ReserveVisitTitle />
+          {reservationOption === "default" ? (
+            <ChooseReserveVisitOption
+              setReservationOption={setReservationOption}
+            />
+          ) : (
+            <ReserveVisitByOption
+              option={reservationOption}
+              isAllDataComplete={isAllDataComplete}
+              handleSubmitVisit={handleSubmitVisit}
+              values={values}
+              valueChangers={valueChangers}
+              lists={lists}
+              loading={isLoading}
+            />
+          )}
+        </Box>
       </Dialog>
     </>
   );
