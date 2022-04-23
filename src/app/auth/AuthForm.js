@@ -1,49 +1,55 @@
 import React, { useState } from "react";
-import { Box, Button, Divider, Grid, Paper, Typography } from "@mui/material";
-import AuthInput from "../AuthInput";
+import useAuth from "./UseAuth";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
-import useAuth from "../UseAuth";
+import { Box, Button, Divider, Grid, Paper, Typography } from "@mui/material";
+import AuthInput from "./AuthInput";
+import RoleSelect from "./signUp/RoleSelect";
 
 const initialState = {
   firstName: "",
   lastName: "",
+  role: "",
   emailAddress: "",
   password: "",
   repeatPassword: "",
 };
 
-const LoginForm = ({ role, ...props }) => {
+const AuthForm = ({ isSignUp, initialRole }) => {
+  const [formData, setFormData] = useState({
+    ...initialState,
+    role: initialRole,
+  });
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignup, setIsSignup] = useState(false);
-  const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState({});
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const mutation = useMutation(
-    () => {
-      return isSignup ? auth.signUp(formData) : auth.signIn(formData);
-    },
-    {
-      onSuccess: (data, variables, context) => {
-        navigate(`/${data.role.toLowerCase()}/`);
-      },
-      onError: (error, variables, context) => {
-        if (typeof error.data === "string" || error.data instanceof String) {
-          setError({ EmailAddress: error.data });
-        } else {
-          let errors = error.data.errors;
-          for (const key in errors) {
-            if (errors.hasOwnProperty(key)) {
-              errors[key] = errors[key].reduce(
-                (total, desc) => total + ", " + desc
-              );
-            }
-          }
-          setError(errors);
+  const onSuccess = (data) => {
+    navigate(`/${data.role.toLowerCase()}`);
+  };
+
+  const onError = (error) => {
+    if (typeof error.data === "string" || error.data instanceof String) {
+      setError({ EmailAddress: error.data });
+    } else {
+      let errors = error.data.errors;
+      for (const key in errors) {
+        if (errors.hasOwnProperty(key)) {
+          errors[key] = errors[key].reduce(
+            (total, desc) => total + ", " + desc
+          );
         }
-      },
+      }
+      setError(errors);
+    }
+  };
+
+  const mutation = useMutation(
+    () => (isSignUp ? auth.signUp(formData) : auth.signIn(formData)),
+    {
+      onSuccess: onSuccess,
+      onError: onError,
     }
   );
 
@@ -55,22 +61,27 @@ const LoginForm = ({ role, ...props }) => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  const switchMode = () => {
-    setFormData(initialState);
-    setIsSignup((prevIsSignup) => !prevIsSignup);
-    setShowPassword(false);
-    setError({});
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Change key role to loginAs or registerAs
+    const oldKey = "role";
+    const newKey = isSignUp ? "registerAs" : "loginAs";
+    delete Object.assign(formData, { [newKey]: formData[oldKey] })[oldKey];
     mutation.mutate();
+  };
+
+  const handleBottomButtonClick = (e) => {
+    if (isSignUp) {
+      navigate("/signIn");
+    } else {
+      navigate("/signUp");
+    }
   };
 
   const styles = {
     root: (theme) => ({
       [theme.breakpoints.up("md")]: {
-        maxWidth: 500,
+        minWidth: 500,
       },
       maxWidth: 400,
       minWidth: 350,
@@ -84,10 +95,10 @@ const LoginForm = ({ role, ...props }) => {
       mb: 8,
     },
     submitButton: {
-      mt: 8,
-      mb: 15,
+      mt: 4,
+      mb: 10,
     },
-    signUpArea: {
+    signInArea: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -103,12 +114,14 @@ const LoginForm = ({ role, ...props }) => {
 
   return (
     <Paper elevation={3} sx={styles.root}>
-      <Typography variant="h5" sx={styles.topLabel}>
-        {isSignup ? "Sign up" : "Sign in"}
-      </Typography>
+      {!isSignUp && (
+        <Typography variant="h5" sx={styles.topLabel}>
+          Sign in
+        </Typography>
+      )}
       <form style={{ width: "100%" }} onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          {isSignup && (
+          {isSignUp && (
             <>
               <AuthInput
                 name="firstName"
@@ -126,6 +139,13 @@ const LoginForm = ({ role, ...props }) => {
                 half
                 error={Boolean(error?.LastName)}
                 helperText={error?.LastName}
+              />
+              <RoleSelect
+                name="role"
+                label={"Role"}
+                handleChange={handleChange}
+                error={Boolean(error?.Role)}
+                helperText={error?.Role}
               />
             </>
           )}
@@ -148,18 +168,16 @@ const LoginForm = ({ role, ...props }) => {
             autoComplete={"current-password"}
             handleShowPassword={handleShowPassword}
           />
-          {isSignup && (
-            <>
-              <AuthInput
-                name="repeatPassword"
-                label={"Repeat password"}
-                handleChange={handleChange}
-                error={Boolean(error?.RepeatPassword)}
-                helperText={error?.RepeatPassword}
-                type="password"
-                autoComplete={"password"}
-              />
-            </>
+          {isSignUp && (
+            <AuthInput
+              name="repeatPassword"
+              label={"Repeat password"}
+              handleChange={handleChange}
+              error={Boolean(error?.RepeatPassword)}
+              helperText={error?.RepeatPassword}
+              type="password"
+              autoComplete={"password"}
+            />
           )}
         </Grid>
         <Button
@@ -170,12 +188,12 @@ const LoginForm = ({ role, ...props }) => {
           sx={styles.submitButton}
           disabled={mutation.isLoading}
         >
-          {isSignup ? "Sign up" : "Sign in"}
+          {isSignUp ? "Sign up" : "Sign in"}
         </Button>
-        <Box sx={styles.signUpArea}>
+        <Box sx={styles.signInArea}>
           <Divider sx={styles.divider} />
-          <Button onClick={switchMode} sx={styles.switchButton}>
-            {isSignup
+          <Button onClick={handleBottomButtonClick} sx={styles.switchButton}>
+            {isSignUp
               ? "Already have an account? Sign In"
               : "Don't have an account? Sign Up"}
           </Button>
@@ -185,4 +203,4 @@ const LoginForm = ({ role, ...props }) => {
   );
 };
 
-export default LoginForm;
+export default AuthForm;

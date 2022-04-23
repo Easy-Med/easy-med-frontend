@@ -25,4 +25,4 @@ export const request = async function (requestConfig, options) {
     .catch(options?.onError ? options.onError : defaultOnError);
 };
 
-export default request
+export default request;

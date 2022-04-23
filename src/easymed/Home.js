@@ -10,7 +10,7 @@ const Home = () => {
     return <Navigate to={`/${authData.role.toLowerCase()}`} replace />;
   }
 
-  return <Navigate to={"/login"} replace />;
+  return <Navigate to={"/signIn"} replace />;
 };
 
 export default Home;

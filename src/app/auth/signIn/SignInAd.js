@@ -1,14 +1,14 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { motion } from "framer-motion";
-import LoginLabel from "./LoginLabel";
+import SignInLabel from "./SignInLabel";
 
-const LoginAd = ({ imgUrl, imgAlt, ...props }) => {
+const SignInAd = ({ imgUrl, imgAlt, ...props }) => {
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <LoginLabel />
+      <SignInLabel />
       <div style={{ height: "100%" }} />
       <motion.img
         whileInView={{ x: [-100, 0], opacity: [0, 1] }}
@@ -21,4 +21,4 @@ const LoginAd = ({ imgUrl, imgAlt, ...props }) => {
   );
 };
 
-export default LoginAd;
+export default SignInAd;

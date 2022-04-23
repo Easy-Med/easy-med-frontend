@@ -4,10 +4,10 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import ChooseLoginOption from "./app/auth/login/ChooseLoginOption";
-import Register from "./app/auth/register/Register";
-import LoginAsDoctor from "./app/auth/login/LoginAsDoctor";
-import LoginAsPatient from "./app/auth/login/LoginAsPatient";
+import ChooseSignInOption from "./app/auth/signIn/ChooseSignInOption";
+import SignUp from "./app/auth/signUp/SignUp";
+import SignInAsDoctor from "./app/auth/signIn/SignInAsDoctor";
+import SignInAsPatient from "./app/auth/signIn/SignInAsPatient";
 import DoctorDashboard from "./easymed/doctor/DoctorDashboard";
 import DoctorReservedVisits from "./easymed/doctor/DoctorReservedVisits";
 import DoctorBookingCalendar from "./easymed/doctor/DoctorBookingCalendar";
@@ -30,10 +30,10 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path={"/"} element={<Home />} />
-          <Route path={"/login"} element={<ChooseLoginOption />} />
-          <Route path={"/login/doctor"} element={<LoginAsDoctor />} />
-          <Route path={"/login/patient"} element={<LoginAsPatient />} />
-          <Route path={"/register"} element={<Register />} />
+          <Route path={"/signIn"} element={<ChooseSignInOption />} />
+          <Route path={"/signIn/doctor"} element={<SignInAsDoctor />} />
+          <Route path={"/signIn/patient"} element={<SignInAsPatient />} />
+          <Route path={"/signUp"} element={<SignUp />} />
 
           <Route
             path={"/doctor/"}
@@ -55,6 +55,7 @@ function App() {
             <Route path={"prescriptions"} element={<DoctorPrescriptions />} />
             <Route path={"reviews"} element={<DoctorReviews />} />
             <Route path={"settings"} element={<DoctorSettings />} />
+            <Route path={"*"} element={<PathNotFound />} />
           </Route>
 
           <Route
@@ -78,6 +79,8 @@ function App() {
             <Route path={"settings"} element={<PatientSettings />} />
             <Route path={"*"} element={<PathNotFound />} />
           </Route>
+
+          <Route path={"*"} element={<PathNotFound />} />
         </Routes>
       </AuthProvider>
     </Router>
