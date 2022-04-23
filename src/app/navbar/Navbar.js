@@ -189,7 +189,7 @@ const Navbar = ({ role, ...props }) => {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         <DrawerHeader />
         <Outlet  />
       </Box>
