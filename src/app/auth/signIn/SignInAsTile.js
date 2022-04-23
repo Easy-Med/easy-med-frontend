@@ -2,7 +2,7 @@ import React from "react";
 import { Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const LoginAsTile = ({ title, imgUrl, imgAlt, redirectUrl, ...props }) => {
+const SignInAsTile = ({ title, imgUrl, imgAlt, redirectUrl, ...props }) => {
   const navigate = useNavigate();
 
   return (
@@ -37,4 +37,4 @@ const LoginAsTile = ({ title, imgUrl, imgAlt, redirectUrl, ...props }) => {
   );
 };
 
-export default LoginAsTile;
+export default SignInAsTile;

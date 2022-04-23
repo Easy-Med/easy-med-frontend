@@ -1,22 +1,22 @@
 import React from "react";
-import LoginAsTile from "./LoginAsTile";
+import SignInAsTile from "./SignInAsTile";
 import { motion } from "framer-motion";
 
-const LoginAsDoctorTile = () => {
+const SignInAsDoctorTile = () => {
   return (
     <motion.div
       whileInView={{ y: [100, 0], opacity: [0, 1] }}
       transition={{ duration: 0.5 }}
       style={{ opacity: 0 }}
     >
-      <LoginAsTile
+      <SignInAsTile
         title={"Doctor"}
-        imgUrl={"/images/doctor/doctor-login-icon.png"}
+        imgUrl={"/images/doctor/doctor-signIn-icon.png"}
         imgAlt={"doctor-image-tile"}
-        redirectUrl={"/login/doctor"}
+        redirectUrl={"/signIn/doctor"}
       />
     </motion.div>
   );
 };
 
-export default LoginAsDoctorTile;
+export default SignInAsDoctorTile;

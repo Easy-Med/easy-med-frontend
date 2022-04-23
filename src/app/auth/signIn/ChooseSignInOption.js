@@ -1,11 +1,11 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Button, Divider, Typography } from "@mui/material";
-import LoginAsDoctorTile from "./LoginAsDoctorTile";
-import LoginAsPatientTile from "./LoginAsPatientTile";
+import SignInAsDoctorTile from "./SignInAsDoctorTile";
+import SignInAsPatientTile from "./SignInAsPatientTile";
 import { useNavigate } from "react-router-dom";
 
-const ChooseLoginOption = () => {
+const ChooseSignInOption = () => {
   const navigate = useNavigate();
 
   return (
@@ -27,7 +27,7 @@ const ChooseLoginOption = () => {
       >
         EasyMed
       </Typography>
-      <Typography variant={"h4"}>Login as</Typography>
+      <Typography variant={"h4"}>Sign in as</Typography>
       <Box
         sx={{
           mt: 4,
@@ -38,12 +38,12 @@ const ChooseLoginOption = () => {
           gap: 10,
         }}
       >
-        <LoginAsDoctorTile />
-        <LoginAsPatientTile />
+        <SignInAsDoctorTile />
+        <SignInAsPatientTile />
       </Box>
       <Divider sx={{ width: "25%" }} />
       <Button
-        onClick={() => navigate("/register")}
+        onClick={() => navigate("/signUp")}
         sx={{ color: "text.secondary", mb: 1 }}
       >
         Don't have account? Sign up
@@ -52,4 +52,4 @@ const ChooseLoginOption = () => {
   );
 };
 
-export default ChooseLoginOption;
+export default ChooseSignInOption;
