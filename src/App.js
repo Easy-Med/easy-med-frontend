@@ -8,7 +8,6 @@ import ChooseSignInOption from "./app/auth/signIn/ChooseSignInOption";
 import SignUp from "./app/auth/signUp/SignUp";
 import SignInAsDoctor from "./app/auth/signIn/SignInAsDoctor";
 import SignInAsPatient from "./app/auth/signIn/SignInAsPatient";
-import DoctorDashboard from "./easymed/doctor/DoctorDashboard";
 import DoctorReservedVisits from "./easymed/doctor/DoctorReservedVisits";
 import DoctorBookingCalendar from "./easymed/doctor/DoctorBookingCalendar";
 import DoctorPrescriptions from "./easymed/doctor/DoctorPrescriptions";
@@ -23,6 +22,7 @@ import PathNotFound from "./app/error/PathNotFound";
 import AuthProvider from "./app/auth/AuthProvider";
 import Home from "./easymed/Home";
 import RequireAuth from "./app/auth/RequireAuth";
+import DoctorDashboard from "./easymed/doctor/dashboard/DoctorDashboard";
 
 function App() {
   return (
