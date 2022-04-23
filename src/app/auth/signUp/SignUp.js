@@ -1,10 +1,10 @@
 import React from "react";
 import { Container } from "@mui/material";
-import RegisterForm from "./RegisterForm";
+import SignUpForm from "./SignUpForm";
 import SignUpLabel from "./SignUpLabel";
 import { motion } from "framer-motion";
 
-const Register = () => {
+const SignUp = () => {
   return (
     <Container
       sx={{
@@ -20,9 +20,9 @@ const Register = () => {
       >
         <SignUpLabel />
       </motion.div>
-      <RegisterForm />
+      <SignUpForm />
     </Container>
   );
 };
 
-export default Register;
+export default SignUp;

@@ -5,7 +5,7 @@ import {
   ThemeProvider,
 } from "@mui/material/styles";
 import ColorModeContext from "./ColorModeContext";
-import { useMediaQuery } from "@mui/material";
+import { CssBaseline, useMediaQuery } from "@mui/material";
 
 const getDesignTokens = (mode) => ({
   palette: {
@@ -42,7 +42,10 @@ const ThemeWrapper = (props) => {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {props.children}
+      </ThemeProvider>
     </ColorModeContext.Provider>
   );
 };

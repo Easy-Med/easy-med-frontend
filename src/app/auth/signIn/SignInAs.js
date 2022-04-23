@@ -1,11 +1,11 @@
 import React from "react";
-import LoginAd from "./LoginAd";
+import SignInAd from "./SignInAd";
 import { Box, useMediaQuery } from "@mui/material";
-import LoginForm from "./LoginForm";
+import SignInForm from "./SignInForm";
 import { useTheme } from "@emotion/react";
-import LoginLabel from "./LoginLabel";
+import SignInLabel from "./SignInLabel";
 
-const LoginAs = ({ imgUrl, imgAlt, ...props }) => {
+const SignInAs = ({ imgUrl, imgAlt, role, ...props }) => {
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -23,7 +23,7 @@ const LoginAs = ({ imgUrl, imgAlt, ...props }) => {
     >
       {matchesDesktop && (
         <>
-          <LoginAd imgUrl={imgUrl} imgAlt={imgAlt} />
+          <SignInAd imgUrl={imgUrl} imgAlt={imgAlt} />
           <Box sx={{ flex: "1", minWidth: "50px" }} />
         </>
       )}
@@ -36,11 +36,11 @@ const LoginAs = ({ imgUrl, imgAlt, ...props }) => {
           gap: 4,
         }}
       >
-        {!matchesDesktop && <LoginLabel />}
-        <LoginForm />
+        {!matchesDesktop && <SignInLabel />}
+        <SignInForm role={role} />
       </Box>
     </Box>
   );
 };
 
-export default LoginAs;
+export default SignInAs;
