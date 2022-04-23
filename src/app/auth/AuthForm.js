@@ -63,10 +63,6 @@ const AuthForm = ({ isSignUp, initialRole }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Change key role to loginAs or registerAs
-    const oldKey = "role";
-    const newKey = isSignUp ? "registerAs" : "loginAs";
-    delete Object.assign(formData, { [newKey]: formData[oldKey] })[oldKey];
     mutation.mutate();
   };
 

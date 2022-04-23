@@ -124,7 +124,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const role = auth.authData.role;
-  const name = auth.authData.emailAddress
+  const name = `${auth.authData.firstName} ${auth.authData.lastName}`;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const [open, setOpen] = React.useState(true);
 
