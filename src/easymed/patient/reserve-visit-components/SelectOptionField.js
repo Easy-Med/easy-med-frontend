@@ -2,7 +2,7 @@ import React from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { TextField, Autocomplete, CircularProgress } from "@mui/material";
+import { TextField, Autocomplete } from "@mui/material";
 
 export default function SelectOptionField({
   type,
@@ -14,11 +14,6 @@ export default function SelectOptionField({
   loading,
   displayCondition,
 }) {
-
-  if (loading) {
-    return <CircularProgress/>;
-  }
- 
   
   return (
     <>
