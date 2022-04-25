@@ -1,14 +1,14 @@
 import React from "react";
 import SelectOptionField from "./SelectOptionField";
-import { apiEndpoints } from "../../../app/utils/backendApi";
+import { apiEndpoints } from "./backendApi";
 import moment from "moment";
 
 export default function ReserveVisitByDate({
   values,
   valueChangers,
   lists,
-  loading,
 }) {
+    console.log(values.date);
   const updateDate = (date) => {
     valueChangers.date(date);
     valueChangers.specialization(null);
@@ -54,7 +54,6 @@ export default function ReserveVisitByDate({
         value={values.date}
         valueChanger={updateDate}
         displayCondition={true}
-        loading={loading}
       />
 
       <SelectOptionField
@@ -64,7 +63,6 @@ export default function ReserveVisitByDate({
         valueChanger={updateSpecialization}
         options={lists.specializations}
         getOptionLabel={(option) => option.toString()}
-        loading={loading}
         displayCondition={values.date}
       />
 
@@ -77,7 +75,6 @@ export default function ReserveVisitByDate({
         getOptionLabel={(option) =>
           `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
         }
-        loading={loading}
         displayCondition={values.date && values.specialization}
       />
 
@@ -88,9 +85,8 @@ export default function ReserveVisitByDate({
         valueChanger={valueChangers.term}
         options={lists.terms}
         getOptionLabel={(option) =>
-          `${option.visitDateTime}, ${option.dayOfWeek}`
+          `${moment(option.visitDateTime, "YYYY-MM-DDTHH:mm:ss.SSS").format('d MMMM YYYY, h:mma')} (${option.dayOfWeek})`
         }
-        loading={loading}
         displayCondition={values.date && values.specialization && values.doctor}
       />
     </>

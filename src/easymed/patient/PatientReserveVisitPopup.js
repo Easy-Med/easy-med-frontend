@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Box, Dialog, Button, CircularProgress } from "@mui/material";
+import { Box, Dialog } from "@mui/material";
 import ReserveVisitTitle from "./reserve-visit-components/ReserveVisitTitle";
 import ChooseReserveVisitOption from "./reserve-visit-components/ChooseReserveVisitOption";
 import useFetch from "react-fetch-hook";
 import ReserveVisitByOption from "./reserve-visit-components/ReserveVisitByOption";
+import { apiEndpoints } from './reserve-visit-components/backendApi';
 
 function PatientReserveVisitPopup({
   openDialog,
@@ -55,6 +56,7 @@ function PatientReserveVisitPopup({
   };
 
   const handleSubmitVisit = () => {
+    // GET PATIENT ID AND POST VISIT
     setShowSuccessAlert(true);
     handleClose();
   };
@@ -65,6 +67,7 @@ function PatientReserveVisitPopup({
     doctor: selectedDoctor,
     term: selectedTerm,
   };
+
   const valueChangers = {
     date: setSelectedDate,
     specialization: setSelectedSpecialization,

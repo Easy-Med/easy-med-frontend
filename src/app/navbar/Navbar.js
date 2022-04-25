@@ -123,7 +123,7 @@ const LogoBox = styled("div", {
 
 const SnackbarAlert = React.forwardRef(function SnackbarAlert(props, ref) {
     return <Alert elevation={6} ref={ref} {...props} />
-})
+});
 
 const Navbar = ({ role, ...props }) => {
   const theme = useTheme();
@@ -133,7 +133,6 @@ const Navbar = ({ role, ...props }) => {
   const name = `${auth.authData.firstName} ${auth.authData.lastName}`;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const [open, setOpen] = React.useState(true);
-
   const [openDialog, setOpenDialog] = React.useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
 
@@ -146,11 +145,11 @@ const Navbar = ({ role, ...props }) => {
   }
 
   const handleCloseSuccessAlert = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setShowSuccessAlert(false);
-  } 
+  };
 
   return (
     <Box sx={{ display: "flex", height: { xs: "auto", md: "100vh" } }}>
@@ -208,7 +207,9 @@ const Navbar = ({ role, ...props }) => {
         {
           {
             doctor: <DoctorMenuItems open={open} />,
-            patient: <PatientMenuItems open={open} setOpenDialog={setOpenDialog}/>,
+            patient: (
+              <PatientMenuItems open={open} setOpenDialog={setOpenDialog} />
+            ),
           }[role.toLowerCase()]
         }
         <Box sx={{ height: "100%" }} />
@@ -240,22 +241,29 @@ const Navbar = ({ role, ...props }) => {
         sx={{ display: "flex", flexDirection: "column", flex: 1 }}
       >
         <DrawerHeader />
-        <PatientReserveVisitPopup openDialog={openDialog} 
-                                  setOpenDialog={setOpenDialog} 
-                                  setShowSuccessAlert={setShowSuccessAlert}/>
-        <Snackbar 
-            open={showSuccessAlert}
-            onClose={handleCloseSuccessAlert}
-            TransitionComponent={alertTransition}
-            autoHideDuration={3000}
-            message="HELOOOOOOOOOOOOO"
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        <PatientReserveVisitPopup
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          setShowSuccessAlert={setShowSuccessAlert}
+        />
+        <Snackbar
+          open={showSuccessAlert}
+          onClose={handleCloseSuccessAlert}
+          TransitionComponent={alertTransition}
+          autoHideDuration={3000}
+          message="HELOOOOOOOOOOOOO"
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
-          <SnackbarAlert onClose={handleCloseSuccessAlert} severity="success" color={"primary"} variant="filled">
-              Visit reserved succesfully!
+          <SnackbarAlert
+            onClose={handleCloseSuccessAlert}
+            severity="success"
+            color={"primary"}
+            variant="filled"
+          >
+            Visit reserved succesfully!
           </SnackbarAlert>
         </Snackbar>
-        <Outlet  />
+        <Outlet />
       </Box>
     </Box>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import ReserveVisitByDate from "./ReserveVisitByDate";
 import ReserveVisitByDoctor from "./ReserveVisitByDoctor";
-
+import { Button, Box, CircularProgress } from "@mui/material";
 
 export default function ReserveVisitByOption({
   option,
@@ -12,6 +12,25 @@ export default function ReserveVisitByOption({
   lists,
   loading,
 }) {
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          width: "80%",
+          height: "330px",
+          mt: 4,
+          mb: 4,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 5,
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <>
       <Box
@@ -30,14 +49,12 @@ export default function ReserveVisitByOption({
             values={values}
             valueChangers={valueChangers}
             lists={lists}
-            loading={loading}
           />
         ) : (
           <ReserveVisitByDoctor
             values={values}
             valueChangers={valueChangers}
             lists={lists}
-            loading={loading}
           />
         )}
 
