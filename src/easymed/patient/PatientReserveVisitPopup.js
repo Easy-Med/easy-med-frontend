@@ -4,7 +4,7 @@ import ReserveVisitTitle from "./reserve-visit-components/ReserveVisitTitle";
 import ChooseReserveVisitOption from "./reserve-visit-components/ChooseReserveVisitOption";
 import useFetch from "react-fetch-hook";
 import ReserveVisitByOption from "./reserve-visit-components/ReserveVisitByOption";
-import { apiEndpoints } from './reserve-visit-components/backendApi';
+import { apiEndpoints } from "./reserve-visit-components/backendApi";
 
 function PatientReserveVisitPopup({
   openDialog,
@@ -27,8 +27,15 @@ function PatientReserveVisitPopup({
 
   const isAllDataComplete =
     selectedDate && selectedSpecialization && selectedDoctor && selectedTerm;
+  
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwibmFtZWlkIjoiMjEiLCJyb2xlIjoiUGF0aWVudCIsImVtYWlsIjoiZXhhbXBsZUBwbCIsIm5iZiI6MTY1MDgxODE5NiwiZXhwIjoxNjUwODI1Mzk2LCJpYXQiOjE2NTA4MTgxOTZ9.JSQ1B6aY7lBxHnkdrWQeYpYUEzXkO-upR3eAqMNv0es"
 
-  const { isLoading, data } = useFetch(apiEndpoint);
+  const { isLoading, data } = useFetch(apiEndpoint, {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`, // notice the Bearer before your token
+    }
+  });
 
   React.useEffect(() => {
     if (data && apiEndpoint.startsWith(apiEndpoints.specialization)) {

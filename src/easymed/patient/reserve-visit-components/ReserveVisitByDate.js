@@ -8,7 +8,6 @@ export default function ReserveVisitByDate({
   valueChangers,
   lists,
 }) {
-    console.log(values.date);
   const updateDate = (date) => {
     valueChangers.date(date);
     valueChangers.specialization(null);
