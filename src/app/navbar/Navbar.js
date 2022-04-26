@@ -19,6 +19,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import DoctorMenuItems from "./DoctorMenuItems";
 import PatientMenuItems from "./PatientMenuItems";
 import useAuth from "../auth/UseAuth";
+import PatientReserveVisitPopup from "../../easymed/patient/PatientReserveVisitPopup";
 
 const drawerWidth = 240;
 
@@ -126,7 +127,8 @@ const Navbar = () => {
   const role = auth.authData.role;
   const name = `${auth.authData.firstName} ${auth.authData.lastName}`;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+  const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleDrawer = () => {
     setOpen((prevState) => !prevState);
@@ -188,7 +190,7 @@ const Navbar = () => {
         {
           {
             doctor: <DoctorMenuItems open={open} />,
-            patient: <PatientMenuItems open={open} />,
+            patient: <PatientMenuItems open={open} setOpenDialog={setOpenDialog}/>,
           }[role.toLowerCase()]
         }
         <Box sx={{ height: "100%" }} />
@@ -220,7 +222,8 @@ const Navbar = () => {
         sx={{ display: "flex", flexDirection: "column", flex: 1 }}
       >
         <DrawerHeader />
-        <Outlet />
+        <PatientReserveVisitPopup openDialog={openDialog} setOpenDialog={setOpenDialog}/>
+        <Outlet  />
       </Box>
     </Box>
   );

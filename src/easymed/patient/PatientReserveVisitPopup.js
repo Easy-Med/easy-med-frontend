@@ -1,32 +1,23 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import Typography from '@mui/material/Typography';
-import { Box, MenuItem, TextField, Alert } from '@mui/material';
+import { Box, MenuItem, TextField } from '@mui/material';
 import SelectDateField from './reserve-visit-components/SelectDateField';
-import ReserveVisitDateTile from './reserve-visit-components/ReserveVisitDateTile';
-import ReserveVisitDoctorTile from './reserve-visit-components/ReserveVisitDoctorTile';
 import ReserveVisitTitle from './reserve-visit-components/ReserveVisitTitle';
-import { useFetchUrl } from './reserve-visit-components/useFetchUrl';
-import CheckIcon from '@mui/icons-material/Check';
+import ChooseReserveVisitOption from './reserve-visit-components/ChooseReserveVisitOption';
 
 const specializationList = ['Orthopedic', 'Kardiologist','Radiologist'] 
 const doctorsList = ['Maciej Bulwa', 'Adrian Kunsz','Barbara Telejko'] 
 
-function PatientReserveVisitPopup() {
-    const [open, setOpen] = React.useState(false);
+function PatientReserveVisitPopup({ openDialog, setOpenDialog, ...props }) {
     const [selectedDate, setSelectedDate] = React.useState(null);
     const [reservationOption, setReservationOption] = React.useState("default");
     const [selectedSpecialization, setSelectedSpecialization] = React.useState('');
     const [selectedDoctor, setSelectedDoctor] = React.useState("");
     const isAllDataComplete = (selectedDate && selectedSpecialization !== '' && selectedDoctor !== '');
-  
-    const handleOpen = () => {
-      setOpen(true);
-    };
 
     const handleClose = () => {
-      setOpen(false); 
+      setOpenDialog(false); 
       setTimeout(() => {
         setReservationOption("default"); 
         setSelectedDate(null); 
@@ -36,21 +27,16 @@ function PatientReserveVisitPopup() {
     };
 
     const handleSubmitVisit = () => {
-      console.log(selectedDate);
-      console.log(selectedSpecialization);
-      console.log(selectedDoctor);
       handleClose();
     }
   
     return (
       <>
-        <Button variant="contained" onClick={handleOpen} color={"primary"}>
-          RESERVE VISIT
-        </Button>
-          <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+          <Dialog open={openDialog} onClose={handleClose} fullWidth maxWidth="md">
             <Box
             sx={{
               width: "100%",
+              height: "100%",
               mt: 2,
               mb: 2,
               display: "flex",
@@ -61,24 +47,7 @@ function PatientReserveVisitPopup() {
               <ReserveVisitTitle/>
             {reservationOption === "default"   
               ? 
-              <Box
-                sx={{
-                  width: "100%",
-                  mt: 4,
-                  mb: 4,
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 5,
-                }}
-              >
-                <ReserveVisitDateTile optionFunc={setReservationOption} />
-                <Typography varaint="h3" color={"primary.main"} fontWeight={"bold"}>
-                  OR
-                </Typography>
-                <ReserveVisitDoctorTile optionFunc={setReservationOption} />
-              </Box>
+              <ChooseReserveVisitOption setReservationOption={setReservationOption}/>
                   :
                   (reservationOption === "date" ? 
                   <Box
