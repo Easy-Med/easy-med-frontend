@@ -11,7 +11,9 @@ const TileIcon = styled("img")(({ theme }) => ({
   borderRadius: "50%",
   borderColor: "grey",
   backgroundColor: "lightGrey",
-  boxShadow: "8px 8px 24px -12px rgba(66, 68, 90, 0.8)",
+  boxShadow: theme.shadows["3"],
+  width: '64px',
+  height: '64px'
 }));
 
 const DailyTile = ({ name, value, iconImgUrl, bgColor, ...props }) => {

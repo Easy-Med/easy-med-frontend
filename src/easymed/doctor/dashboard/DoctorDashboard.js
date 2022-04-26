@@ -26,22 +26,22 @@ const DoctorDashboard = () => {
           iconImgUrl={"/images/doctor/dashboard/calendar-icon.png"}
         />
         <DailyTile
-          name={"Remaining visits"}
-          value={7}
-          bgColor={"0, 200, 0"}
-          iconImgUrl={"/images/doctor/dashboard/calendar-icon.png"}
+          name={"End of work at"}
+          value={"18:30"}
+          bgColor={"0, 170, 255"}
+          iconImgUrl={"/images/doctor/dashboard/work-icon.png"}
         />
         <DailyTile
-          name={"Remaining visits"}
-          value={7}
-          bgColor={"0, 200, 0"}
-          iconImgUrl={"/images/doctor/dashboard/calendar-icon.png"}
+          name={"Issued prescriptions"}
+          value={3}
+          bgColor={"224, 4, 0"}
+          iconImgUrl={"/images/doctor/dashboard/prescriptions-icon.png"}
         />
         <DailyTile
-          name={"Remaining visits"}
-          value={7}
-          bgColor={"0, 200, 0"}
-          iconImgUrl={"/images/doctor/dashboard/calendar-icon.png"}
+          name={"Current rating"}
+          value={"4,32/5"}
+          bgColor={"242, 230, 0"}
+          iconImgUrl={"/images/doctor/dashboard/stars-icon.png"}
         />
       </Box>
     </Box>
