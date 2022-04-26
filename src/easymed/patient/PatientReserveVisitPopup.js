@@ -2,38 +2,66 @@ import * as React from "react";
 import { Box, Dialog } from "@mui/material";
 import ReserveVisitTitle from "./reserve-visit-components/ReserveVisitTitle";
 import ChooseReserveVisitOption from "./reserve-visit-components/ChooseReserveVisitOption";
-import ReserveVisitByOption from "./reserve-visit-components/ReserveVisitForm";
+import ReserveVisitForm from "./reserve-visit-components/ReserveVisitForm";
 import ReserveVisitService from "../../app/api/ReserveVisitService";
-import { useMutation } from 'react-query';
+import { useMutation } from "react-query";
+
+const initialState = {
+  date: null,
+  specialization: null,
+  doctor: null,
+  term: null,
+};
 
 function PatientReserveVisitPopup({
   openDialog,
   setOpenDialog,
   setShowSuccessAlert,
   ...props
-}) { 
+}) {
   const [reservationOption, setReservationOption] = React.useState("default");
-  const [formData, setFormData] = REact.useState(initialState);
-
-  const [doctorsList, setDoctorsList] = React.useState([]);
-  const [specializationsList, setSpecializationsList] = React.useState([]);
-  const [termsAvailable, setTermsAvailable] = React.useState([]);
+  const [formData, setFormData] = React.useState(initialState);
+  const [data, setData] = React.useState([]);
 
   const isAllDataComplete =
-    selectedDate && selectedSpecialization && selectedDoctor && selectedTerm;
+    formData.date &&
+    formData.specialization &&
+    formData.doctor &&
+    formData.term;
+
+  const handleResponse = (response) => {
+    const { data } = response;
+    setData(data);
+    console.log(data);
+  };
 
   const reserveVisitMutation = useMutation(() => {
-    
-  });  
+    if (reservationOption === "date") {
+      if (formData.date) {
+        if (formData.specialization) {
+          if (formData.doctor)
+            return ReserveVisitService.getDoctorFreeterms(
+              formData.doctor.id,
+              formData.date,
+              { onSuccess: handleResponse }
+            );
+          return ReserveVisitService.getDoctorsWthSpecialization(
+            formData.specialization,
+            { onSuccess: handleResponse }
+          );
+        }
+        return ReserveVisitService.getSpecializations({
+          onSuccess: handleResponse,
+        });
+      }
+    }
+  });
 
   const handleClose = () => {
     setOpenDialog(false);
     setTimeout(() => {
+      setFormData(initialState);
       setReservationOption("default");
-      setSelectedDate(null);
-      setSelectedSpecialization(null);
-      setSelectedDoctor(null);
-      setSelectedTerm(null);
     }, 200);
   };
 
@@ -42,15 +70,23 @@ function PatientReserveVisitPopup({
     handleClose();
   };
 
-  const handleFormData = (e) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
-  }
-
-
-  const lists = {
-    specializations: specializationsList,
-    doctors: doctorsList,
-    terms: termsAvailable,
+  const formDataHandlers = {
+    date: (newValue) => {
+      setFormData({ ...formData, date: newValue});
+      setTimeout(() => {reserveVisitMutation.mutate();}, 1000);
+    },
+    specialization: (newValue) => {
+      setFormData({ ...formData, specialization: newValue });
+      reserveVisitMutation.mutate();
+    },
+    doctor: (newValue) => {
+      setFormData({ ...formData, doctor: newValue });
+      reserveVisitMutation.mutate();
+    },
+    term: (newValue) => {
+      setFormData({ ...formData, term: newValue });
+      reserveVisitMutation.mutate();
+    },
   };
 
   return (
@@ -78,8 +114,8 @@ function PatientReserveVisitPopup({
               isAllDataComplete={isAllDataComplete}
               handleSubmitVisit={handleSubmitVisit}
               formData={formData}
-              handleFormData={handleFormData}
-              lists={lists}
+              formDataHandlers={formDataHandlers}
+              selectOptions={data}
               loading={reserveVisitMutation.isLoading}
             />
           )}

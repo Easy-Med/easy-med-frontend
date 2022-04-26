@@ -1,16 +1,15 @@
 import React from "react";
-import ReserveVisitByDate from "./ReserveVisitByDate";
-import ReserveVisitByDoctor from "./ReserveVisitByDoctor";
 import { Button, Box, CircularProgress } from "@mui/material";
-import ReserveVisitForm from "./ReserveVisitForm";
+import SelectOptionField from "./SelectOptionField";
+import moment from "moment";
 
 export default function ReserveVisitForm({
   option,
   isAllDataComplete,
   handleSubmitVisit,
   formData,
-  handleFormData,
-  lists,
+  formDataHandlers,
+  selectOptions,
   loading,
 }) {
   if (loading) {
@@ -46,97 +45,99 @@ export default function ReserveVisitForm({
         }}
       >
         <form style={{ width: "100%" }} onSubmit={handleSubmitVisit}>
+          {option === "date" ? (
+            <>
+              <SelectOptionField
+                type="date"
+                label="Select date"
+                value={formData.date}
+                valueChanger={formDataHandlers.date}
+                displayCondition={!formData.date}
+              />
+              <SelectOptionField
+                type="specialization"
+                label="Select specialization"
+                value={formData.specialization}
+                valueChanger={formDataHandlers.specialization}
+                options={selectOptions}
+                getOptionLabel={(option) => option.toString()}
+                displayCondition={!formData.specialization && formData.date}
+              />
+              <SelectOptionField
+                type="doctor"
+                label="Select doctor"
+                value={formData.doctor}
+                valueChanger={formDataHandlers.doctor}
+                options={selectOptions}
+                getOptionLabel={(option) =>
+                  `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
+                }
+                displayCondition={
+                  !formData.doctor && formData.specialization && formData.date
+                }
+              />
+            </>
+          ) : (
+            <>
+              <SelectOptionField
+                type="specialization"
+                label="Select specialization"
+                value={formData.specialization}
+                valueChanger={formDataHandlers.specialization}
+                options={selectOptions}
+                getOptionLabel={(option) => option.toString()}
+                displayCondition={!formData.specialization}
+              />
+              <SelectOptionField
+                type="doctor"
+                label="Select doctor"
+                value={formData.doctor}
+                valueChanger={formDataHandlers.doctor}
+                options={selectOptions}
+                getOptionLabel={(option) =>
+                  `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
+                }
+                displayCondition={!formData.doctor && formData.specialization}
+              />
+              <SelectOptionField
+                type="date"
+                label="Select date"
+                value={formData.date}
+                valueChanger={formDataHandlers.date}
+                displayCondition={
+                  !formData.date && formData.specialization && formData.doctor
+                }
+              />
+            </>
+          )}
 
-        {option === "date" ? (
-          <>
-            <SelectOptionField
-              type="date"
-              label="Select date"
-              value={formData.date}
-              valueChanger={handleFormData}
-              displayCondition={!formData.date}
-            />
-            <SelectOptionField
-              type="specialization"
-              label="Select specialization"
-              value={formData.specialization}
-              valueChanger={handleFormData}
-              options={lists.specializations}
-              getOptionLabel={(option) => option.toString()}
-              displayCondition={!formData.specialization && formData.date}
-            />
-            <SelectOptionField
-              type="doctor"
-              label="Select doctor"
-              value={formData.doctor}
-              valueChanger={handleFormData}
-              options={lists.doctors}
-              getOptionLabel={(option) =>
-                `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
-              }
-              displayCondition={!formData.doctor && formData.specialization && formData.date}
-            />
-          </>
-        ) : (
-          <>
-            <SelectOptionField
-              type="specialization"
-              label="Select specialization"
-              value={formData.specialization}
-              valueChanger={handleFormData}
-              options={lists.specializations}
-              getOptionLabel={(option) => option.toString()}
-              displayCondition={!formData.specialization}
-            />
-            <SelectOptionField
-              type="doctor"
-              label="Select doctor"
-              value={formData.doctor}
-              valueChanger={handleFormData}
-              options={lists.doctors}
-              getOptionLabel={(option) =>
-                `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
-              }
-              displayCondition={!formData.doctor && formData.specialization}
-            />
-            <SelectOptionField
-              type="date"
-              label="Select date"
-              value={formData.date}
-              valueChanger={handleFormData}
-              displayCondition={!formData.date && formData.specialization && formData.doctor}
-            />
-          </>
-        )}
+          <SelectOptionField
+            type="term"
+            label="Select term"
+            value={formData.term}
+            valueChanger={formDataHandlers.term}
+            options={selectOptions}
+            getOptionLabel={(option) =>
+              `${moment(option.visitDateTime, "YYYY-MM-DDTHH:mm:ss.SSS").format(
+                "d MMMM YYYY, h:mma"
+              )} (${option.dayOfWeek})`
+            }
+            displayCondition={
+              option === "date" ? formData.doctor : formData.date
+            }
+          />
 
-        <SelectOptionField
-          type="term"
-          label="Select term"
-          value={formData.term}
-          valueChanger={handleFormData}
-          options={lists.terms}
-          getOptionLabel={(option) =>
-            `${moment(option.visitDateTime, "YYYY-MM-DDTHH:mm:ss.SSS").format(
-              "d MMMM YYYY, h:mma"
-            )} (${option.dayOfWeek})`
-          }
-          displayCondition={
-            option === "date" ? formData.doctor : formData.date
-          }
-        />
-     
-
-        {isAllDataComplete && (
-          <Button
-            variant="contained"
-            type="submit"
-            color={"primary"}
-            onClick={handleSubmitVisit}
-          >
-            CONFIRM VISIT
-          </Button>
-        )}
-         </form>
+          {isAllDataComplete && (
+            <Button
+              variant="contained"
+              type="submit"
+              color={"primary"}
+              onClick={handleSubmitVisit}
+            >
+              CONFIRM VISIT
+            </Button>
+          )}
+        </form>
       </Box>
     </>
   );
