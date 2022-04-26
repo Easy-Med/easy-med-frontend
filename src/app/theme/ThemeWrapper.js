@@ -5,7 +5,8 @@ import {
   ThemeProvider,
 } from "@mui/material/styles";
 import ColorModeContext from "./ColorModeContext";
-import { CssBaseline, useMediaQuery } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import { getStorageItem, setStorageItem } from "../utils/storage";
 
 const getDesignTokens = (mode) => ({
   palette: {
@@ -24,12 +25,17 @@ const getDesignTokens = (mode) => ({
 });
 
 const ThemeWrapper = (props) => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = React.useState(prefersDarkMode ? "dark" : "light");
+  const [mode, setMode] = React.useState(
+    getStorageItem("theme") ? getStorageItem("theme") : "light"
+  );
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+        setMode((prevMode) => {
+          const newMode = prevMode === "light" ? "dark" : "light";
+          setStorageItem("theme", newMode);
+          return newMode;
+        });
       },
     }),
     []
