@@ -33,8 +33,12 @@ const secondarySideMenuOptions = [
   },
 ];
 
+<<<<<<< HEAD
 const PatientMenuItems = ({ open, ...props }) => {
   const handleReserveVisit = () => {};
+=======
+const PatientMenuItems = ({ open, setOpenDialog, ...props }) => {
+>>>>>>> 134ad9e (Moved reservation popup to Navbar, slight code refactoring, linked reseravtion button to dialog)
 
   return (
     <Box>
@@ -42,9 +46,13 @@ const PatientMenuItems = ({ open, ...props }) => {
         sx={{ width: "100%", mt: 1, display: "flex", justifyContent: "center" }}
       >
         {open ? (
+<<<<<<< HEAD
           <Button onClick={handleReserveVisit} variant={"contained"}>
             Reserve visit
           </Button>
+=======
+          <Button variant={"contained"} onClick={() => setOpenDialog(true)}>Reserve visit</Button>
+>>>>>>> 134ad9e (Moved reservation popup to Navbar, slight code refactoring, linked reseravtion button to dialog)
         ) : (
           <IconButton
             onClick={handleReserveVisit}
