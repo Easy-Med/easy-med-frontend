@@ -12,7 +12,7 @@ import DoctorReservedVisits from "./easymed/doctor/DoctorReservedVisits";
 import DoctorBookingCalendar from "./easymed/doctor/DoctorBookingCalendar";
 import DoctorPrescriptions from "./easymed/doctor/DoctorPrescriptions";
 import DoctorReviews from "./easymed/doctor/DoctorReviews";
-import DoctorSettings from "./easymed/doctor/DoctorSettings";
+import DoctorSettings from "./easymed/doctor/settings/DoctorSettings";
 import Navbar from "./app/navbar/Navbar";
 import PatientReservedVisits from "./easymed/patient/PatientReservedVisits";
 import PatientPrescriptions from "./easymed/patient/PatientPrescriptions";
