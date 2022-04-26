@@ -75,7 +75,6 @@ const DoctorSettings = () => {
       flexDirection={"column"}
       alignItems={"flex-start"}
       sx={{ py: 2, px: 5 }}
-      maxWidth={"600px"}
     >
       <Typography variant={"h6"} fontWeight={"bold"}>
         Account data
@@ -87,6 +86,7 @@ const DoctorSettings = () => {
         flexDirection={"column"}
         gap={3}
         width={"100%"}
+        maxWidth={"600px"}
         sx={{ my: 3 }}
       >
         <TextField
