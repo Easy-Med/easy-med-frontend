@@ -2,54 +2,29 @@ import * as React from "react";
 import { Box, Dialog } from "@mui/material";
 import ReserveVisitTitle from "./reserve-visit-components/ReserveVisitTitle";
 import ChooseReserveVisitOption from "./reserve-visit-components/ChooseReserveVisitOption";
-import useFetch from "react-fetch-hook";
-import ReserveVisitByOption from "./reserve-visit-components/ReserveVisitByOption";
-import { apiEndpoints } from "./reserve-visit-components/backendApi";
+import ReserveVisitByOption from "./reserve-visit-components/ReserveVisitForm";
+import ReserveVisitService from "../../app/api/ReserveVisitService";
+import { useMutation } from 'react-query';
 
 function PatientReserveVisitPopup({
   openDialog,
   setOpenDialog,
   setShowSuccessAlert,
   ...props
-}) {
-  const [selectedDate, setSelectedDate] = React.useState(null);
+}) { 
   const [reservationOption, setReservationOption] = React.useState("default");
-  const [selectedSpecialization, setSelectedSpecialization] =
-    React.useState(null);
-  const [selectedDoctor, setSelectedDoctor] = React.useState(null);
-  const [selectedTerm, setSelectedTerm] = React.useState(null);
+  const [formData, setFormData] = REact.useState(initialState);
 
   const [doctorsList, setDoctorsList] = React.useState([]);
   const [specializationsList, setSpecializationsList] = React.useState([]);
   const [termsAvailable, setTermsAvailable] = React.useState([]);
 
-  const [apiEndpoint, setApiEndpoint] = React.useState("");
-
   const isAllDataComplete =
     selectedDate && selectedSpecialization && selectedDoctor && selectedTerm;
-  
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwibmFtZWlkIjoiMjEiLCJyb2xlIjoiUGF0aWVudCIsImVtYWlsIjoiZXhhbXBsZUBwbCIsIm5iZiI6MTY1MDgxODE5NiwiZXhwIjoxNjUwODI1Mzk2LCJpYXQiOjE2NTA4MTgxOTZ9.JSQ1B6aY7lBxHnkdrWQeYpYUEzXkO-upR3eAqMNv0es"
 
-  const { isLoading, data } = useFetch(apiEndpoint, {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`, // notice the Bearer before your token
-    }
-  });
-
-  React.useEffect(() => {
-    if (data && apiEndpoint.startsWith(apiEndpoints.specialization)) {
-      setSpecializationsList(data);
-    }
-
-    if (data && apiEndpoint.startsWith(apiEndpoints.doctorFreeTerms)) {
-      setTermsAvailable(data);
-    }
-
-    if (data && apiEndpoint.startsWith(`${apiEndpoints.doctorWithSpec}?`)) {
-      setDoctorsList(data);
-    }
-  }, [data, apiEndpoint]);
+  const reserveVisitMutation = useMutation(() => {
+    
+  });  
 
   const handleClose = () => {
     setOpenDialog(false);
@@ -63,25 +38,14 @@ function PatientReserveVisitPopup({
   };
 
   const handleSubmitVisit = () => {
-    // GET PATIENT ID AND POST VISIT
     setShowSuccessAlert(true);
     handleClose();
   };
 
-  const values = {
-    date: selectedDate,
-    specialization: selectedSpecialization,
-    doctor: selectedDoctor,
-    term: selectedTerm,
-  };
+  const handleFormData = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value});
+  }
 
-  const valueChangers = {
-    date: setSelectedDate,
-    specialization: setSelectedSpecialization,
-    doctor: setSelectedDoctor,
-    term: setSelectedTerm,
-    api: setApiEndpoint,
-  };
 
   const lists = {
     specializations: specializationsList,
@@ -109,14 +73,14 @@ function PatientReserveVisitPopup({
               setReservationOption={setReservationOption}
             />
           ) : (
-            <ReserveVisitByOption
+            <ReserveVisitForm
               option={reservationOption}
               isAllDataComplete={isAllDataComplete}
               handleSubmitVisit={handleSubmitVisit}
-              values={values}
-              valueChangers={valueChangers}
+              formData={formData}
+              handleFormData={handleFormData}
               lists={lists}
-              loading={isLoading}
+              loading={reserveVisitMutation.isLoading}
             />
           )}
         </Box>

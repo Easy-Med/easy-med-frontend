@@ -124,7 +124,7 @@ const SnackbarAlert = React.forwardRef(function SnackbarAlert(props, ref) {
     return <Alert elevation={6} ref={ref} {...props} />
 });
 
-const Navbar = ({ role, ...props }) => {
+const Navbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const auth = useAuth();
