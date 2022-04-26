@@ -20,13 +20,9 @@ export default function SelectOptionField({
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label={label}
-            renderInput={(params) => <TextField fullWidth {...params} />}
+            renderInput={(params) => <TextField fullWidth {...params}/>}
             value={value}
             onChange={valueChanger}
-            onAccept={(date) => {
-              valueChanger(date);
-            }}
-            onError={(reason, value) => valueChanger(null)}
             disablePast
             disabled={!displayCondition}
           />
@@ -35,11 +31,9 @@ export default function SelectOptionField({
         <Autocomplete
           options={options}
           value={value}
-          renderInput={(params) => <TextField {...params} label={label} />}
+          renderInput={(params) => <TextField {...params} label={label}/>}
+          onChange={valueChanger}
           fullWidth
-          onChange={(event, newValue) => {
-            valueChanger(newValue);
-          }}
           getOptionLabel={getOptionLabel}
           disabled={!displayCondition}
         />
