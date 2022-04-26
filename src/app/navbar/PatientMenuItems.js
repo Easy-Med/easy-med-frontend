@@ -33,8 +33,7 @@ const secondarySideMenuOptions = [
   },
 ];
 
-const PatientMenuItems = ({ open, ...props }) => {
-  const handleReserveVisit = () => {};
+const PatientMenuItems = ({ open, setOpenDialog,  ...props }) => {
 
   return (
     <Box>
@@ -45,7 +44,7 @@ const PatientMenuItems = ({ open, ...props }) => {
           <Button variant={"contained"} onClick={() => setOpenDialog(true)}>Reserve visit</Button>
         ) : (
           <IconButton size={"medium"} color={"primary"} onClick={() => setOpenDialog(true)}>
-            <EventSeatIcon />
+            <BookOnlineIcon />
           </IconButton>
         )}
       </Box>

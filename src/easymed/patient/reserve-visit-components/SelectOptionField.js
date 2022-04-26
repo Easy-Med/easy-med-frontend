@@ -11,7 +11,6 @@ export default function SelectOptionField({
   options,
   label,
   getOptionLabel,
-  loading,
   displayCondition,
 }) {
   
