@@ -215,7 +215,7 @@ const Navbar = () => {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ display: "flex", flexDirection: "column" }}>
+      <Box component="main" sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <DrawerHeader />
         <Outlet />
       </Box>

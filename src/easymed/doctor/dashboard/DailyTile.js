@@ -12,8 +12,8 @@ const TileIcon = styled("img")(({ theme }) => ({
   borderColor: "grey",
   backgroundColor: "lightGrey",
   boxShadow: theme.shadows["3"],
-  width: '64px',
-  height: '64px'
+  width: "64px",
+  height: "64px",
 }));
 
 const DailyTile = ({ name, value, iconImgUrl, bgColor, ...props }) => {
@@ -29,6 +29,7 @@ const DailyTile = ({ name, value, iconImgUrl, bgColor, ...props }) => {
         alignItems: "center",
         gap: 2,
         flex: matchesMobile ? "1" : "0 1 auto",
+        minWidth: "245px",
       }}
     >
       <TileIcon
