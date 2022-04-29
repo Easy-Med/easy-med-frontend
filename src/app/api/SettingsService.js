@@ -18,4 +18,11 @@ export default class SettingsService {
       options
     );
   }
+
+  static getDoctorSpecializations() {
+    return request({
+      url: `/api/doctor/specializations`,
+      method: 'GET'
+    })
+  }
 }

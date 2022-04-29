@@ -20,7 +20,14 @@ const getDesignTokens = (mode) => ({
             main: "#BA5252",
           },
         }
-      : {}),
+      : {
+          primary: {
+            main: "#01a6a6",
+          },
+          secondary: {
+            main: "#BA5252",
+          },
+        }),
   },
 });
 

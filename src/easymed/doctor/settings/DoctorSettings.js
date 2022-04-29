@@ -7,7 +7,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import SettingsService from "../../../app/api/SettingsService";
 import useAuth from "../../../app/auth/UseAuth";
 import { replaceNull } from "../../../app/utils/objectUtils";
-import ErrorSnackbar from "./ErrorSnackbar";
+import SettingsSnackbar from "./SettingsSnackbar";
+import DoctorSpecializationsSelect from "./DoctorSpecializationsSelect";
 
 const initFormData = {
   firstName: "",
@@ -21,17 +22,21 @@ const initFormData = {
 
 const DoctorSettings = () => {
   const [formData, setFormData] = useState(initFormData);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const auth = useAuth();
   const doctorId = auth.authData.id;
   const queryClient = useQueryClient();
 
-  const showSnackbar = () => {
+  const showSnackbar = (severity, message) => {
+    setSnackbarSeverity(severity);
+    setSnackbarMessage(message);
     setOpenSnackbar(true);
   };
 
   const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -51,10 +56,12 @@ const DoctorSettings = () => {
     () => SettingsService.updateAccountDataForDoctorId(doctorId, formData),
     {
       onSuccess: (data) => {
+        showSnackbar("success", "Account data updated successfully");
+
         queryClient.invalidateQueries("doctorSettings");
       },
       onError: (error) => {
-        showSnackbar()
+        showSnackbar("error", "Can't update account data");
       },
     }
   );
@@ -104,6 +111,7 @@ const DoctorSettings = () => {
         <TextField
           name={"email"}
           label={"Email"}
+          placeholder={"e.g. kowalski@gmail.com"}
           type={"email"}
           onChange={handleChange}
           value={formData.email}
@@ -111,6 +119,7 @@ const DoctorSettings = () => {
         <TextField
           name={"telephone"}
           label={"Telephone"}
+          placeholder={"e.g. 506871462"}
           type={"tel"}
           onChange={handleChange}
           value={formData.telephone}
@@ -118,6 +127,7 @@ const DoctorSettings = () => {
         <TextField
           name={"description"}
           label={"Description"}
+          placeholder={"Describe yourself in a few sentences..."}
           onChange={handleChange}
           value={formData.description}
           multiline
@@ -126,16 +136,22 @@ const DoctorSettings = () => {
         <TextField
           name={"officeLocation"}
           label={"Office location"}
+          placeholder={"e.g. ul. Młynowa 17, 15-404 Białystok"}
           onChange={handleChange}
           value={formData.officeLocation}
         />
-        <TextField
+        <DoctorSpecializationsSelect
           name={"medicalSpecialization"}
           label={"Medical specialization"}
           onChange={handleChange}
           value={formData.medicalSpecialization}
         />
-        <Button disabled={query.isLoading} variant={"contained"} sx={{ mb: 5 }} type={"submit"}>
+        <Button
+          disabled={query.isLoading}
+          variant={"contained"}
+          sx={{ mb: 5 }}
+          type={"submit"}
+        >
           Save changes
         </Button>
       </Box>
@@ -147,7 +163,12 @@ const DoctorSettings = () => {
         <Typography>Change theme: </Typography>
         <ThemeSwitcher />
       </Box>
-      <ErrorSnackbar open={openSnackbar} handleClose={handleSnackbarClose} message={"Can't update account data"} />
+      <SettingsSnackbar
+        open={openSnackbar}
+        handleClose={handleSnackbarClose}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+      />
     </Box>
   );
 };
