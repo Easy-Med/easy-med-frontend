@@ -1,4 +1,5 @@
 import request from "./request";
+import moment from "moment";
 
 export default class ReserveVisitService {
   static getSpecializations(options) {
@@ -24,7 +25,19 @@ export default class ReserveVisitService {
   static getDoctorFreeterms(id, date, options) {
     return request(
       {
-        url: `/api/doctor/freeterms?doctorId=${id}&visitDateTime=${date}`,
+        url: `/api/doctor/freeterms?doctorId=${id}&visitDateTime=${moment(
+          date
+        ).format("YYYY-MM-DD")}`,
+        method: "GET",
+      },
+      options
+    );
+  }
+
+  static getDoctorFreeDates(id, options) {
+    return request(
+      {
+        url: `/api/doctor/`,
         method: "GET",
       },
       options
