@@ -11,7 +11,7 @@ const ReserveVisitDateTile = (props) => {
     >
       <ReserveVisitOptionTile
         title={"Choose doctor"}
-        imgUrl={"/images/doctor/doctor-login-screen.png"}
+        imgUrl={"/images/doctor/doctor-signIn-screen.png"}
         imgAlt={"doctor-image-tile"}
         redirectUrl={""}
         optionFunc={props.optionFunc}
