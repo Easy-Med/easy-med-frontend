@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Avatar, Box, Button, ListItem, useMediaQuery } from "@mui/material";
+import { Avatar, Box, ListItem, Snackbar, Slide, Alert } from "@mui/material";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -120,7 +121,11 @@ const LogoBox = styled("div", {
   },
 }));
 
-const Navbar = () => {
+const SnackbarAlert = React.forwardRef(function SnackbarAlert(props, ref) {
+    return <Alert elevation={6} ref={ref} {...props} />
+})
+
+const Navbar = ({ role, ...props }) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const auth = useAuth();
@@ -128,11 +133,24 @@ const Navbar = () => {
   const name = `${auth.authData.firstName} ${auth.authData.lastName}`;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const [open, setOpen] = React.useState(true);
+
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
 
   const handleDrawer = () => {
     setOpen((prevState) => !prevState);
   };
+
+  function alertTransition(rest) {
+    return <Slide {...rest} direction="left" />;
+  }
+
+  const handleCloseSuccessAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setShowSuccessAlert(false);
+  } 
 
   return (
     <Box sx={{ display: "flex", height: { xs: "auto", md: "100vh" } }}>
@@ -222,7 +240,21 @@ const Navbar = () => {
         sx={{ display: "flex", flexDirection: "column", flex: 1 }}
       >
         <DrawerHeader />
-        <PatientReserveVisitPopup openDialog={openDialog} setOpenDialog={setOpenDialog}/>
+        <PatientReserveVisitPopup openDialog={openDialog} 
+                                  setOpenDialog={setOpenDialog} 
+                                  setShowSuccessAlert={setShowSuccessAlert}/>
+        <Snackbar 
+            open={showSuccessAlert}
+            onClose={handleCloseSuccessAlert}
+            TransitionComponent={alertTransition}
+            autoHideDuration={3000}
+            message="HELOOOOOOOOOOOOO"
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+          <SnackbarAlert onClose={handleCloseSuccessAlert} severity="success" color={"primary"} variant="filled">
+              Visit reserved succesfully!
+          </SnackbarAlert>
+        </Snackbar>
         <Outlet  />
       </Box>
     </Box>
