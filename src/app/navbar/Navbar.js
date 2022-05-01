@@ -126,7 +126,7 @@ const Navbar = () => {
   const role = auth.authData.role;
   const name = `${auth.authData.firstName} ${auth.authData.lastName}`;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawer = () => {
     setOpen((prevState) => !prevState);

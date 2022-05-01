@@ -17,7 +17,7 @@ import Navbar from "./app/navbar/Navbar";
 import PatientReservedVisits from "./easymed/patient/PatientReservedVisits";
 import PatientPrescriptions from "./easymed/patient/PatientPrescriptions";
 import PatientReviews from "./easymed/patient/PatientReviews";
-import PatientSettings from "./easymed/patient/PatientSettings";
+import PatientSettings from "./easymed/patient/settings/PatientSettings";
 import PathNotFound from "./app/error/PathNotFound";
 import AuthProvider from "./app/auth/AuthProvider";
 import Home from "./easymed/Home";
