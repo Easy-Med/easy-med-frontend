@@ -1,17 +1,17 @@
 import request from "./request";
 
 export default class SettingsService {
-  static getAccountDataForDoctorId(id) {
+  static getAccountDataFor(role, id) {
     return request({
-      url: `/api/doctor/${id}/details`,
+      url: `/api/${role}/${id}/details`,
       method: "GET",
     });
   }
 
-  static updateAccountDataForDoctorId(id, formData, options) {
+  static updateAccountDataFor(role, id, formData, options) {
     return request(
       {
-        url: `/api/doctor/${id}`,
+        url: `/api/${role}/${id}`,
         method: "PATCH",
         data: formData,
       },
@@ -22,7 +22,7 @@ export default class SettingsService {
   static getDoctorSpecializations() {
     return request({
       url: `/api/doctor/specializations`,
-      method: 'GET'
-    })
+      method: "GET",
+    });
   }
 }
