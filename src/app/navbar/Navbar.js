@@ -250,7 +250,7 @@ const Navbar = () => {
           onClose={handleCloseSuccessAlert}
           TransitionComponent={alertTransition}
           autoHideDuration={3000}
-          message="HELOOOOOOOOOOOOO"
+          message=""
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
           <SnackbarAlert

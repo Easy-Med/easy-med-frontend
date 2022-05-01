@@ -11,6 +11,7 @@ export default function SelectOptionField({
   options,
   label,
   getOptionLabel,
+  isOptionEqualToValue,
   displayCondition,
 }) {
   
@@ -35,6 +36,7 @@ export default function SelectOptionField({
           onChange={valueChanger}
           fullWidth
           getOptionLabel={getOptionLabel}
+          isOptionEqualToValue={isOptionEqualToValue}
           disabled={!displayCondition}
         />
       )}

@@ -8,7 +8,7 @@ const ReserveVisitOptionTile = ({ title, imgUrl, imgAlt, redirectUrl, option, op
       elevation={10}
       onClick={() => optionFunc(option)}
       sx={{
-        width: "250px",
+        width: "300px",
         height: "400px",
         display: "flex",
         flexDirection: "column",

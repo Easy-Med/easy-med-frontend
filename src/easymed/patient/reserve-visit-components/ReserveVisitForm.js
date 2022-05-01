@@ -44,7 +44,6 @@ export default function ReserveVisitForm({
           gap: 5,
         }}
       >
-        <form style={{ width: "100%" }} onSubmit={handleSubmitVisit}>
           {option === "date" ? (
             <>
               <SelectOptionField
@@ -59,8 +58,7 @@ export default function ReserveVisitForm({
                 label="Select specialization"
                 value={formData.specialization}
                 valueChanger={formDataHandlers.specialization}
-                options={selectOptions}
-                getOptionLabel={(option) => option.toString()}
+                options={formData.specialization ? [] : selectOptions}
                 displayCondition={!formData.specialization && formData.date}
               />
               <SelectOptionField
@@ -68,7 +66,7 @@ export default function ReserveVisitForm({
                 label="Select doctor"
                 value={formData.doctor}
                 valueChanger={formDataHandlers.doctor}
-                options={selectOptions}
+                options={formData.doctor ? [] : selectOptions}
                 getOptionLabel={(option) =>
                   `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
                 }
@@ -84,7 +82,7 @@ export default function ReserveVisitForm({
                 label="Select specialization"
                 value={formData.specialization}
                 valueChanger={formDataHandlers.specialization}
-                options={selectOptions}
+                options={formData.specialization ? [] : selectOptions}
                 getOptionLabel={(option) => option.toString()}
                 displayCondition={!formData.specialization}
               />
@@ -93,7 +91,7 @@ export default function ReserveVisitForm({
                 label="Select doctor"
                 value={formData.doctor}
                 valueChanger={formDataHandlers.doctor}
-                options={selectOptions}
+                options={formData.doctor ? [] : selectOptions}
                 getOptionLabel={(option) =>
                   `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
                 }
@@ -116,10 +114,10 @@ export default function ReserveVisitForm({
             label="Select term"
             value={formData.term}
             valueChanger={formDataHandlers.term}
-            options={selectOptions}
+            options={formData.term ? [] : selectOptions}
             getOptionLabel={(option) =>
-              `${moment(option.visitDateTime, "YYYY-MM-DDTHH:mm:ss.SSS").format(
-                "d MMMM YYYY, h:mma"
+              `${moment(option.visitDateTime).format(
+                "DD MMMM,  hh:mm"
               )} (${option.dayOfWeek})`
             }
             displayCondition={
@@ -137,7 +135,6 @@ export default function ReserveVisitForm({
               CONFIRM VISIT
             </Button>
           )}
-        </form>
       </Box>
     </>
   );
