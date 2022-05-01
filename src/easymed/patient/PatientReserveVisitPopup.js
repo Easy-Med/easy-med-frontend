@@ -9,7 +9,7 @@ import ChooseReserveVisitOption from './reserve-visit-components/ChooseReserveVi
 const specializationList = ['Orthopedic', 'Kardiologist','Radiologist'] 
 const doctorsList = ['Maciej Bulwa', 'Adrian Kunsz','Barbara Telejko'] 
 
-function PatientReserveVisitPopup({ openDialog, setOpenDialog, ...props }) {
+function PatientReserveVisitPopup({ openDialog, setOpenDialog, setShowSuccessAlert,  ...props }) {
     const [selectedDate, setSelectedDate] = React.useState(null);
     const [reservationOption, setReservationOption] = React.useState("default");
     const [selectedSpecialization, setSelectedSpecialization] = React.useState('');
@@ -27,6 +27,8 @@ function PatientReserveVisitPopup({ openDialog, setOpenDialog, ...props }) {
     };
 
     const handleSubmitVisit = () => {
+      setShowSuccessAlert(true);
+      console.log("HELOOOOOO");
       handleClose();
     }
   
