@@ -73,7 +73,7 @@ function PatientReserveVisitPopup({
   const formDataHandlers = {
     date: (newValue) => {
       setFormData({ ...formData, date: newValue});
-      setTimeout(() => {reserveVisitMutation.mutate();}, 1000);
+      reserveVisitMutation.mutate();
     },
     specialization: (newValue) => {
       setFormData({ ...formData, specialization: newValue });
