@@ -9,7 +9,7 @@ import SignUp from "./app/auth/signUp/SignUp";
 import SignInAsDoctor from "./app/auth/signIn/SignInAsDoctor";
 import SignInAsPatient from "./app/auth/signIn/SignInAsPatient";
 import DoctorReservedVisits from "./easymed/doctor/DoctorReservedVisits";
-import DoctorBookingCalendar from "./easymed/doctor/DoctorBookingCalendar";
+import DoctorBookingCalendar from "./easymed/doctor/bookingCalendar/DoctorBookingCalendar";
 import DoctorPrescriptions from "./easymed/doctor/DoctorPrescriptions";
 import DoctorReviews from "./easymed/doctor/DoctorReviews";
 import DoctorSettings from "./easymed/doctor/settings/DoctorSettings";
