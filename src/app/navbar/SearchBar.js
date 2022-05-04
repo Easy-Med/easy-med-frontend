@@ -12,12 +12,8 @@ const Search = styled("div")(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.black, 0.1),
   },
   transition: "background-color 0.25s",
-  marginRight: theme.spacing(1),
-  marginLeft: theme.spacing(1),
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
     width: "auto",
     maxWidth: "none",
   },

@@ -14,7 +14,7 @@ import DoctorPrescriptions from "./easymed/doctor/DoctorPrescriptions";
 import DoctorReviews from "./easymed/doctor/DoctorReviews";
 import DoctorSettings from "./easymed/doctor/settings/DoctorSettings";
 import Navbar from "./app/navbar/Navbar";
-import PatientReservedVisits from "./easymed/patient/PatientReservedVisits";
+import PatientReservedVisits from "./easymed/patient/reservedVisits/PatientReservedVisits";
 import PatientPrescriptions from "./easymed/patient/PatientPrescriptions";
 import PatientReviews from "./easymed/patient/PatientReviews";
 import PatientSettings from "./easymed/patient/settings/PatientSettings";

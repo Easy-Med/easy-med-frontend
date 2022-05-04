@@ -150,7 +150,7 @@ const Navbar = () => {
               {role ? capitalize(role) : ""}
             </Typography>
           </LogoBox>
-          <SearchBar />
+          <SearchBar sx={{mx: {xs: 1, sm: 2}}} />
           <Box sx={{ flex: 1 }} />
           <IconButton sx={{ display: { xs: "none", sm: "inherit" } }}>
             <NotificationsIcon />
