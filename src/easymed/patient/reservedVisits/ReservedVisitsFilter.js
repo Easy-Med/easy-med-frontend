@@ -30,6 +30,7 @@ const ReservedVisitsFilter = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
+        width: {md: '200px', xs: 'auto'},
         px: 3,
         py: 2,
       }}

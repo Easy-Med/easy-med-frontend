@@ -14,11 +14,12 @@ const ReservedVisitCard = () => {
   return (
     <Paper
       sx={{
-        p: 1,
+        p: 2,
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
       }}
+      elevation={2}
     >
       <Typography variant={"h5"}>
         Reserved visit nr. <strong>19874</strong>
