@@ -4,6 +4,9 @@ import "./bookingCalendarStyles.scss";
 import Box from "@mui/material/Box";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@mui/material";
+import { useQuery } from "react-query";
+import BookingCalendarService from "../../../app/api/BookingCalendarService";
+import useAuth from "../../../app/auth/UseAuth";
 
 const initEvents = [
   {
@@ -85,20 +88,35 @@ const initEvents = [
 const localizer = momentLocalizer(moment);
 
 const DoctorBookingCalendar = () => {
-  const [fetchedEvents, setFetchedEvents] = useState([]);
-  const [eventsToSave, setEventsToSave] = useState([]);
-  const [displayedEvents, setDisplayedEvents] = useState([]);
+  const [fetchedAvailability, setFetchedAvailability] = useState([]);
+  const [availabilityToSave, setAvailabilityToSave] = useState([]);
+  const [displayedAvailability, setDisplayedAvailability] = useState([]);
+  const auth = useAuth();
+  const id = auth.authData.id;
+
+  const availabilityQuery = useQuery(
+    "bookingCalendarAvailability",
+    () => BookingCalendarService.getAvailabilityForDoctor(id),
+    {
+      onSuccess: (data) => {
+        setFetchedAvailability(data);
+      },
+    }
+  );
 
   const handleSelectSlot = useCallback(
     ({ start, end }) => {
-      setEventsToSave((prev) => [...prev, { start, end, title: "Available" }]);
+      setAvailabilityToSave((prev) => [
+        ...prev,
+        { start, end, title: "Available" },
+      ]);
     },
-    [setEventsToSave]
+    [setAvailabilityToSave]
   );
 
   useEffect(() => {
-    setDisplayedEvents([...fetchedEvents, ...eventsToSave]);
-  }, [fetchedEvents, eventsToSave]);
+    setDisplayedAvailability([...fetchedAvailability, ...availabilityToSave]);
+  }, [fetchedAvailability, availabilityToSave]);
 
   const handleSelectEvent = useCallback(
     (event) => window.alert(event.title),
@@ -118,7 +136,7 @@ const DoctorBookingCalendar = () => {
   };
 
   const removeEventsToSave = () => {
-    setEventsToSave([]);
+    setAvailabilityToSave([]);
   };
 
   return (
@@ -127,14 +145,14 @@ const DoctorBookingCalendar = () => {
         dayLayoutAlgorithm={"no-overlap"}
         defaultDate={defaultDate}
         defaultView={Views.WEEK}
-        events={displayedEvents}
+        events={displayedAvailability}
         localizer={localizer}
         onSelectEvent={handleSelectEvent}
         onSelectSlot={handleSelectSlot}
         selectable
         scrollToTime={scrollToTime}
       />
-      {eventsToSave.length > 0 && (
+      {availabilityToSave.length > 0 && (
         <div>
           <Button
             variant={"contained"}
