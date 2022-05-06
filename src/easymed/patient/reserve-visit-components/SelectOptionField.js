@@ -13,6 +13,7 @@ export default function SelectOptionField({
   getOptionLabel,
   isOptionEqualToValue,
   displayCondition,
+  handleDoctorFreeDays
 }) {
   
   return (
@@ -26,6 +27,7 @@ export default function SelectOptionField({
             onChange={valueChanger}
             disablePast
             disabled={!displayCondition}
+            shouldDisableDate={handleDoctorFreeDays}
           />
         </LocalizationProvider>
       ) : (
