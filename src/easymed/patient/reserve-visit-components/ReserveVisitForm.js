@@ -12,6 +12,13 @@ export default function ReserveVisitForm({
   selectOptions,
   loading,
 }) {
+
+  const handleDoctorFreeDays = (date) => {
+    const convertedDate = moment(date).format('YYYY-MM-DD');
+    
+    return selectOptions.find(element => element.day === convertedDate) ? false : true;
+  }
+
   if (loading) {
     return (
       <Box
@@ -105,6 +112,7 @@ export default function ReserveVisitForm({
                 displayCondition={
                   !formData.date && formData.specialization && formData.doctor
                 }
+                handleDoctorFreeDays={formData.doctor ? handleDoctorFreeDays : null}
               />
             </>
           )}

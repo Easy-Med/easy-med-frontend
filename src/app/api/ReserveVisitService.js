@@ -37,7 +37,7 @@ export default class ReserveVisitService {
   static getDoctorFreeDates(id, options) {
     return request(
       {
-        url: `/api/doctor/`,
+        url: `/api/doctor/dayswithfreeterm?doctorId=${id}`,
         method: "GET",
       },
       options
