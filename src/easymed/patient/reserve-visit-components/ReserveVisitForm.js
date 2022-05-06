@@ -12,12 +12,26 @@ export default function ReserveVisitForm({
   selectOptions,
   loading,
 }) {
-
   const handleDoctorFreeDays = (date) => {
-    const convertedDate = moment(date).format('YYYY-MM-DD');
-    
-    return selectOptions.find(element => element.day === convertedDate) ? false : true;
-  }
+    const convertedDate = moment(date).format("YYYY-MM-DD");
+
+    return selectOptions.find((element) => element.day === convertedDate)
+      ? false
+      : true;
+  };
+
+  const disableTodayAndDatesAfterMonth = (date) => {
+    const today = new Date();
+    const lastDateToChoose = new Date();
+    lastDateToChoose.setDate(lastDateToChoose.getDate() + 30);
+
+
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    ) || date > lastDateToChoose;
+  };
 
   if (loading) {
     return (
@@ -51,98 +65,97 @@ export default function ReserveVisitForm({
           gap: 5,
         }}
       >
-          {option === "date" ? (
-            <>
-              <SelectOptionField
-                type="date"
-                label="Select date"
-                value={formData.date}
-                valueChanger={formDataHandlers.date}
-                displayCondition={!formData.date}
-              />
-              <SelectOptionField
-                type="specialization"
-                label="Select specialization"
-                value={formData.specialization}
-                valueChanger={formDataHandlers.specialization}
-                options={formData.specialization ? [] : selectOptions}
-                displayCondition={!formData.specialization && formData.date}
-              />
-              <SelectOptionField
-                type="doctor"
-                label="Select doctor"
-                value={formData.doctor}
-                valueChanger={formDataHandlers.doctor}
-                options={formData.doctor ? [] : selectOptions}
-                getOptionLabel={(option) =>
-                  `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
-                }
-                displayCondition={
-                  !formData.doctor && formData.specialization && formData.date
-                }
-              />
-            </>
-          ) : (
-            <>
-              <SelectOptionField
-                type="specialization"
-                label="Select specialization"
-                value={formData.specialization}
-                valueChanger={formDataHandlers.specialization}
-                options={formData.specialization ? [] : selectOptions}
-                getOptionLabel={(option) => option.toString()}
-                displayCondition={!formData.specialization}
-              />
-              <SelectOptionField
-                type="doctor"
-                label="Select doctor"
-                value={formData.doctor}
-                valueChanger={formDataHandlers.doctor}
-                options={formData.doctor ? [] : selectOptions}
-                getOptionLabel={(option) =>
-                  `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
-                }
-                displayCondition={!formData.doctor && formData.specialization}
-              />
-              <SelectOptionField
-                type="date"
-                label="Select date"
-                value={formData.date}
-                valueChanger={formDataHandlers.date}
-                displayCondition={
-                  !formData.date && formData.specialization && formData.doctor
-                }
-                handleDoctorFreeDays={formData.doctor ? handleDoctorFreeDays : null}
-              />
-            </>
-          )}
+        {option === "date" ? (
+          <>
+            <SelectOptionField
+              type="date"
+              label="Select date"
+              value={formData.date}
+              valueChanger={formDataHandlers.date}
+              displayCondition={!formData.date}
+              disableDateFunc={disableTodayAndDatesAfterMonth}
+            />
+            <SelectOptionField
+              type="specialization"
+              label="Select specialization"
+              value={formData.specialization}
+              valueChanger={formDataHandlers.specialization}
+              options={formData.specialization ? [] : selectOptions}
+              displayCondition={!formData.specialization && formData.date}
+            />
+            <SelectOptionField
+              type="doctor"
+              label="Select doctor"
+              value={formData.doctor}
+              valueChanger={formDataHandlers.doctor}
+              options={formData.doctor ? [] : selectOptions}
+              getOptionLabel={(option) =>
+                `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
+              }
+              displayCondition={
+                !formData.doctor && formData.specialization && formData.date
+              }
+            />
+          </>
+        ) : (
+          <>
+            <SelectOptionField
+              type="specialization"
+              label="Select specialization"
+              value={formData.specialization}
+              valueChanger={formDataHandlers.specialization}
+              options={formData.specialization ? [] : selectOptions}
+              getOptionLabel={(option) => option.toString()}
+              displayCondition={!formData.specialization}
+            />
+            <SelectOptionField
+              type="doctor"
+              label="Select doctor"
+              value={formData.doctor}
+              valueChanger={formDataHandlers.doctor}
+              options={formData.doctor ? [] : selectOptions}
+              getOptionLabel={(option) =>
+                `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
+              }
+              displayCondition={!formData.doctor && formData.specialization}
+            />
+            <SelectOptionField
+              type="date"
+              label="Select date"
+              value={formData.date}
+              valueChanger={formDataHandlers.date}
+              displayCondition={
+                !formData.date && formData.specialization && formData.doctor
+              }
+              disableDateFunc={handleDoctorFreeDays}
+            />
+          </>
+        )}
 
-          <SelectOptionField
-            type="term"
-            label="Select term"
-            value={formData.term}
-            valueChanger={formDataHandlers.term}
-            options={formData.term ? [] : selectOptions}
-            getOptionLabel={(option) =>
-              `${moment(option.visitDateTime).format(
-                "DD MMMM,  hh:mm"
-              )} (${option.dayOfWeek})`
-            }
-            displayCondition={
-              option === "date" ? formData.doctor : formData.date
-            }
-          />
+        <SelectOptionField
+          type="term"
+          label="Select term"
+          value={formData.term}
+          valueChanger={formDataHandlers.term}
+          options={formData.term ? [] : selectOptions}
+          getOptionLabel={(option) =>
+            `${moment(option.visitDateTime).format("DD MMMM,  hh:mm")} (${
+              option.dayOfWeek
+            })`
+          }
+          displayCondition={option === "date" ? formData.doctor : formData.date}
+        />
 
-          {isAllDataComplete && (
-            <Button
-              variant="contained"
-              type="submit"
-              color={"primary"}
-              onClick={handleSubmitVisit}
-            >
-              CONFIRM VISIT
-            </Button>
-          )}
+        {isAllDataComplete && (
+          <Button
+            variant="contained"
+            type="submit"
+            color={"primary"}
+            onClick={handleSubmitVisit}
+          >
+            CONFIRM VISIT
+          </Button>
+        )}
       </Box>
     </>
   );

@@ -94,7 +94,7 @@ function PatientReserveVisitPopup({
 
   const handleResponseData = (response) => {
     const { data } = response;
-    console.log(data);
+    //console.log(data);
     setData(data);
   };
 
