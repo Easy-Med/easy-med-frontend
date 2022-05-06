@@ -3,7 +3,6 @@ import {
   Typography,
   Card,
   Button,
-  CardHeader,
   CardContent,
   CardActions,
 } from "@mui/material";
@@ -15,19 +14,26 @@ const PatientReservedVisits = () => {
   const [openCancelConfirmDialog, setOpenCancelConfirmDialog] =
     React.useState(false);
 
+
+   // WYPEŁNIĆ DLA SUKCESU I DLA BŁĘDU JAK TAM POTRZEBA  
   const handleVisitCanceledSuccessfully = () => {};
 
   const handleVisitCanceledError = () => {};
 
   const cancelVisitMutation = useMutation(
     () => {
-      ReserveVisitService.deleteVisit();
+      // first param: visitId, then options
+      ReserveVisitService.deleteVisit(null, null);
     },
     {
       onSuccess: handleVisitCanceledSuccessfully,
       onError: handleVisitCanceledError,
     }
   );
+
+  const handleSubmitDeleteVisit = () => {
+    cancelVisitMutation.mutate();
+  }
 
   const handleCancelationDialog = () => {
     setOpenCancelConfirmDialog((prevState) => !prevState);
@@ -37,7 +43,7 @@ const PatientReservedVisits = () => {
     <div>
       <Dialog
         open={openCancelConfirmDialog}
-        onClose={() => setOpenCancelConfirmDialog(false)}
+        onClose={handleCancelationDialog}
         fullWidth
         maxWidth="md"
         sx={{
@@ -67,7 +73,7 @@ const PatientReservedVisits = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="error">
+            <Button size="small" color="error" onClick={handleSubmitDeleteVisit}>
               CANCEL VISIT
             </Button>
             <Button
