@@ -35,7 +35,7 @@ const PatientPrescriptions = () => {
     <Box sx={{ m: 2, flex: 1 }}>
       <Box display={"flex"} gap={2} flexWrap={"wrap"} sx={{ mb: 2 }}>
         {prescriptionsQuery.data.length === 0 ? (
-          <Typography sx={{color: 'text.secondary'}} variant={"h4"}>
+          <Typography sx={{ color: "text.secondary" }} variant={"h4"}>
             No prescriptions available
           </Typography>
         ) : (

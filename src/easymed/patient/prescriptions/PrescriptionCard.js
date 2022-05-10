@@ -2,7 +2,13 @@ import React from "react";
 import { Paper, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 
-const PrescriptionCard = ({ sx = [], isForPatient, personOnPx, dateOfIssue, listOfMedicines }) => {
+const PrescriptionCard = ({
+  sx = [],
+  isForPatient,
+  personOnPx,
+  dateOfIssue,
+  listOfMedicines,
+}) => {
   return (
     <Paper
       sx={[
@@ -27,7 +33,9 @@ const PrescriptionCard = ({ sx = [], isForPatient, personOnPx, dateOfIssue, list
           <Typography fontWeight={"bold"}>{dateOfIssue}</Typography>
         </Box>
       </Box>
-      <Typography sx={{ color: "text.secondary" }}>{isForPatient ? 'Issuing doctor' : 'Assigned to patient'}</Typography>
+      <Typography sx={{ color: "text.secondary" }}>
+        {isForPatient ? "Issuing doctor" : "Assigned to patient"}
+      </Typography>
       <Typography fontWeight={"bold"}>{personOnPx}</Typography>
       <Typography sx={{ color: "text.secondary", mt: 2 }}>
         List of medicines:
