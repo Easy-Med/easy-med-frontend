@@ -1,0 +1,6 @@
+$primary: #009B9B;
+$secondary: #BA5252;
+
+@use 'react-big-calendar/lib/sass/styles' with (
+  $event-bg: $primary
+);
