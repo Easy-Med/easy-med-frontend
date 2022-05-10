@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import { useTheme } from "@emotion/react";
 
 const initFormData = {
   patient: null,
@@ -28,6 +29,7 @@ const IssuePrescriptionForm = ({ sx = [] }) => {
   const [patientInputValue, setPatientInputValue] = useState("");
   const [loadingPatients, setLoadingPatients] = useState(false);
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
 
   const handleMedicineChange = (e) => {
     setMedicine({ ...medicine, [e.target.name]: e.target.value });
@@ -141,7 +143,7 @@ const IssuePrescriptionForm = ({ sx = [] }) => {
         </Box>
       </Box>
       <Box
-        bgcolor={"grey.200"}
+        bgcolor={theme.palette.mode === "light" ? "grey.200" : "grey.800"}
         p={2}
         display={"flex"}
         justifyContent={"flex-end"}
