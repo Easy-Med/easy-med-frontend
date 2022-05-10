@@ -14,6 +14,16 @@ const PatientReservedVisits = () => {
 
   const onDateSortChange = (e) => {
     setDateSortValue(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const applyFilters = (filterOptions) => {
+    console.log("Filter reserved visits!");
+    console.log(filterOptions);
+  };
+
+  const resetFilters = (e) => {
+    console.log("Remove filters");
   };
 
   return (
@@ -23,7 +33,10 @@ const PatientReservedVisits = () => {
         flexDirection={matchesMobile ? "column" : "row"}
         gap={2}
       >
-        <ReservedVisitsFilter />
+        <ReservedVisitsFilter
+          applyFilters={applyFilters}
+          resetFilters={resetFilters}
+        />
         <Box
           display={"flex"}
           flexDirection={"column"}
