@@ -14,6 +14,7 @@ const PrescriptionCard = ({
       sx={[
         {
           p: 2,
+          width: { xs: "100%", sm: "250px" },
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

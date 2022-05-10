@@ -20,11 +20,6 @@ const initMedicine = {
   capacity: "",
 };
 
-const optionss = [
-  { name: "Patryk Grzechuta", id: 2 },
-  { name: "Marek Dąb", id: 3 },
-];
-
 const options = [];
 
 const IssuePrescriptionForm = ({ sx = [] }) => {

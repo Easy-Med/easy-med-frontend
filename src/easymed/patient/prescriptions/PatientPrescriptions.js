@@ -1,15 +1,12 @@
 import React from "react";
-import PrescriptionCard from "./PrescriptionCard";
+import PrescriptionCard from "../../generic/prescriptions/PrescriptionCard";
 import Box from "@mui/material/Box";
-import { useTheme } from "@emotion/react";
-import { Skeleton, Typography, useMediaQuery } from "@mui/material";
+import { Skeleton, Typography } from "@mui/material";
 import { useQuery } from "react-query";
 import useAuth from "../../../app/auth/UseAuth";
 import PrescriptionsService from "../../../app/api/PrescriptionsService";
 
 const PatientPrescriptions = () => {
-  const theme = useTheme();
-  const matchesMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const auth = useAuth();
   const { role, id } = auth.authData;
 
@@ -41,7 +38,6 @@ const PatientPrescriptions = () => {
         ) : (
           prescriptionsQuery.data.map((prescription) => (
             <PrescriptionCard
-              sx={matchesMobile ? { width: "100%" } : { maxWidth: "250px" }}
               isForPatient
               dateOfIssue={prescription.dateOfIssue}
               personOnPx={prescription.personOnPx}
