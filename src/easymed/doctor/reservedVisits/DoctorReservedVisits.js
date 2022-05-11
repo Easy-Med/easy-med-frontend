@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Box from "@mui/material/Box";
+import {useTheme} from "@emotion/react";
+import {useMediaQuery} from "@mui/material";
 import ReservedVisitsFilter from "../../generic/reservedVisits/ReservedVisitsFilter";
 import SearchBar from "../../../app/navbar/SearchBar";
-import ReservedVisitPatientCard from "./ReservedVisitPatientCard";
-import { useTheme } from "@emotion/react";
-import { useMediaQuery } from "@mui/material";
 import DateSort from "../../generic/reservedVisits/DateSort";
+import ReservedVisitDoctorCard from "./ReservedVisitDoctorCard";
 
-const PatientReservedVisits = () => {
-  const theme = useTheme();
+const DoctorReservedVisits = () => {
+  const theme = useTheme()
   const matchesMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [dateSortValue, setDateSortValue] = useState("");
 
@@ -22,7 +22,7 @@ const PatientReservedVisits = () => {
     console.log(filterOptions);
   };
 
-  const resetFilters = (e) => {
+  const resetFilters = () => {
     console.log("Remove filters");
   };
 
@@ -50,13 +50,13 @@ const PatientReservedVisits = () => {
             onChange={onDateSortChange}
           />
           <Box display={"flex"} flexDirection={"column"} width={"100%"} gap={2}>
-            <ReservedVisitPatientCard />
-            <ReservedVisitPatientCard />
+            <ReservedVisitDoctorCard completed={"no"} />
+            <ReservedVisitDoctorCard completed={"yes"} />
           </Box>
         </Box>
       </Box>
     </Box>
-  );
+  )
 };
 
-export default PatientReservedVisits;
+export default DoctorReservedVisits;
