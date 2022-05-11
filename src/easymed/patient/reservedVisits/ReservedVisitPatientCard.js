@@ -9,7 +9,7 @@ const Item = styled("div")(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
-const ReservedVisitCard = () => {
+const ReservedVisitPatientCard = () => {
   return (
     <Paper
       sx={{
@@ -24,38 +24,38 @@ const ReservedVisitCard = () => {
         Reserved visit nr. <strong>19874</strong>
       </Typography>
       <Grid container>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Item>Date:</Item>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Item>
             03.04.2022 <strong>15:10</strong>
           </Item>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Item>Location:</Item>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Item>
             ul. <strong>Generala Bema 15</strong>
             <br />
             15-458 <strong>Bialystok</strong>
           </Item>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Item>Doctor:</Item>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Item>
             <strong>Dr. </strong>Kondrad <strong>Zabrzecki</strong>
             <br />
             Chirurg
           </Item>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Item>Completed:</Item>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Item>
             <strong>No</strong>
           </Item>
@@ -73,4 +73,4 @@ const ReservedVisitCard = () => {
   );
 };
 
-export default ReservedVisitCard;
+export default ReservedVisitPatientCard;
