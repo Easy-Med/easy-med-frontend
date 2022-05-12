@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Box, ListItem } from "@mui/material";
+import { Avatar, Box, Button, ListItem, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -13,12 +13,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SearchBar from "./SearchBar";
-import {Outlet, useNavigate} from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { capitalize } from "../utils/stringUtils";
-import PropTypes from "prop-types";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import DoctorMenuItems from "./DoctorMenuItems";
 import PatientMenuItems from "./PatientMenuItems";
+import useAuth from "../auth/UseAuth";
 
 const drawerWidth = 240;
 
@@ -94,18 +94,14 @@ const LogoBox = styled("div", {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  cursor: 'pointer',
+  cursor: "pointer",
   width: drawerWidth,
   transition: theme.transitions.create(["width", "opacity"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  '&:hover': {
-    opacity: 0.8
-  },
-  [theme.breakpoints.down("sm")]: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
+  "&:hover": {
+    opacity: 0.8,
   },
   ...(open && {
     transition: theme.transitions.create(["width", "opacity"], {
@@ -116,19 +112,28 @@ const LogoBox = styled("div", {
   ...(!open && {
     width: "150px",
   }),
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    width: "auto",
+  },
 }));
 
-const Navbar = ({ role, ...props }) => {
+const Navbar = () => {
   const theme = useTheme();
-  const navigate = useNavigate()
-  const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
+  const auth = useAuth();
+  const role = auth.authData.role;
+  const name = `${auth.authData.firstName} ${auth.authData.lastName}`;
+  const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawer = () => {
     setOpen((prevState) => !prevState);
   };
 
   return (
-    <Box sx={{ display: "flex", height: {xs: 'auto', md: '100vh'} }}>
+    <Box sx={{ display: "flex", height: { xs: "auto", md: "100vh" } }}>
       <AppBar position="fixed" open={open} color={"default"}>
         <Toolbar disableGutters={true}>
           <LogoBox open={open} onClick={() => navigate(`/${role}`)}>
@@ -145,15 +150,36 @@ const Navbar = ({ role, ...props }) => {
               {role ? capitalize(role) : ""}
             </Typography>
           </LogoBox>
-          <SearchBar />
+          <SearchBar sx={{mx: {xs: 1, sm: 2}}} />
           <Box sx={{ flex: 1 }} />
-          <IconButton>
+          <IconButton sx={{ display: { xs: "none", sm: "inherit" } }}>
             <NotificationsIcon />
           </IconButton>
-          <Avatar sx={{ mx: 2, display: { xs: "none", sm: "inherit" } }}>
+          <Avatar
+            sx={{
+              mx: { xs: 1, sm: 2 },
+              display: { xs: "none", sm: "inherit" },
+            }}
+          >
             A
           </Avatar>
-          <Typography sx={{ mr: { xs: 2, sm: 5 } }}>Adrian Kunsz</Typography>
+          <Typography
+            sx={{
+              mx: 1,
+              flexShrink: 0,
+              display: { xs: "none", sm: "inherit" },
+            }}
+          >
+            {name}
+          </Typography>
+          <Button
+            variant={"outlined"}
+            size={matchesDesktop ? "medium" : "small"}
+            sx={{ mx: 2, flexShrink: "0" }}
+            onClick={auth.signOut}
+          >
+            Sign out
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -189,16 +215,15 @@ const Navbar = ({ role, ...props }) => {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box
+        component="main"
+        sx={{ display: "flex", flexDirection: "column", flex: 1 }}
+      >
         <DrawerHeader />
-        <Outlet  />
+        <Outlet />
       </Box>
     </Box>
   );
-};
-
-Navbar.propTypes = {
-  role: PropTypes.string.isRequired,
 };
 
 export default Navbar;
