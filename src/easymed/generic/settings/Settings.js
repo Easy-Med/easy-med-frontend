@@ -24,7 +24,6 @@ const Settings = ({ children }) => {
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const auth = useAuth();
-  const doctorId = auth.authData.id;
   const role = auth.authData.role;
   const queryClient = useQueryClient();
 
@@ -44,7 +43,7 @@ const Settings = ({ children }) => {
 
   const query = useQuery(
     `${role}Settings`,
-    () => SettingsService.getAccountDataFor(role, doctorId),
+    () => SettingsService.getAccountDataFor(role),
     {
       onSuccess: (data) => {
         setFormData({ ...formData, ...replaceNull(data, "") });
@@ -52,7 +51,7 @@ const Settings = ({ children }) => {
     }
   );
   const mutation = useMutation(
-    () => SettingsService.updateAccountDataFor(role, doctorId, formData),
+    () => SettingsService.updateAccountDataFor(role, formData),
     {
       onSuccess: () => {
         showSnackbar("success", "Account data updated successfully");

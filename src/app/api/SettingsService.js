@@ -1,17 +1,17 @@
 import request from "./request";
 
 export default class SettingsService {
-  static getAccountDataFor(role, id) {
+  static getAccountDataFor(role) {
     return request({
-      url: `/api/${role}/${id}/details`,
+      url: `/api/${role}/details`,
       method: "GET",
     });
   }
 
-  static updateAccountDataFor(role, id, formData, options) {
+  static updateAccountDataFor(role, formData, options) {
     return request(
       {
-        url: `/api/${role}/${id}`,
+        url: `/api/${role}`,
         method: "PATCH",
         data: formData,
       },
