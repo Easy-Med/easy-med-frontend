@@ -7,15 +7,13 @@ import {
   CardActions,
 } from "@mui/material";
 import React from "react";
+import { useState } from "react";
 import { useMutation } from "react-query";
-import ReserveVisitService from "../../app/api/ReserveVisitService";
+import ReserveVisitService from "../../../app/api/ReserveVisitService";
 
-const PatientReservedVisits = () => {
-  const [openCancelConfirmDialog, setOpenCancelConfirmDialog] =
-    React.useState(false);
+const PatientDeleteReservedVisitPopup = () => {
+  const [openCancelConfirmDialog, setOpenCancelConfirmDialog] = useState(false);
 
-
-   // WYPEŁNIĆ DLA SUKCESU I DLA BŁĘDU JAK TAM POTRZEBA  
   const handleVisitCanceledSuccessfully = () => {};
 
   const handleVisitCanceledError = () => {};
@@ -33,14 +31,13 @@ const PatientReservedVisits = () => {
 
   const handleSubmitDeleteVisit = () => {
     cancelVisitMutation.mutate();
-  }
+  };
 
   const handleCancelationDialog = () => {
     setOpenCancelConfirmDialog((prevState) => !prevState);
   };
 
   return (
-    <div>
       <Dialog
         open={openCancelConfirmDialog}
         onClose={handleCancelationDialog}
@@ -73,7 +70,11 @@ const PatientReservedVisits = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="error" onClick={handleSubmitDeleteVisit}>
+            <Button
+              size="small"
+              color="error"
+              onClick={handleSubmitDeleteVisit}
+            >
               CANCEL VISIT
             </Button>
             <Button
@@ -86,16 +87,7 @@ const PatientReservedVisits = () => {
           </CardActions>
         </Card>
       </Dialog>
-      <Typography variant={"h5"}>Patient reserved visits</Typography>
-      <Button
-        variant="contained"
-        color="error"
-        onClick={handleCancelationDialog}
-      >
-        CANCEL VISIT
-      </Button>
-    </div>
   );
 };
 
-export default PatientReservedVisits;
+export default PatientDeleteReservedVisitPopup;
