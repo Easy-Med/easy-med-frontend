@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Box, Button, ListItem, useMediaQuery, Snackbar, Slide, Alert  } from "@mui/material";
+import { Avatar, Box, Button, ListItem, useMediaQuery  } from "@mui/material";
 import * as React from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -19,7 +20,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import DoctorMenuItems from "./DoctorMenuItems";
 import PatientMenuItems from "./PatientMenuItems";
 import useAuth from "../auth/UseAuth";
-import PatientReserveVisitPopup from "../../easymed/patient/PatientReserveVisitPopup";
 
 const drawerWidth = 240;
 
@@ -120,10 +120,6 @@ const LogoBox = styled("div", {
   },
 }));
 
-const SnackbarAlert = React.forwardRef(function SnackbarAlert(props, ref) {
-    return <Alert elevation={6} ref={ref} {...props} />
-});
-
 const Navbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -131,23 +127,10 @@ const Navbar = () => {
   const role = auth.authData.role;
   const name = `${auth.authData.firstName} ${auth.authData.lastName}`;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
-  const [open, setOpen] = React.useState(true);
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleDrawer = () => {
     setOpen((prevState) => !prevState);
-  };
-
-  function alertTransition(rest) {
-    return <Slide {...rest} direction="left" />;
-  }
-
-  const handleCloseSuccessAlert = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setShowSuccessAlert(false);
   };
 
   return (
@@ -207,7 +190,7 @@ const Navbar = () => {
           {
             doctor: <DoctorMenuItems open={open} />,
             patient: (
-              <PatientMenuItems open={open} setOpenDialog={setOpenDialog} />
+              <PatientMenuItems open={open} />
             ),
           }[role.toLowerCase()]
         }
@@ -240,28 +223,6 @@ const Navbar = () => {
         sx={{ display: "flex", flexDirection: "column", flex: 1 }}
       >
         <DrawerHeader />
-        <PatientReserveVisitPopup
-          openDialog={openDialog}
-          setOpenDialog={setOpenDialog}
-          setShowSuccessAlert={setShowSuccessAlert}
-        />
-        <Snackbar
-          open={showSuccessAlert}
-          onClose={handleCloseSuccessAlert}
-          TransitionComponent={alertTransition}
-          autoHideDuration={3000}
-          message=""
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        >
-          <SnackbarAlert
-            onClose={handleCloseSuccessAlert}
-            severity="success"
-            color={"primary"}
-            variant="filled"
-          >
-            Visit reserved succesfully!
-          </SnackbarAlert>
-        </Snackbar>
         <Outlet />
       </Box>
     </Box>

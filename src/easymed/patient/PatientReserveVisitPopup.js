@@ -1,8 +1,9 @@
 import * as React from "react";
+import { useState } from "react";
 import { Box, Dialog } from "@mui/material";
-import ReserveVisitTitle from "./reserve-visit-components/ReserveVisitTitle";
-import ChooseReserveVisitOption from "./reserve-visit-components/ChooseReserveVisitOption";
-import ReserveVisitForm from "./reserve-visit-components/ReserveVisitForm";
+import ReserveVisitTitle from "./reserveNewVisit/ReserveVisitTitle";
+import ChooseReserveVisitOption from "./reserveNewVisit/ChooseReserveVisitOption";
+import ReserveVisitForm from "./reserveNewVisit/ReserveVisitForm";
 import ReserveVisitService from "../../app/api/ReserveVisitService";
 import { useMutation } from "react-query";
 import useAuth from "../../app/auth/UseAuth";
@@ -20,9 +21,9 @@ function PatientReserveVisitPopup({
   setShowSuccessAlert,
   ...props
 }) {
-  const [reservationOption, setReservationOption] = React.useState("default");
-  const [formData, setFormData] = React.useState(initialState);
-  const [data, setData] = React.useState([]);
+  const [reservationOption, setReservationOption] = useState("default");
+  const [formData, setFormData] = useState(initialState);
+  const [data, setData] = useState([]);
   const auth = useAuth();
 
   const isAllDataComplete =
@@ -94,7 +95,6 @@ function PatientReserveVisitPopup({
 
   const handleResponseData = (response) => {
     const { data } = response;
-    //console.log(data);
     setData(data);
   };
 
@@ -137,8 +137,7 @@ function PatientReserveVisitPopup({
           sx={{
             width: "100%",
             height: "100%",
-            mt: 2,
-            mb: 2,
+            my: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
