@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useState } from "react";
 import { Box, Dialog } from "@mui/material";
-import ReserveVisitTitle from "./reserveNewVisit/ReserveVisitTitle";
-import ChooseReserveVisitOption from "./reserveNewVisit/ChooseReserveVisitOption";
-import ReserveVisitForm from "./reserveNewVisit/ReserveVisitForm";
-import ReserveVisitService from "../../app/api/ReserveVisitService";
+import ReserveVisitTitle from "./ReserveVisitTitle";
+import ChooseReserveVisitOption from "./ChooseReserveVisitOption";
+import ReserveVisitForm from "./ReserveVisitForm";
+import ReserveVisitService from "../../../app/api/ReserveVisitService";
 import { useMutation } from "react-query";
-import useAuth from "../../app/auth/UseAuth";
+import useAuth from "../../../app/auth/UseAuth";
 
 const initialState = {
   date: null,
