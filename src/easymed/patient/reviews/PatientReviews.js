@@ -11,13 +11,21 @@ import ReviewMapper from "./ReviewMapper";
 
 const postReviewInfos = [
   {
-    doctorName: "",
-    doctorSpecialization: "Alergolog",
+    doctor: {
+      id: 1,
+      firstName: 'Gabriela',
+      lastName: 'Konopka',
+      medicalSpecialization: 'Alergolog'
+    },
     dateOfVisit: "04.03.2022",
   },
   {
-    doctorName: "",
-    doctorSpecialization: "Alergolog",
+    doctor: {
+      id: 2,
+      firstName: 'Gabriela',
+      lastName: 'Konopka',
+      medicalSpecialization: 'Alergolog'
+    },
     dateOfVisit: "04.03.2022",
   },
 ];
@@ -53,9 +61,9 @@ const PatientReviews = () => {
       <Typography variant={"h5"} color={"info"}>
         Post Review
       </Typography>
-      <Box sx={{ mt: 1, mb: 3 }}>
+      <Box sx={{ mt: 1, mb: 3, display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
         {postReviewInfos.map((info, idx) => (
-          <PostReviewCard key={idx} postReviewInfo={info} />
+          <PostReviewCard key={idx} postReviewInfo={info} sx={{width: '100%'}} />
         ))}
       </Box>
       <Typography variant={"h5"} color={"info"}>
