@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { Paper, Rating, Typography, useMediaQuery } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useTheme } from "@emotion/react";
+import moment from "moment";
 
 const ReviewCard = ({ review, sx = [] }) => {
   const theme = useTheme();
@@ -23,16 +24,16 @@ const ReviewCard = ({ review, sx = [] }) => {
     >
       <Box display={"flex"} flexDirection={"column"} p={2} mr={2}>
         <Typography variant={"h6"} mb={4}>
-          {review.name} <strong>{review.surname}</strong>
+          {review.firstName} <strong>{review.lastName}</strong>
         </Typography>
         <Rating
           sx={{ ml: -0.5, mb: 0.5 }}
-          defaultValue={review.stars}
+          defaultValue={review.rating}
           precision={0.5}
           readOnly
         />
         <Typography variant={"body2"} color={"info"}>
-          {review.date}
+          {moment(review.createdAt).fromNow()}
         </Typography>
       </Box>
       <Divider
@@ -40,7 +41,7 @@ const ReviewCard = ({ review, sx = [] }) => {
         flexItem
       />
       <Typography width={"100%"} p={2} textAlign={"center"}>
-        {review.content}
+        {review.description}
       </Typography>
     </Paper>
   );
@@ -49,11 +50,11 @@ const ReviewCard = ({ review, sx = [] }) => {
 ReviewCard.propTypes = {
   review: PropTypes.shape({
     id: PropTypes.number,
-    content: PropTypes.string,
-    name: PropTypes.string,
-    surname: PropTypes.string,
-    date: PropTypes.string,
-    stars: PropTypes.number,
+    description: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    createdAt: PropTypes.string,
+    rating: PropTypes.number,
   }).isRequired,
 };
 

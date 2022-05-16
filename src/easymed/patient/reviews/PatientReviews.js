@@ -7,6 +7,7 @@ import ReviewCard from "../../generic/reviews/ReviewCard";
 import useAuth from "../../../app/auth/UseAuth";
 import { useQuery } from "react-query";
 import ReviewsService from "../../../app/api/ReviewsService";
+import ReviewMapper from "./ReviewMapper";
 
 const postReviewInfos = [
   {
@@ -58,11 +59,18 @@ const PatientReviews = () => {
         ))}
       </Box>
       <Typography variant={"h5"} color={"info"}>
-        Received reviews
+        Posted reviews
       </Typography>
-      <Box sx={{ mt: 1, mb: 3 }}>
+      <Box
+        sx={{ mt: 1, mb: 3, display: "flex", flexDirection: "column", gap: 4 }}
+      >
         {reviewQuery.data.length !== 0 ? (
-          reviewQuery.data.map((review) => <ReviewCard review={review} />)
+          reviewQuery.data.map((review) => (
+            <ReviewCard
+              key={review.id}
+              review={ReviewMapper.map(review, role)}
+            />
+          ))
         ) : (
           <Typography variant={"h6"}>
             Write your first review today! ✨

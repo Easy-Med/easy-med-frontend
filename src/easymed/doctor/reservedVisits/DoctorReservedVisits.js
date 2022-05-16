@@ -28,7 +28,7 @@ const DoctorReservedVisits = () => {
   };
 
   return (
-    <PageBox>
+    <PageBox sx={{px: { xs: 2 }}}>
       <Box
         display={"flex"}
         flexDirection={matchesMobile ? "column" : "row"}

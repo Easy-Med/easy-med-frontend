@@ -6,6 +6,7 @@ import PageBox from "../../generic/PageBox";
 import { useQuery } from "react-query";
 import ReviewsService from "../../../app/api/ReviewsService";
 import useAuth from "../../../app/auth/UseAuth";
+import ReviewMapper from "../../patient/reviews/ReviewMapper";
 
 const DoctorReviews = () => {
   const auth = useAuth();
@@ -51,7 +52,7 @@ const DoctorReviews = () => {
       </Typography>
       <Box display={"flex"} flexDirection={"column"} gap={4}>
         {reviewQuery.data.map((review) => (
-          <ReviewCard key={review.id} review={review} />
+          <ReviewCard key={review.id} review={ReviewMapper.map(review, role)} />
         ))}
       </Box>
     </PageBox>
