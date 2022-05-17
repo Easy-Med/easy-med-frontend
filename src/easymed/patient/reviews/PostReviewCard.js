@@ -1,6 +1,8 @@
 import React from "react";
-import { Button, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
+import PostReviewDialog from "./PostReviewDialog";
+import moment from "moment";
 
 const PostReviewCard = ({ sx = [], postReviewInfo }) => {
   return (
@@ -27,12 +29,10 @@ const PostReviewCard = ({ sx = [], postReviewInfo }) => {
           </Typography>
         </Box>
         <Typography>
-          Date of visit: <strong>{postReviewInfo.dateOfVisit}</strong>
+          Date of visit: <strong>{moment(postReviewInfo.dateOfVisit).format('DD.MM.YYYY')}</strong>
         </Typography>
       </Box>
-      <Button sx={{ mt: { xs: 2, sm: 0 } }} variant={"outlined"}>
-        Post review
-      </Button>
+      <PostReviewDialog postReviewInfo={postReviewInfo} />
     </Paper>
   );
 };

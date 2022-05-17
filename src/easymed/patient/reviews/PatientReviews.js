@@ -17,7 +17,7 @@ const postReviewInfos = [
       lastName: 'Konopka',
       medicalSpecialization: 'Alergolog'
     },
-    dateOfVisit: "04.03.2022",
+    dateOfVisit: "2022-04-23 18:34:02.923445+00",
   },
   {
     doctor: {
@@ -26,7 +26,7 @@ const postReviewInfos = [
       lastName: 'Konopka',
       medicalSpecialization: 'Alergolog'
     },
-    dateOfVisit: "04.03.2022",
+    dateOfVisit: "2022-04-23 18:34:02.923445+00",
   },
 ];
 

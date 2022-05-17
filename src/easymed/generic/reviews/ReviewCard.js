@@ -29,7 +29,7 @@ const ReviewCard = ({ review, sx = [] }) => {
         <Rating
           sx={{ ml: -0.5, mb: 0.5 }}
           defaultValue={review.rating}
-          precision={0.5}
+          precision={1}
           readOnly
         />
         <Typography variant={"body2"} color={"info"}>
