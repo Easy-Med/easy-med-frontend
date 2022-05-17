@@ -101,7 +101,7 @@ function PatientReserveVisitPopup({
   const handleSuccessfulVisitReservation = (response) => {
     setShowSuccessAlert(true);
     handleClose();
-  }
+  };
 
   const handleClose = () => {
     setOpenDialog(false);

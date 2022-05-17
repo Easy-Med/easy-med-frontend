@@ -91,6 +91,7 @@ const PatientMenuItems = ({ open, ...props }) => {
         autoHideDuration={3000}
         message=""
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        sx={{ mt: 10 }}
       >
         <SnackbarAlert
           onClose={handleCloseSuccessAlert}
