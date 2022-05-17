@@ -8,15 +8,12 @@ export default class SettingsService {
     });
   }
 
-  static updateAccountDataFor(role, formData, options) {
-    return request(
-      {
-        url: `/api/${role}`,
-        method: "PATCH",
-        data: formData,
-      },
-      options
-    );
+  static updateAccountDataFor(role, formData) {
+    return request({
+      url: `/api/${role}`,
+      method: "PATCH",
+      data: formData,
+    });
   }
 
   static getDoctorSpecializations() {

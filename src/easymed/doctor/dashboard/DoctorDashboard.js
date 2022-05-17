@@ -1,10 +1,11 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import DailyTile from "./DailyTile";
+import PageBox from "../../generic/PageBox";
 
 const DoctorDashboard = () => {
   return (
-    <Box sx={{ py: 2, px: 5 }}>
+    <PageBox>
       <Typography
         fontWeight={"bold"}
         sx={{ color: "text.secondary" }}
@@ -15,6 +16,7 @@ const DoctorDashboard = () => {
       <Box
         display={"flex"}
         justifyContent={"space-between"}
+        width={'100%'}
         gap={2}
         paddingY={2}
         flexWrap={"wrap"}
@@ -44,7 +46,7 @@ const DoctorDashboard = () => {
           iconImgUrl={"/images/doctor/dashboard/stars-icon.png"}
         />
       </Box>
-    </Box>
+    </PageBox>
   );
 };
 
