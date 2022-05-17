@@ -29,7 +29,10 @@ const PostReviewCard = ({ sx = [], postReviewInfo }) => {
           </Typography>
         </Box>
         <Typography>
-          Date of visit: <strong>{moment(postReviewInfo.dateOfVisit).format('DD.MM.YYYY')}</strong>
+          Date of visit:{" "}
+          <strong>
+            {moment(postReviewInfo.dateOfVisit).format("DD.MM.YYYY")}
+          </strong>
         </Typography>
       </Box>
       <PostReviewDialog postReviewInfo={postReviewInfo} />

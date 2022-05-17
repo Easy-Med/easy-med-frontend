@@ -14,4 +14,12 @@ export default class ReviewsService {
       method: "GET",
     });
   }
+
+  static postReviewForDoctorId(id, formData) {
+    return request({
+      url: `/api/doctor/${id}/reviews`,
+      method: "POST",
+      data: formData,
+    });
+  }
 }

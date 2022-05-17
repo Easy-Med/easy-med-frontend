@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import SettingsService from "../../../app/api/SettingsService";
 import useAuth from "../../../app/auth/UseAuth";
 import { replaceNull } from "../../../app/utils/objectUtils";
-import SettingsSnackbar from "../../generic/settings/SettingsSnackbar";
+import ResultSnackbar from "../ResultSnackbar";
 import PageBox from "../PageBox";
 
 const initFormData = (children) => {
@@ -115,7 +115,7 @@ const Settings = ({ children }) => {
         <Typography>Change theme: </Typography>
         <ThemeSwitcher />
       </Box>
-      <SettingsSnackbar
+      <ResultSnackbar
         open={openSnackbar}
         handleClose={handleSnackbarClose}
         message={snackbarMessage}
