@@ -7,4 +7,11 @@ export default class ReviewsService {
       method: "GET",
     });
   }
+
+  static getPostReviewInfo(id) {
+    return request({
+      url: `/api/patient/${id}/reviews/available-doctors`,
+      method: "GET",
+    });
+  }
 }
