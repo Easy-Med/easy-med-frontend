@@ -6,6 +6,7 @@ import ReservedVisitsFilter from "../../generic/reservedVisits/ReservedVisitsFil
 import SearchBar from "../../../app/navbar/SearchBar";
 import DateSort from "../../generic/reservedVisits/DateSort";
 import ReservedVisitDoctorCard from "./ReservedVisitDoctorCard";
+import PageBox from "../../generic/PageBox";
 
 const DoctorReservedVisits = () => {
   const theme = useTheme()
@@ -27,7 +28,7 @@ const DoctorReservedVisits = () => {
   };
 
   return (
-    <Box sx={{ flex: 1, p: 2 }}>
+    <PageBox sx={{px: { xs: 2 }}}>
       <Box
         display={"flex"}
         flexDirection={matchesMobile ? "column" : "row"}
@@ -55,7 +56,7 @@ const DoctorReservedVisits = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </PageBox>
   )
 };
 

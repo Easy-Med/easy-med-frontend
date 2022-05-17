@@ -7,7 +7,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import SettingsService from "../../../app/api/SettingsService";
 import useAuth from "../../../app/auth/UseAuth";
 import { replaceNull } from "../../../app/utils/objectUtils";
-import SettingsSnackbar from "../../generic/settings/SettingsSnackbar";
+import ResultSnackbar from "../ResultSnackbar";
+import PageBox from "../PageBox";
 
 const initFormData = (children) => {
   const result = {};
@@ -76,12 +77,7 @@ const Settings = ({ children }) => {
   };
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      alignItems={"flex-start"}
-      sx={{ py: 2, px: 5 }}
-    >
+    <PageBox>
       <Typography variant={"h6"} fontWeight={"bold"}>
         Account data
       </Typography>
@@ -119,13 +115,13 @@ const Settings = ({ children }) => {
         <Typography>Change theme: </Typography>
         <ThemeSwitcher />
       </Box>
-      <SettingsSnackbar
+      <ResultSnackbar
         open={openSnackbar}
         handleClose={handleSnackbarClose}
         message={snackbarMessage}
         severity={snackbarSeverity}
       />
-    </Box>
+    </PageBox>
   );
 };
 

@@ -133,7 +133,7 @@ const Navbar = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: { xs: "auto", md: "100vh" } }}>
+    <Box sx={{ display: "flex", height: "100vh" }}>
       <AppBar position="fixed" open={open} color={"default"}>
         <Toolbar disableGutters={true}>
           <LogoBox open={open} onClick={() => navigate(`/${role}`)}>

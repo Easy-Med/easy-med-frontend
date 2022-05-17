@@ -6,6 +6,7 @@ import ReservedVisitPatientCard from "./ReservedVisitPatientCard";
 import { useTheme } from "@emotion/react";
 import { useMediaQuery } from "@mui/material";
 import DateSort from "../../generic/reservedVisits/DateSort";
+import PageBox from "../../generic/PageBox";
 
 const PatientReservedVisits = () => {
   const theme = useTheme();
@@ -27,8 +28,9 @@ const PatientReservedVisits = () => {
   };
 
   return (
-    <Box sx={{ flex: 1, p: 2 }}>
+    <PageBox sx={{px: { xs: 2 }}}>
       <Box
+        width={"100%"}
         display={"flex"}
         flexDirection={matchesMobile ? "column" : "row"}
         gap={2}
@@ -55,7 +57,7 @@ const PatientReservedVisits = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </PageBox>
   );
 };
 
