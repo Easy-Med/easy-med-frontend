@@ -20,7 +20,6 @@ const PatientDeleteReservedVisitPopup = () => {
 
   const cancelVisitMutation = useMutation(
     () => {
-      // first param: visitId, then options
       ReserveVisitService.deleteVisit(null, null);
     },
     {
