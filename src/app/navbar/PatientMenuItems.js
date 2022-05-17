@@ -7,7 +7,7 @@ import RateReviewIcon from "@mui/icons-material/RateReview";
 import SettingsIcon from "@mui/icons-material/Settings";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import { Box, Button, IconButton, Snackbar, Slide, Alert } from "@mui/material";
-import PatientReserveVisitPopup from "../../easymed/patient/PatientReserveVisitPopup";
+import PatientReserveVisitPopup from "../../easymed/patient/reserveNewVisit/PatientReserveVisitPopup.js"
 
 const mainSideMenuOptions = [
   {
