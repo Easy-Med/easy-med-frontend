@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Box, Button, ListItem, useMediaQuery } from "@mui/material";
+import { Avatar, Box, Button, ListItem, useMediaQuery  } from "@mui/material";
 import * as React from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -126,7 +127,7 @@ const Navbar = () => {
   const role = auth.authData.role;
   const name = `${auth.authData.firstName} ${auth.authData.lastName}`;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleDrawer = () => {
     setOpen((prevState) => !prevState);
@@ -188,7 +189,9 @@ const Navbar = () => {
         {
           {
             doctor: <DoctorMenuItems open={open} />,
-            patient: <PatientMenuItems open={open} />,
+            patient: (
+              <PatientMenuItems open={open} />
+            ),
           }[role.toLowerCase()]
         }
         <Box sx={{ height: "100%" }} />

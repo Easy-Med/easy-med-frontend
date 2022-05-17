@@ -79,7 +79,6 @@ function App() {
             <Route path={"settings"} element={<PatientSettings />} />
             <Route path={"*"} element={<PathNotFound />} />
           </Route>
-
           <Route path={"*"} element={<PathNotFound />} />
         </Routes>
       </AuthProvider>
