@@ -8,7 +8,7 @@ export default class ReviewsService {
     });
   }
 
-  static getPostReviewInfo(id) {
+  static getPostReviewInfoForPatientId(id) {
     return request({
       url: `/api/patient/${id}/reviews/available-doctors`,
       method: "GET",

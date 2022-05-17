@@ -18,7 +18,7 @@ const PatientReviews = () => {
   );
 
   const postReviewInfoQuery = useQuery("postReviewInfo", () =>
-    ReviewsService.getPostReviewInfo(id)
+    ReviewsService.getPostReviewInfoForPatientId(id)
   );
 
   if (reviewQuery.isError || postReviewInfoQuery.isError) {
