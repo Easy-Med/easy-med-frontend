@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { useTheme } from "@emotion/react";
 import ReservedVisitMapper from "./ReservedVisitMapper";
+import DeleteReservedVisitPopup from "../../generic/reservedVisits/DeleteReservedVisitPopup";
 
 const Item = styled("div")(({ theme }) => ({
   ...theme.typography.body1,
@@ -72,9 +73,7 @@ const ReservedVisitDoctorCard = ({ reservedVisit }) => {
             <Button color={"info"} size={"small"} variant={"contained"}>
               Complete visit
             </Button>
-            <Button color={"error"} size={"small"} variant={"contained"}>
-              Cancel visit
-            </Button>
+            <DeleteReservedVisitPopup visitId={reservedVisit.id} />
           </Box>
         </>
       )}
