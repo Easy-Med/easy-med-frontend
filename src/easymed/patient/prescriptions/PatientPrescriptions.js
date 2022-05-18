@@ -5,6 +5,7 @@ import { Skeleton, Typography } from "@mui/material";
 import { useQuery } from "react-query";
 import useAuth from "../../../app/auth/UseAuth";
 import PrescriptionsService from "../../../app/api/PrescriptionsService";
+import PageBox from "../../generic/PageBox";
 
 const PatientPrescriptions = () => {
   const auth = useAuth();
@@ -29,7 +30,7 @@ const PatientPrescriptions = () => {
   }
 
   return (
-    <Box sx={{ m: 2, flex: 1 }}>
+    <PageBox>
       <Box display={"flex"} gap={2} flexWrap={"wrap"} sx={{ mb: 2 }}>
         {prescriptionsQuery.data.length === 0 ? (
           <Typography sx={{ color: "text.secondary" }} variant={"h4"}>
@@ -46,7 +47,7 @@ const PatientPrescriptions = () => {
           ))
         )}
       </Box>
-    </Box>
+    </PageBox>
   );
 };
 

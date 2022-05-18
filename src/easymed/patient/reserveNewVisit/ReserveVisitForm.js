@@ -15,9 +15,7 @@ export default function ReserveVisitForm({
   const handleDoctorFreeDays = (date) => {
     const convertedDate = moment(date).format("YYYY-MM-DD");
 
-    return selectOptions.find((element) => element.day === convertedDate)
-      ? false
-      : true;
+    return !selectOptions.find((element) => element.day === convertedDate);
   };
 
   const disableTodayAndDatesAfterMonth = (date) => {
@@ -139,7 +137,7 @@ export default function ReserveVisitForm({
           valueChanger={formDataHandlers.term}
           options={formData.term ? [] : selectOptions}
           getOptionLabel={(option) =>
-            `${moment(option.visitDateTime).format("DD MMMM,  hh:mm")} (${
+            `${moment(option.visitDateTime).format("DD MMMM,  HH:mm")} (${
               option.dayOfWeek
             })`
           }

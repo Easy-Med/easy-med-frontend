@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import IssuePrescriptionForm from "./IssuePrescriptionForm";
 import PrescriptionCard from "../../generic/prescriptions/PrescriptionCard";
+import PageBox from "../../generic/PageBox";
 
 const prescriptions = [
   {
@@ -51,12 +52,8 @@ const prescriptions = [
 
 const DoctorPrescriptions = () => {
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      alignItems={"flex-start"}
-      p={2}
-      gap={2}
+    <PageBox
+      sx={{gap: 2}}
     >
       <Typography variant={"h4"} color={"text.secondary"}>
         Issue a prescription
@@ -76,7 +73,7 @@ const DoctorPrescriptions = () => {
           />
         ))}
       </Box>
-    </Box>
+    </PageBox>
   );
 };
 
