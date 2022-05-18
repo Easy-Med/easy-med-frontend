@@ -19,22 +19,23 @@ const initialFilters = {
 };
 
 const ReservedVisitsFilter = ({ applyFilters, resetFilters }) => {
-  const [completed, setCompleted] = useState(initialFilters.completed);
+  const [filters, setFilters] = useState(initialFilters);
 
-  const handleSortingChange = (event) => {
-    setCompleted({
-      ...completed,
-      [event.target.name]: event.target.checked,
+  const handleFilterChange = (event) => {
+    const selectedField = event.target.name.split(':')
+    setFilters({
+      ...filters,
+      [selectedField[0]]: {...filters[selectedField[0]], [selectedField[1]]: event.target.checked},
     });
   };
 
   const onResetFilters = () => {
-    setCompleted(initialFilters.completed);
+    setFilters(initialFilters);
     resetFilters();
   };
 
   const onApplyFilters = () => {
-    applyFilters({ completed });
+    applyFilters({ completed: ((!filters.completed.yes && filters.completed.no) || (filters.completed.yes && !filters.completed.no)) ? filters.completed.yes : undefined});
   };
 
   return (
@@ -54,13 +55,12 @@ const ReservedVisitsFilter = ({ applyFilters, resetFilters }) => {
       <Divider sx={{ width: "100%", mb: 1 }} />
       <FormControl component={"fieldset"} variant={"standard"}>
         <FormLabel component={"legend"}>Completed</FormLabel>
-        <FormGroup>
+        <FormGroup onChange={handleFilterChange}>
           <FormControlLabel
             control={
               <Checkbox
-                checked={completed.yes}
-                onChange={handleSortingChange}
-                name="yes"
+                checked={filters.completed.yes}
+                name="completed:yes"
               />
             }
             label={"Yes"}
@@ -68,9 +68,8 @@ const ReservedVisitsFilter = ({ applyFilters, resetFilters }) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={completed.no}
-                onChange={handleSortingChange}
-                name="no"
+                checked={filters.completed.no}
+                name="completed:no"
               />
             }
             label={"No"}
