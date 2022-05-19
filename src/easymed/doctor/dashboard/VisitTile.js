@@ -1,10 +1,11 @@
-import { Typography, Paper, Box, Button } from "@mui/material";
+import { Typography, Paper, Box, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const TileIcon = styled("img")(({ theme }) => ({
   padding: theme.spacing(1),
   borderRadius: "50%",
-  borderColor: "grey",
+  border: "solid transparent",
+  borderWidth: "0px",
   backgroundColor: "lightGrey",
   boxShadow: theme.shadows["3"],
   width: "45px",
@@ -44,27 +45,45 @@ function VisitTile({ hour, firstName, lastName, pesel, ...props }) {
           Pesel: <b>{pesel}</b>
         </Typography>
       </Box>
-      <Box sx={{
+      <Box
+        sx={{
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
           gap: 3,
-          pr: 3
-      }}>
-            <TileIcon
+          pr: 3,
+        }}
+      >
+        <IconButton sx={{p: 0}} disableRipple>
+          <TileIcon
             src={"/images/doctor/dashboard/document-icon.png"}
             alt={""}
-            sx={{
-                backgroundColor: `rgba(${"33, 150, 243"}, 1)`,
-            }}
-            />
-            <TileIcon
+            sx={[{
+              backgroundColor: `rgba(${"33, 150, 243"}, 1)`,
+            },
+          {
+            '&:hover': {
+              borderColor: `rgba(${"33, 150, 243"}, 1)`,
+              borderWidth: "2px"
+            },
+          }]}
+          />
+          </IconButton>
+        <IconButton sx={{p: 0}} disableRipple>
+          <TileIcon
             src={"/images/doctor/dashboard/good-pincode-icon.png"}
             alt={""}
-            sx={{
-                backgroundColor: `rgba(${"0, 155, 155"}, 1)`,
-            }}
-            />
+            sx={[{
+              backgroundColor: `rgba(${"0, 155, 155"}, 1)`,
+            },
+          {
+            '&:hover': {
+              borderColor: `rgba(${"0, 155, 155"}, 1)`,
+              borderWidth: "2px",
+            },
+          }]}
+          />
+        </IconButton>
       </Box>
     </Paper>
   );
