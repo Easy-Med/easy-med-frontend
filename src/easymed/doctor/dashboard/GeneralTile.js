@@ -16,8 +16,8 @@ function GeneralTile({ children, value, ...props }) {
         alignItems: "center",
         gap: 2,
         flex: matchesMobile ? "1" : "0 1 auto",
-        width: "100%",
-        maxWidth: "49%",
+        width: "49%",
+        minWidth: "245px",
       }}
     >
       <Typography variant={"h5"} fontWeight={"bold"}>

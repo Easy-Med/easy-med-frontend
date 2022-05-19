@@ -1,16 +1,5 @@
-import { Typography, Paper, Box, IconButton } from "@mui/material";
-import { styled } from "@mui/material/styles";
-
-const TileIcon = styled("img")(({ theme }) => ({
-  padding: theme.spacing(1),
-  borderRadius: "50%",
-  border: "solid transparent",
-  borderWidth: "0px",
-  backgroundColor: "lightGrey",
-  boxShadow: theme.shadows["3"],
-  width: "45px",
-  height: "45px",
-}));
+import { Typography, Paper, Box } from "@mui/material";
+import VisitTileButton from "./VisitTileButton";
 
 function VisitTile({ hour, firstName, lastName, pesel, ...props }) {
   return (
@@ -54,36 +43,15 @@ function VisitTile({ hour, firstName, lastName, pesel, ...props }) {
           pr: 3,
         }}
       >
-        <IconButton sx={{p: 0}} disableRipple>
-          <TileIcon
-            src={"/images/doctor/dashboard/document-icon.png"}
-            alt={""}
-            sx={[{
-              backgroundColor: `rgba(${"33, 150, 243"}, 1)`,
-            },
-          {
-            '&:hover': {
-              borderColor: `rgba(${"33, 150, 243"}, 1)`,
-              borderWidth: "2px"
-            },
-          }]}
-          />
-          </IconButton>
-        <IconButton sx={{p: 0}} disableRipple>
-          <TileIcon
-            src={"/images/doctor/dashboard/good-pincode-icon.png"}
-            alt={""}
-            sx={[{
-              backgroundColor: `rgba(${"0, 155, 155"}, 1)`,
-            },
-          {
-            '&:hover': {
-              borderColor: `rgba(${"0, 155, 155"}, 1)`,
-              borderWidth: "2px",
-            },
-          }]}
-          />
-        </IconButton>
+        <VisitTileButton
+          imgSrc={"/images/doctor/dashboard/document-icon.png"}
+          bgColor={"33, 150, 243"}
+        />
+
+        <VisitTileButton
+          imgSrc={"/images/doctor/dashboard/good-pincode-icon.png"}
+          bgColor={"0, 155, 155"}
+        />
       </Box>
     </Paper>
   );
