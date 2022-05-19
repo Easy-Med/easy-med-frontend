@@ -3,7 +3,6 @@ import { Box, CircularProgress, useMediaQuery } from "@mui/material";
 import useAuth from "../../../app/auth/UseAuth";
 import { useQuery } from "react-query";
 import VisitService from "../../../app/api/doctor/VisitService";
-import moment from "moment";
 import { useTheme } from "@emotion/react";
 
 const AllVisitsTile = ({ ...props }) => {
@@ -37,10 +36,7 @@ const AllVisitsTile = ({ ...props }) => {
         data.map((element) => (
           <VisitTile
             key={element.id}
-            hour={moment(element.startDate).format("HH:mm")}
-            firstName={element.patient.firstName}
-            lastName={element.patient.lastName}
-            pesel={element.patient.personalIdentityNumber}
+            visit={element}
           />
         ))
       )}

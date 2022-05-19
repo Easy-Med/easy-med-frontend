@@ -12,9 +12,9 @@ const TileIcon = styled("img")(({ theme }) => ({
   height: "45px",
 }));
 
-const VisitTileButton = ({ imgSrc, bgColor }) => {
+const VisitTileButton = ({ visit, onClick, imgSrc, bgColor }) => {
   return (
-      <IconButton sx={{ p: 0 }} disableRipple>
+      <IconButton sx={{ p: 0 }} disableRipple onClick={onClick}>
         <TileIcon
           src={imgSrc}
           alt={""}
