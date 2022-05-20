@@ -52,9 +52,7 @@ const prescriptions = [
 
 const DoctorPrescriptions = () => {
   return (
-    <PageBox
-      sx={{gap: 2}}
-    >
+    <PageBox sx={{ gap: 2 }}>
       <Typography variant={"h4"} color={"text.secondary"}>
         Issue a prescription
       </Typography>

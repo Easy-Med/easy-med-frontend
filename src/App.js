@@ -8,13 +8,12 @@ import ChooseSignInOption from "./app/auth/signIn/ChooseSignInOption";
 import SignUp from "./app/auth/signUp/SignUp";
 import SignInAsDoctor from "./app/auth/signIn/SignInAsDoctor";
 import SignInAsPatient from "./app/auth/signIn/SignInAsPatient";
-import DoctorReservedVisits from "./easymed/doctor/reservedVisits/DoctorReservedVisits";
+import ReservedVisits from "./easymed/generic/reservedVisits/ReservedVisits";
 import DoctorBookingCalendar from "./easymed/doctor/bookingCalendar/DoctorBookingCalendar";
 import DoctorPrescriptions from "./easymed/doctor/prescriptions/DoctorPrescriptions";
 import DoctorReviews from "./easymed/doctor/reviews/DoctorReviews";
 import DoctorSettings from "./easymed/doctor/settings/DoctorSettings";
 import Navbar from "./app/navbar/Navbar";
-import PatientReservedVisits from "./easymed/patient/reservedVisits/PatientReservedVisits";
 import PatientPrescriptions from "./easymed/patient/prescriptions/PatientPrescriptions";
 import PatientReviews from "./easymed/patient/reviews/PatientReviews";
 import PatientSettings from "./easymed/patient/settings/PatientSettings";
@@ -44,10 +43,7 @@ function App() {
             }
           >
             <Route path={""} element={<DoctorDashboard />} />
-            <Route
-              path={"reserved-visits"}
-              element={<DoctorReservedVisits />}
-            />
+            <Route path={"reserved-visits"} element={<ReservedVisits />} />
             <Route
               path={"booking-calendar"}
               element={<DoctorBookingCalendar />}
@@ -70,10 +66,7 @@ function App() {
               path={""}
               element={<Navigate to={"reserved-visits"} replace />}
             />
-            <Route
-              path={"reserved-visits"}
-              element={<PatientReservedVisits />}
-            />
+            <Route path={"reserved-visits"} element={<ReservedVisits />} />
             <Route path={"prescriptions"} element={<PatientPrescriptions />} />
             <Route path={"reviews"} element={<PatientReviews />} />
             <Route path={"settings"} element={<PatientSettings />} />

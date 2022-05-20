@@ -1,8 +1,15 @@
 import React from "react";
 import { Paper, Typography } from "@mui/material";
 
-const ReserveVisitOptionTile = ({ title, imgUrl, imgAlt, redirectUrl, option, optionFunc,...props }) => {
-
+const ReserveVisitOptionTile = ({
+  title,
+  imgUrl,
+  imgAlt,
+  redirectUrl,
+  option,
+  optionFunc,
+  ...props
+}) => {
   return (
     <Paper
       elevation={10}
@@ -17,7 +24,7 @@ const ReserveVisitOptionTile = ({ title, imgUrl, imgAlt, redirectUrl, option, op
         cursor: "pointer",
         transition: "all 0.3s ease-in-out",
         "&:hover": { opacity: 0.9 },
-        backgroundColor: "primary.main"
+        backgroundColor: "primary.main",
       }}
     >
       <Typography variant={"h6"} color="white" sx={{ my: 1 }}>
@@ -33,7 +40,7 @@ const ReserveVisitOptionTile = ({ title, imgUrl, imgAlt, redirectUrl, option, op
         src={imgUrl}
         alt={imgAlt}
       />
-      <br/>
+      <br />
     </Paper>
   );
 };

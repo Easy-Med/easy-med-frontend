@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -10,6 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import { useSearchParams } from "react-router-dom";
+import {
+  CommaArrayParam,
+  decodeQueryParamsForReservedVisits,
+} from "../../../app/utils/serializeQueryParamsUtils";
 
 const initialFilters = {
   completed: {
@@ -18,23 +23,58 @@ const initialFilters = {
   },
 };
 
-const ReservedVisitsFilter = ({ applyFilters, resetFilters }) => {
-  const [completed, setCompleted] = useState(initialFilters.completed);
+const ReservedVisitsFilter = () => {
+  const [filters, setFilters] = useState(initialFilters);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSortingChange = (event) => {
-    setCompleted({
-      ...completed,
-      [event.target.name]: event.target.checked,
+  useEffect(() => {
+    setFilters(decodeQuery());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  const handleCompletedChange = (event) => {
+    const selectedField = event.target.name.split(":");
+    setFilters({
+      ...filters,
+      [selectedField[0]]: {
+        ...filters[selectedField[0]],
+        [selectedField[1]]: event.target.checked,
+      },
     });
   };
 
+  const encodeQuery = () => {
+    const completed = [];
+    for (const [option, checked] of Object.entries(filters.completed)) {
+      if (checked) {
+        completed.push(option);
+      }
+    }
+
+    return {
+      ...Object.fromEntries([...searchParams]),
+      completed: CommaArrayParam.encode(completed),
+    };
+  };
+
+  const decodeQuery = () => {
+    const filters = initialFilters;
+    const filtersFromQuery = decodeQueryParamsForReservedVisits(searchParams);
+
+    Object.keys(filters.completed).forEach((option) => {
+      filters.completed[option] = !!filtersFromQuery.completed.includes(option);
+    });
+
+    return filters;
+  };
+
   const onResetFilters = () => {
-    setCompleted(initialFilters.completed);
-    resetFilters();
+    setFilters(initialFilters);
+    setSearchParams({});
   };
 
   const onApplyFilters = () => {
-    applyFilters({ completed });
+    setSearchParams(encodeQuery());
   };
 
   return (
@@ -54,24 +94,16 @@ const ReservedVisitsFilter = ({ applyFilters, resetFilters }) => {
       <Divider sx={{ width: "100%", mb: 1 }} />
       <FormControl component={"fieldset"} variant={"standard"}>
         <FormLabel component={"legend"}>Completed</FormLabel>
-        <FormGroup>
+        <FormGroup onChange={handleCompletedChange}>
           <FormControlLabel
             control={
-              <Checkbox
-                checked={completed.yes}
-                onChange={handleSortingChange}
-                name="yes"
-              />
+              <Checkbox checked={filters.completed.yes} name="completed:yes" />
             }
             label={"Yes"}
           />
           <FormControlLabel
             control={
-              <Checkbox
-                checked={completed.no}
-                onChange={handleSortingChange}
-                name="no"
-              />
+              <Checkbox checked={filters.completed.no} name="completed:no" />
             }
             label={"No"}
           />
