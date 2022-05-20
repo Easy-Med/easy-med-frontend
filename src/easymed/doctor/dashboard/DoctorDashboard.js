@@ -16,7 +16,7 @@ const DoctorDashboard = () => {
       <Box
         display={"flex"}
         justifyContent={"space-between"}
-        width={'100%'}
+        width={"100%"}
         gap={2}
         paddingY={2}
         flexWrap={"wrap"}

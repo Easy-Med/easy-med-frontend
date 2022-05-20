@@ -1,45 +1,51 @@
 import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
   Dialog,
   Typography,
-  Card,
-  Button,
-  CardContent,
-  CardActions,
 } from "@mui/material";
-import React from "react";
-import { useState } from "react";
-import { useMutation } from "react-query";
-import ReserveVisitService from "../../../app/api/ReserveVisitService";
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
+import useAuth from "../../../app/auth/UseAuth";
 
-const PatientDeleteReservedVisitPopup = () => {
-  const [openCancelConfirmDialog, setOpenCancelConfirmDialog] = useState(false);
+const DeleteReservedVisitPopup = ({ visitId }) => {
+  const [openedDialog, setOpenedDialog] = useState(false);
+  const queryClient = useQueryClient();
+  const auth = useAuth();
+  const { role } = auth.authData;
 
-  const handleVisitCanceledSuccessfully = () => {};
-
-  const handleVisitCanceledError = () => {};
+  const handleClose = () => {
+    setOpenedDialog(false);
+  };
 
   const cancelVisitMutation = useMutation(
-    () => {
-      ReserveVisitService.deleteVisit(null, null);
-    },
+    () => ReservedVisitsService.cancelVisit(visitId),
     {
-      onSuccess: handleVisitCanceledSuccessfully,
-      onError: handleVisitCanceledError,
+      onSuccess: queryClient.invalidateQueries(`${role}Visits`),
     }
   );
 
-  const handleSubmitDeleteVisit = () => {
+  const handleCancelVisit = () => {
     cancelVisitMutation.mutate();
-  };
-
-  const handleCancelationDialog = () => {
-    setOpenCancelConfirmDialog((prevState) => !prevState);
+    handleClose();
   };
 
   return (
+    <>
+      <Button
+        color={"error"}
+        size={"small"}
+        variant={"contained"}
+        onClick={() => setOpenedDialog(true)}
+      >
+        Cancel visit
+      </Button>
       <Dialog
-        open={openCancelConfirmDialog}
-        onClose={handleCancelationDialog}
+        open={openedDialog}
+        onClose={handleClose}
         fullWidth
         maxWidth="md"
         sx={{
@@ -69,24 +75,17 @@ const PatientDeleteReservedVisitPopup = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button
-              size="small"
-              color="error"
-              onClick={handleSubmitDeleteVisit}
-            >
+            <Button size="small" color="error" onClick={handleCancelVisit}>
               CANCEL VISIT
             </Button>
-            <Button
-              size="small"
-              color={"primary"}
-              onClick={handleCancelationDialog}
-            >
+            <Button size="small" color={"primary"} onClick={handleClose}>
               GO BACK
             </Button>
           </CardActions>
         </Card>
       </Dialog>
+    </>
   );
 };
 
-export default PatientDeleteReservedVisitPopup;
+export default DeleteReservedVisitPopup;

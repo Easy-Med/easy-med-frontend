@@ -58,14 +58,4 @@ export default class ReserveVisitService {
       options
     );
   }
-
-  static deleteVisit(id, options) {
-    return request(
-      {
-        url: `/api/visit/${id}`,
-        method: "DELETE",
-      },
-      options
-    );
-  }
 }

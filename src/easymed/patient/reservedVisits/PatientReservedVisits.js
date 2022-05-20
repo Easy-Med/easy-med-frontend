@@ -5,7 +5,7 @@ import SearchBar from "../../../app/navbar/SearchBar";
 import ReservedVisitPatientCard from "./ReservedVisitPatientCard";
 import { useTheme } from "@emotion/react";
 import { useMediaQuery } from "@mui/material";
-import DateSort from "../../generic/reservedVisits/DateSort";
+import ReservedVisitsSorting from "../../generic/reservedVisits/ReservedVisitsSorting";
 import PageBox from "../../generic/PageBox";
 
 const PatientReservedVisits = () => {
@@ -28,7 +28,7 @@ const PatientReservedVisits = () => {
   };
 
   return (
-    <PageBox sx={{px: { xs: 2 }}}>
+    <PageBox sx={{ px: { xs: 2 } }}>
       <Box
         width={"100%"}
         display={"flex"}
@@ -46,7 +46,7 @@ const PatientReservedVisits = () => {
           flex={1}
         >
           <SearchBar sx={{ border: "1px solid grey" }} />
-          <DateSort
+          <ReservedVisitsSorting
             sx={{ my: 2 }}
             value={dateSortValue}
             onChange={onDateSortChange}
