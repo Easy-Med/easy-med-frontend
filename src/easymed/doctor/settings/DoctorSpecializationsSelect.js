@@ -6,17 +6,17 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import {useQuery} from "react-query";
+import { useQuery } from "react-query";
 import SettingsService from "../../../app/api/SettingsService";
 
 const DoctorSpecializationsSelect = ({
-                                       name,
-                                       label,
-                                       value,
-                                       onChange,
-                                       error,
-                                       helperText,
-                                     }) => {
+  name,
+  label,
+  value,
+  onChange,
+  error,
+  helperText,
+}) => {
   const query = useQuery("doctorSpecializations", () =>
     SettingsService.getDoctorSpecializations()
   );
@@ -28,11 +28,11 @@ const DoctorSpecializationsSelect = ({
         name={name}
         labelId="role-select-label"
         label={label}
-        value={query.isSuccess ? value : ''}
+        value={query.isSuccess ? value : ""}
         onChange={onChange}
         error={error}
         autoWidth
-        MenuProps={{PaperProps: {sx: {maxHeight: 400}}}}
+        MenuProps={{ PaperProps: { sx: { maxHeight: 400 } } }}
         disabled={query.isLoading}
       >
         {query.isSuccess &&
