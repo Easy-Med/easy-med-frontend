@@ -13,7 +13,7 @@ const AllVisitsTile = ({ ...props }) => {
   const matchesMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { isLoading, data } = useQuery("doctorsVisits", () =>
-    VisitService.getDoctorsVisits(3)
+    VisitService.getDoctorsVisits(id)
   );
 
   return (
@@ -45,36 +45,3 @@ const AllVisitsTile = ({ ...props }) => {
 };
 
 export default AllVisitsTile;
-
-/* 
-<VisitTile
-        hour={"13:00"}
-        firstName={"Zbigniew"}
-        lastName={"Kaniecki"}
-        pesel={"00230305789"}
-      />
-      <VisitTile
-        hour={"14:00"}
-        firstName={"Aneta"}
-        lastName={"Ławska"}
-        pesel={"01457898123"}
-      />
-      <VisitTile
-        hour={"15:00"}
-        firstName={"Ola"}
-        lastName={"Kabzuła"}
-        pesel={"01457898123"}
-      />
-      <VisitTile
-        hour={"16:00"}
-        firstName={"Ola"}
-        lastName={"Kabzuła"}
-        pesel={"01457898123"}
-      />
-      <VisitTile
-        hour={"17:00"}
-        firstName={"Ola"}
-        lastName={"Kabzuła"}
-        pesel={"01457898123"}
-      />
-*/

@@ -1,7 +1,9 @@
 import { Typography, Paper, Box, Dialog, Divider } from "@mui/material";
 import VisitTileButton from "./VisitTileButton";
 import { useState } from "react";
+import { useQueryClient, useMutation } from "react-query";
 import moment from "moment";
+import VisitService from "../../../app/api/doctor/VisitService";
 
 const VisitDetailsField = ({ type, children }) => {
   return (
@@ -19,12 +21,21 @@ function VisitTile({ visit, ...props }) {
   const [open, setOpen] = useState(false);
 
   const hour = moment(visit.startDate).format("HH:mm");
+  const queryClient = useQueryClient()
 
   const handleOnCloseVisitDetail = () => {
     setOpen((prevState) => !prevState);
   };
 
-  const handleMakeVisitCompleted = () => {};
+  const completeVisitMutation = useMutation(() => {
+      VisitService.completeVisit(visit.id);
+  }, {
+    onSuccess: () => queryClient.invalidateQuery("doctorsVisits")
+  });
+
+  const handleMakeVisitCompleted = () => {
+    completeVisitMutation.mutate();
+  }
 
   return (
     <Box>

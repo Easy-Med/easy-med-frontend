@@ -7,4 +7,11 @@ export default class VisitService {
       method: "GET",
     });
   }
+
+  static completeVisit(id) {
+    return request({
+      url: `/api/doctor/visit/${id}/complete`,
+      method: "PATCH",
+    });
+  }
 }
