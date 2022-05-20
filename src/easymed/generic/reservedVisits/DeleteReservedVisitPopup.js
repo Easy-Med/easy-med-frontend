@@ -24,7 +24,9 @@ const DeleteReservedVisitPopup = ({ visitId }) => {
   const cancelVisitMutation = useMutation(
     () => ReservedVisitsService.cancelVisit(visitId),
     {
-      onSuccess: queryClient.invalidateQueries(`${role}Visits`),
+      onSuccess: () => {
+        queryClient.invalidateQueries(`${role}Visits`)
+      }
     }
   );
 

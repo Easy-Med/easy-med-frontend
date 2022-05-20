@@ -24,7 +24,6 @@ const ReservedVisits = () => {
   const [sort, setSort] = useState("");
 
   const sortReservedVisits = (visits) => {
-    console.log('sorting')
     switch (sort) {
       case "oldest":
         visits.sort((a, b) => {

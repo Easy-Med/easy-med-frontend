@@ -24,7 +24,6 @@ const ReservedVisitCard = ({ reservedVisit }) => {
   const { role } = auth.authData;
 
   const gridItems = ReservedVisitMapper.map(reservedVisit, role);
-  console.log('hi')
 
   const orderGridItems = (arr) => {
     if (matchesTablet) {
