@@ -16,6 +16,7 @@ export default function ChooseReserveVisitOption({ setReservationOption }) {
           justifyContent: "center",
           alignItems: "center",
           gap: 5,
+          overflow: 'hidden'
         }}
       >
         <ReserveVisitDateTile optionFunc={setReservationOption} />
