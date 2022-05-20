@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Box, CircularProgress } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 import SelectOptionField from "./SelectOptionField";
 import moment from "moment";
 
@@ -23,12 +23,12 @@ export default function ReserveVisitForm({
     const lastDateToChoose = new Date();
     lastDateToChoose.setDate(lastDateToChoose.getDate() + 30);
 
-
     return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    ) || date > lastDateToChoose;
+      (date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()) ||
+      date > lastDateToChoose
+    );
   };
 
   if (loading) {

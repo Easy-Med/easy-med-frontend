@@ -2,7 +2,7 @@ import React from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { TextField, Autocomplete } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 
 export default function SelectOptionField({
   type,
@@ -15,14 +15,13 @@ export default function SelectOptionField({
   displayCondition,
   disableDateFunc,
 }) {
-  
   return (
     <>
       {type === "date" ? (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label={label}
-            renderInput={(params) => <TextField fullWidth {...params}/>}
+            renderInput={(params) => <TextField fullWidth {...params} />}
             value={value}
             onChange={valueChanger}
             disablePast
@@ -34,7 +33,7 @@ export default function SelectOptionField({
         <Autocomplete
           options={options}
           value={value}
-          renderInput={(params) => <TextField {...params} label={label}/>}
+          renderInput={(params) => <TextField {...params} label={label} />}
           onChange={valueChanger}
           fullWidth
           getOptionLabel={getOptionLabel}

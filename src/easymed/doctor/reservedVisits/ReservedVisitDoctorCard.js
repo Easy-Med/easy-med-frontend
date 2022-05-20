@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, Grid, Paper, Typography, useMediaQuery } from "@mui/material";
+import { Grid, Paper, Typography, useMediaQuery } from "@mui/material";
 import styled from "@emotion/styled";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { useTheme } from "@emotion/react";
 import ReservedVisitMapper from "./ReservedVisitMapper";
 import DeleteReservedVisitPopup from "../../generic/reservedVisits/DeleteReservedVisitPopup";
+import CompleteReservedVisitPopup from "./CompleteReservedVisitPopup";
 
 const Item = styled("div")(({ theme }) => ({
   ...theme.typography.body1,
@@ -61,7 +62,7 @@ const ReservedVisitDoctorCard = ({ reservedVisit }) => {
           </Grid>,
         ])}
       </Grid>
-      {!reservedVisit.completed && (
+      {!reservedVisit.isCompleted && (
         <>
           <Divider flexItem sx={{ my: 2 }} />
           <Box
@@ -70,9 +71,7 @@ const ReservedVisitDoctorCard = ({ reservedVisit }) => {
             gap={2}
             sx={{ alignSelf: { xs: "stretch", sm: "flex-end" } }}
           >
-            <Button color={"info"} size={"small"} variant={"contained"}>
-              Complete visit
-            </Button>
+            <CompleteReservedVisitPopup visitId={reservedVisit.id} />
             <DeleteReservedVisitPopup visitId={reservedVisit.id} />
           </Box>
         </>

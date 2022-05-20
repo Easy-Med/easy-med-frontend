@@ -1,12 +1,21 @@
 import request from "./request";
 
 export default class ReservedVisitsService {
-  static getReservedVisitsForDoctor(id, {completed}) {
+  static getReservedVisitsForDoctor(id, filters) {
     return request({
       url:
         `/api/doctor/${id}/visits` +
-        (completed !== undefined ? `?isCompleted=${completed}` : ""),
+        (filters.completed !== undefined && filters.completed.length === 1
+          ? `?isCompleted=${filters.completed[0] === "yes"}`
+          : ""),
       method: "GET",
+    });
+  }
+
+  static completeVisit(id) {
+    return request({
+      url: `/api/doctor/visit/${id}/complete`,
+      method: "PATCH",
     });
   }
 

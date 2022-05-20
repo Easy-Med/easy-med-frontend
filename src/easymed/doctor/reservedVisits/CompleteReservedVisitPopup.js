@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -6,12 +7,11 @@ import {
   Dialog,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
 import useAuth from "../../../app/auth/UseAuth";
+import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
 
-const DeleteReservedVisitPopup = ({ visitId }) => {
+const CompleteReservedVisitPopup = ({ visitId }) => {
   const [openedDialog, setOpenedDialog] = useState(false);
   const queryClient = useQueryClient();
   const auth = useAuth();
@@ -21,27 +21,27 @@ const DeleteReservedVisitPopup = ({ visitId }) => {
     setOpenedDialog(false);
   };
 
-  const cancelVisitMutation = useMutation(
-    () => ReservedVisitsService.cancelVisit(visitId),
+  const completeVisitMutation = useMutation(
+    () => ReservedVisitsService.completeVisit(visitId),
     {
       onSuccess: queryClient.invalidateQueries(`${role}Visits`),
     }
   );
 
-  const handleCancelVisit = () => {
-    cancelVisitMutation.mutate();
+  const handleCompleteVisit = () => {
+    completeVisitMutation.mutate();
     handleClose();
   };
 
   return (
     <>
       <Button
-        color={"error"}
+        color={"info"}
         size={"small"}
         variant={"contained"}
         onClick={() => setOpenedDialog(true)}
       >
-        Cancel visit
+        Complete visit
       </Button>
       <Dialog
         open={openedDialog}
@@ -65,18 +65,18 @@ const DeleteReservedVisitPopup = ({ visitId }) => {
         <Card>
           <CardContent>
             <Typography sx={{ mb: 3 }} variant="h5" component="div">
-              <b>Are you sure you want to cancel your visit?</b>
+              <b>Are you sure you want to complete visit?</b>
             </Typography>
             <Typography sx={{ mb: 3 }} color="text.secondary">
-              Canceled visits cannot be retrieved!
+              Completed visits are archived
             </Typography>
             <Typography variant="body2">
-              For confirmation, click <b>“Cancel Visit”.</b>
+              For confirmation, click <b>“Complete Visit”.</b>
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="error" onClick={handleCancelVisit}>
-              CANCEL VISIT
+            <Button size="small" color="info" onClick={handleCompleteVisit}>
+              COMPLETE VISIT
             </Button>
             <Button size="small" color={"primary"} onClick={handleClose}>
               GO BACK
@@ -88,4 +88,4 @@ const DeleteReservedVisitPopup = ({ visitId }) => {
   );
 };
 
-export default DeleteReservedVisitPopup;
+export default CompleteReservedVisitPopup;

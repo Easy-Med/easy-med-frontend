@@ -8,7 +8,7 @@ export default class ReservedVisitMapper {
       telephone: reservedVisit.patient.telephoneNumber,
       date: moment(reservedVisit.startDate).format("DD.MM.YYYY HH:mm"),
       location: reservedVisit.location,
-      completed: reservedVisit.completed ? "Yes" : "No",
+      completed: reservedVisit.isCompleted ? "Yes" : "No",
     };
   }
 }
