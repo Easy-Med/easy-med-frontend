@@ -87,8 +87,10 @@ const ReservedVisits = () => {
             {reservedVisitsQuery.isSuccess &&
               reservedVisitsQuery.data.length === 0 && (
                 <Typography variant={"h4"}>
-                  No reserved visits. Go and persuade some patients for a visit
-                  with you! 🍀
+                  {role === "patient" &&
+                    "No reserved visits? Go and reserve one! 🎠"}
+                  {role === "doctor" &&
+                    "No reserved visits. Go and persuade some patients for a visit with you! 🍀"}
                 </Typography>
               )}
             {reservedVisitsQuery.isSuccess &&
