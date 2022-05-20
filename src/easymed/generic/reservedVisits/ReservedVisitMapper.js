@@ -2,8 +2,6 @@ import moment from "moment";
 
 export default class ReservedVisitMapper {
   static map(reservedVisit, role) {
-    // console.log(reservedVisit, role);
-
     switch (role) {
       case "doctor":
         return {
