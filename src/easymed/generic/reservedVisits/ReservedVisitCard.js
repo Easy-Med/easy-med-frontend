@@ -5,8 +5,9 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { useTheme } from "@emotion/react";
 import ReservedVisitMapper from "./ReservedVisitMapper";
-import DeleteReservedVisitPopup from "../../generic/reservedVisits/DeleteReservedVisitPopup";
-import CompleteReservedVisitPopup from "./CompleteReservedVisitPopup";
+import DeleteReservedVisitPopup from "./DeleteReservedVisitPopup";
+import CompleteReservedVisitPopup from "../../doctor/reservedVisits/CompleteReservedVisitPopup";
+import useAuth from "../../../app/auth/UseAuth";
 
 const Item = styled("div")(({ theme }) => ({
   ...theme.typography.body1,
@@ -16,11 +17,14 @@ const Item = styled("div")(({ theme }) => ({
   wordWrap: "break-word",
 }));
 
-const ReservedVisitDoctorCard = ({ reservedVisit }) => {
+const ReservedVisitCard = ({ reservedVisit }) => {
   const theme = useTheme();
   const matchesTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const auth = useAuth();
+  const { role } = auth.authData;
 
-  const gridItems = ReservedVisitMapper.map(reservedVisit);
+  const gridItems = ReservedVisitMapper.map(reservedVisit, role);
+  console.log('hi')
 
   const orderGridItems = (arr) => {
     if (matchesTablet) {
@@ -46,10 +50,18 @@ const ReservedVisitDoctorCard = ({ reservedVisit }) => {
       }}
       elevation={2}
     >
-      <Typography variant={"h4"}>
-        {reservedVisit.patient.firstName}{" "}
-        <strong>{reservedVisit.patient.lastName}</strong>
-      </Typography>
+      {role === "doctor" && (
+        <Typography variant={"h4"}>
+          {reservedVisit.patient.firstName}{" "}
+          <strong>{reservedVisit.patient.lastName}</strong>
+        </Typography>
+      )}
+      {role === "patient" && (
+        <Typography variant={"h4"}>
+          Reserved visit nr. <strong>{reservedVisit.id}</strong>
+        </Typography>
+      )}
+
       <Grid container>
         {orderGridItems(Object.keys(gridItems)).map((key) => [
           <Grid item xs={6} md={3} key={`${key}1`}>
@@ -71,7 +83,9 @@ const ReservedVisitDoctorCard = ({ reservedVisit }) => {
             gap={2}
             sx={{ alignSelf: { xs: "stretch", sm: "flex-end" } }}
           >
-            <CompleteReservedVisitPopup visitId={reservedVisit.id} />
+            {role === "doctor" && (
+              <CompleteReservedVisitPopup visitId={reservedVisit.id} />
+            )}
             <DeleteReservedVisitPopup visitId={reservedVisit.id} />
           </Box>
         </>
@@ -80,4 +94,4 @@ const ReservedVisitDoctorCard = ({ reservedVisit }) => {
   );
 };
 
-export default ReservedVisitDoctorCard;
+export default ReservedVisitCard;

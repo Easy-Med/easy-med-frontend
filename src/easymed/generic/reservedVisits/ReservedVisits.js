@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { useTheme } from "@emotion/react";
 import { Typography, useMediaQuery } from "@mui/material";
-import ReservedVisitsFilter from "../../generic/reservedVisits/ReservedVisitsFilter";
+import ReservedVisitsFilter from "./ReservedVisitsFilter";
 import SearchBar from "../../../app/navbar/SearchBar";
-import ReservedVisitsSorting from "../../generic/reservedVisits/ReservedVisitsSorting";
-import ReservedVisitDoctorCard from "./ReservedVisitDoctorCard";
-import PageBox from "../../generic/PageBox";
+import ReservedVisitsSorting from "./ReservedVisitsSorting";
+import ReservedVisitCard from "./ReservedVisitCard";
+import PageBox from "../PageBox";
 import { useQuery } from "react-query";
 import useAuth from "../../../app/auth/UseAuth";
 import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
@@ -14,7 +14,7 @@ import moment from "moment";
 import { useSearchParams } from "react-router-dom";
 import { decodeQueryParamsForReservedVisits } from "../../../app/utils/serializeQueryParamsUtils";
 
-const DoctorReservedVisits = () => {
+const ReservedVisits = () => {
   const auth = useAuth();
   const { id, role } = auth.authData;
   const theme = useTheme();
@@ -24,6 +24,7 @@ const DoctorReservedVisits = () => {
   const [sort, setSort] = useState("");
 
   const sortReservedVisits = (visits) => {
+    console.log('sorting')
     switch (sort) {
       case "oldest":
         visits.sort((a, b) => {
@@ -42,7 +43,7 @@ const DoctorReservedVisits = () => {
 
   const reservedVisitsQuery = useQuery(
     [`${role}Visits`, filters, sort],
-    () => ReservedVisitsService.getReservedVisitsForDoctor(id, filters),
+    () => ReservedVisitsService.getReservedVisitsFor(role, id, filters),
     {
       onSuccess: sortReservedVisits,
     }
@@ -94,7 +95,7 @@ const DoctorReservedVisits = () => {
             {reservedVisitsQuery.isSuccess &&
               reservedVisitsQuery.data.length !== 0 &&
               reservedVisitsQuery.data.map((reservedVisit) => (
-                <ReservedVisitDoctorCard
+                <ReservedVisitCard
                   key={reservedVisit.id}
                   reservedVisit={reservedVisit}
                 />
@@ -106,4 +107,4 @@ const DoctorReservedVisits = () => {
   );
 };
 
-export default DoctorReservedVisits;
+export default ReservedVisits;
