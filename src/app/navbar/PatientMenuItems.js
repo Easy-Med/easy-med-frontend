@@ -1,13 +1,12 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import MenuItems from "./MenuItems";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
 import MedicationIcon from "@mui/icons-material/Medication";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import SettingsIcon from "@mui/icons-material/Settings";
-import BookOnlineIcon from "@mui/icons-material/BookOnline";
-import { Box, Button, IconButton, Snackbar, Slide, Alert } from "@mui/material";
-import PatientReserveVisitPopup from "../../easymed/patient/reserveNewVisit/PatientReserveVisitPopup.js"
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Alert, Box, Button, IconButton, Slide, Snackbar } from "@mui/material";
+import PatientReserveVisitPopup from "../../easymed/patient/reserveNewVisit/PatientReserveVisitPopup.js";
 
 const mainSideMenuOptions = [
   {
@@ -69,7 +68,7 @@ const PatientMenuItems = ({ open, ...props }) => {
             color={"primary"}
             onClick={() => setOpenDialog(true)}
           >
-            <BookOnlineIcon />
+            <AddCircleIcon />
           </IconButton>
         )}
       </Box>
@@ -78,7 +77,6 @@ const PatientMenuItems = ({ open, ...props }) => {
         role={"patient"}
         itemsArray={[mainSideMenuOptions, secondarySideMenuOptions]}
       />
-
       <PatientReserveVisitPopup
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
@@ -99,7 +97,7 @@ const PatientMenuItems = ({ open, ...props }) => {
           color={"primary"}
           variant="filled"
         >
-          Visit reserved succesfully!
+          Visit reserved successfully!
         </SnackbarAlert>
       </Snackbar>
     </Box>

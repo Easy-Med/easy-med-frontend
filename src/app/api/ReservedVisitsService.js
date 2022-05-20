@@ -1,10 +1,10 @@
 import request from "./request";
 
 export default class ReservedVisitsService {
-  static getReservedVisitsForDoctor(id, filters) {
+  static getReservedVisitsFor(role, id, filters) {
     return request({
       url:
-        `/api/doctor/${id}/visits` +
+        `/api/${role}/${id}/visits` +
         (filters.completed !== undefined && filters.completed.length === 1
           ? `?isCompleted=${filters.completed[0] === "yes"}`
           : ""),

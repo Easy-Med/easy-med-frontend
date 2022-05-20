@@ -22,9 +22,10 @@ const CompleteReservedVisitPopup = ({ visitId }) => {
   };
 
   const completeVisitMutation = useMutation(
-    () => ReservedVisitsService.completeVisit(visitId),
-    {
-      onSuccess: queryClient.invalidateQueries(`${role}Visits`),
+    () => ReservedVisitsService.completeVisit(visitId),{
+      onSuccess: () => {
+        queryClient.invalidateQueries(`${role}Visits`)
+      }
     }
   );
 
