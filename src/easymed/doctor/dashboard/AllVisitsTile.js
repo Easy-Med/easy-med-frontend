@@ -2,18 +2,19 @@ import VisitTile from "./VisitTile";
 import { Box, CircularProgress, useMediaQuery } from "@mui/material";
 import useAuth from "../../../app/auth/UseAuth";
 import { useQuery } from "react-query";
-import VisitService from "../../../app/api/doctor/VisitService";
+import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
 import { useTheme } from "@emotion/react";
 
 const AllVisitsTile = ({ ...props }) => {
   const auth = useAuth();
   const id = auth.authData.id;
   const theme = useTheme();
+  const { role } = auth.authData;
 
   const matchesMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { isLoading, data } = useQuery("doctorsVisits", () =>
-    VisitService.getDoctorsVisits(id)
+  const { isLoading, data } = useQuery(`${role}Visits`, () =>
+    ReservedVisitsService.getReservedVisitsFor(role, 3, {"completed": ["no"]})
   );
 
   return (

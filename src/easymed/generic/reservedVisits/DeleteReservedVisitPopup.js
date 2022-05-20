@@ -22,17 +22,7 @@ const DeleteReservedVisitPopup = ({ visitId }) => {
   };
 
   const cancelVisitMutation = useMutation(
-<<<<<<< HEAD:src/easymed/patient/reservedVisits/PatientDeleteReservedVisitPopup.js
-    () => {
-<<<<<<< HEAD
-      // first param: visitId, then options
-=======
->>>>>>> 6b1a66861b83f38a347de304ec11068e6eb08e23
-      ReserveVisitService.deleteVisit(null, null);
-    },
-=======
     () => ReservedVisitsService.cancelVisit(visitId),
->>>>>>> b1b6a21c9d538a22c297ef84d40a027bf590d0a5:src/easymed/generic/reservedVisits/DeleteReservedVisitPopup.js
     {
       onSuccess: () => {
         queryClient.invalidateQueries(`${role}Visits`)

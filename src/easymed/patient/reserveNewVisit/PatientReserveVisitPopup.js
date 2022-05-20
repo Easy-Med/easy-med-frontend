@@ -34,7 +34,6 @@ function PatientReserveVisitPopup({
 
   const { mutate, isLoading } = useMutation(() => {
     if (isAllDataComplete) {
-      console.log(formData.term.visitDateTime)
       return ReserveVisitService.reserveVisit(
         formData.term.visitDateTime,
         formData.doctor.id,
