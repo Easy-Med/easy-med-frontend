@@ -7,4 +7,19 @@ export default class PrescriptionsService {
       method: "GET",
     });
   }
+
+  static getPatientsWhoCanGetPrescriptionForDoctor(id) {
+    return request({
+      url: `/api/doctor/${id}/prescriptions/available-patients`,
+      method: "GET",
+    });
+  }
+
+  static issuePrescriptionFromDoctor(id, formData) {
+    return request({
+      url: `/api/doctor/${id}/prescriptions`,
+      method: "POST",
+      data: formData
+    })
+  }
 }
