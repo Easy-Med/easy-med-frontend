@@ -7,4 +7,12 @@ export default class BookingCalendarService {
       method: "GET",
     });
   }
+
+  static addAvailabilityForDoctor(id, formData) {
+    return request({
+      url: `/api/doctor/${id}/schedule`,
+      method: "POST",
+      data: formData
+    })
+  }
 }
