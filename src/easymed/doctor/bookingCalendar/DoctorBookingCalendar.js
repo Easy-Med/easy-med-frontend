@@ -2,44 +2,94 @@ import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 import "./bookingCalendarStyles.scss";
 import Box from "@mui/material/Box";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Button } from "@mui/material";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import BookingCalendarService from "../../../app/api/BookingCalendarService";
 import useAuth from "../../../app/auth/UseAuth";
+import BookingCalendarMapper from "./BookingCalendarMapper";
+import ResultSnackbar from "../../generic/ResultSnackbar";
+import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
 
 const localizer = momentLocalizer(moment);
 
 const DoctorBookingCalendar = () => {
   const [fetchedAvailability, setFetchedAvailability] = useState([]);
   const [availabilityToSave, setAvailabilityToSave] = useState([]);
-  const [displayedAvailability, setDisplayedAvailability] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const auth = useAuth();
   const id = auth.authData.id;
 
-  useQuery(
+  const showSnackbar = (severity, message) => {
+    setSnackbarSeverity(severity);
+    setSnackbarMessage(message);
+    setOpenSnackbar(true);
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+
+  const reservedVisitsQuery = useQuery("reservedVisits", () =>
+    ReservedVisitsService.getReservedVisitsFor("doctor", id, {})
+  );
+
+  const availabilityQuery = useQuery(
     "bookingCalendarAvailability",
     () => BookingCalendarService.getAvailabilityForDoctor(id),
     {
       onSuccess: (data) => {
-        setFetchedAvailability(data);
+        const mappedData = data.map(BookingCalendarMapper.mapAvailability);
+        setFetchedAvailability(mappedData);
+      },
+    }
+  );
+
+  const addAvailabilityMutation = useMutation(
+    "addAvailability",
+    () =>
+      BookingCalendarService.addAvailabilityForDoctor(
+        id,
+        BookingCalendarMapper.mapForAddAvailabilityRequest(availabilityToSave)
+      ),
+    {
+      onSuccess: () => {
+        setAvailabilityToSave([]);
+        availabilityQuery.refetch();
+        showSnackbar("success", "Availabilities added successfully!");
+      },
+      onError: () => {
+        showSnackbar("error", "Can't add availability. Try again later!");
       },
     }
   );
 
   const handleSelectSlot = useCallback(
     ({ start, end }) => {
-      setAvailabilityToSave((prev) => [
-        ...prev,
-        { start, end, title: "Available" },
-      ]);
-    },
-    [setAvailabilityToSave]
-  );
+      const isEventNotInterfering = (start, end) => {
+        return !availabilityToSave.some(
+          (savedDate) =>
+            (savedDate.start < start && savedDate.end > start) ||
+            (savedDate.start < end && savedDate.end > end) ||
+            (+savedDate.start === +start && +savedDate.end === +end)
+        );
+      };
 
-  useEffect(() => {
-    setDisplayedAvailability([...fetchedAvailability, ...availabilityToSave]);
-  }, [fetchedAvailability, availabilityToSave]);
+      if (isEventNotInterfering(start, end)) {
+        setAvailabilityToSave((prev) => [
+          ...prev,
+          { start, end, title: "Available" },
+        ]);
+      }
+    },
+    [availabilityToSave]
+  );
 
   const handleSelectEvent = useCallback(
     (event) => window.alert(event.title),
@@ -55,7 +105,7 @@ const DoctorBookingCalendar = () => {
   );
 
   const saveNewEvents = () => {
-    console.log("POST to DB with new events");
+    addAvailabilityMutation.mutate();
   };
 
   const removeEventsToSave = () => {
@@ -68,12 +118,19 @@ const DoctorBookingCalendar = () => {
         dayLayoutAlgorithm={"no-overlap"}
         defaultDate={defaultDate}
         defaultView={Views.WEEK}
-        events={displayedAvailability}
+        events={fetchedAvailability.concat(availabilityToSave)}
         localizer={localizer}
         onSelectEvent={handleSelectEvent}
         onSelectSlot={handleSelectSlot}
         selectable
         scrollToTime={scrollToTime}
+        backgroundEvents={
+          reservedVisitsQuery.isSuccess
+            ? reservedVisitsQuery.data.map(
+                BookingCalendarMapper.mapReservedVisit
+              )
+            : []
+        }
       />
       {availabilityToSave.length > 0 && (
         <div>
@@ -96,6 +153,12 @@ const DoctorBookingCalendar = () => {
           </Button>
         </div>
       )}
+      <ResultSnackbar
+        open={openSnackbar}
+        handleClose={handleSnackbarClose}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+      />
     </Box>
   );
 };
