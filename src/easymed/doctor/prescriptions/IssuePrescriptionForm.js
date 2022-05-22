@@ -10,9 +10,12 @@ import {
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import { useTheme } from "@emotion/react";
+import { useMutation, useQueryClient } from "react-query";
+import PrescriptionsService from "../../../app/api/PrescriptionsService";
+import useAuth from "../../../app/auth/UseAuth";
 
 const initFormData = {
-  patient: null,
+  patientId: null,
   medicines: [],
 };
 
@@ -21,15 +24,30 @@ const initMedicine = {
   capacity: "",
 };
 
-const options = [];
-
 const IssuePrescriptionForm = ({ sx = [] }) => {
   const [formData, setFormData] = useState(initFormData);
+  const [chosenPatient, setChosenPatient] = useState(null);
   const [medicine, setMedicine] = useState(initMedicine);
-  const [patientInputValue, setPatientInputValue] = useState("");
-  const [loadingPatients, setLoadingPatients] = useState(false);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const auth = useAuth();
+  const { id } = auth.authData;
+  const queryClient = useQueryClient();
+
+  const availablePatientsMutation = useMutation("availablePatients", () =>
+    PrescriptionsService.getPatientsWhoCanGetPrescriptionForDoctor(id)
+  );
+
+  const issuePrescriptionMutation = useMutation(
+    "issuePrescription",
+    () => PrescriptionsService.issuePrescriptionFromDoctor(id, formData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("doctorPrescriptions");
+        resetFormData();
+      },
+    }
+  );
 
   const handleMedicineChange = (e) => {
     setMedicine({ ...medicine, [e.target.name]: e.target.value });
@@ -43,12 +61,24 @@ const IssuePrescriptionForm = ({ sx = [] }) => {
 
   const handleSubmitPrescription = (e) => {
     e.preventDefault();
-    console.log("Send data", formData);
+    issuePrescriptionMutation.mutate();
   };
 
   const resetFormData = () => {
     setFormData(initFormData);
     setMedicine(initMedicine);
+    setChosenPatient(null);
+  };
+
+  const handleOpenPatientAutocomplete = () => {
+    setOpen(true);
+    if (!availablePatientsMutation.data) {
+      availablePatientsMutation.mutate();
+    }
+  };
+
+  const handleClosePatientAutocomplete = () => {
+    setOpen(false);
   };
 
   return (
@@ -77,7 +107,7 @@ const IssuePrescriptionForm = ({ sx = [] }) => {
                   ...params.InputProps,
                   endAdornment: (
                     <React.Fragment>
-                      {loadingPatients ? (
+                      {availablePatientsMutation.isLoading ? (
                         <CircularProgress color="inherit" size={20} />
                       ) : null}
                       {params.InputProps.endAdornment}
@@ -86,27 +116,26 @@ const IssuePrescriptionForm = ({ sx = [] }) => {
                 }}
               />
             )}
-            options={options}
+            options={
+              availablePatientsMutation.isSuccess
+                ? availablePatientsMutation.data
+                : []
+            }
             open={open}
-            onOpen={() => {
-              setLoadingPatients(true);
-              setOpen(true);
+            onOpen={handleOpenPatientAutocomplete}
+            onClose={handleClosePatientAutocomplete}
+            isOptionEqualToValue={(option, value) => {
+              return option.id === value.id;
             }}
-            onClose={() => {
-              setLoadingPatients(false);
-              setOpen(false);
+            getOptionLabel={(option) => {
+              return `${option.firstName} ${option.lastName} (${option.personalIdentityNumber})`;
             }}
-            isOptionEqualToValue={(option, value) => option.name === value.name}
-            getOptionLabel={(option) => option.name}
-            loading={loadingPatients}
-            value={formData.patient}
-            onChange={(e, newValue) =>
-              setFormData({ ...formData, patient: newValue })
-            }
-            inputValue={patientInputValue}
-            onInputChange={(event, newInputValue) =>
-              setPatientInputValue(newInputValue)
-            }
+            loading={availablePatientsMutation.isLoading}
+            value={chosenPatient}
+            onChange={(e, newValue) => {
+              setChosenPatient(newValue);
+              setFormData({ ...formData, patientId: newValue?.id });
+            }}
           />
           <TextField
             variant={"standard"}
@@ -152,7 +181,11 @@ const IssuePrescriptionForm = ({ sx = [] }) => {
         <Button onClick={resetFormData} variant={"contained"} color={"error"}>
           Reset
         </Button>
-        <Button type={"submit"} variant={"contained"}>
+        <Button
+          type={"submit"}
+          variant={"contained"}
+          disabled={issuePrescriptionMutation.isLoading}
+        >
           Submit
         </Button>
       </Box>
