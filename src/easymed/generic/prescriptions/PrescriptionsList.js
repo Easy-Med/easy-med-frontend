@@ -19,13 +19,13 @@ const PrescriptionsList = () => {
         <Skeleton width={300} height={270} variant={"rectangular"} />
       )}
       {prescriptionsQuery.isError && (
-        <Typography variant={"h6"}>
+        <Typography variant={"h5"}>
           Can't load prescriptions :/. Try again later!
         </Typography>
       )}
       {prescriptionsQuery.isSuccess &&
         prescriptionsQuery.data?.length === 0 && (
-          <Typography>No issued prescriptions :o. Go and issue one!</Typography>
+          <Typography variant={"h5"}>No prescriptions available 🎌</Typography>
         )}
       {prescriptionsQuery.isSuccess && prescriptionsQuery.data?.length !== 0 && (
         <Box display={"flex"} gap={2} flexWrap={"wrap"}>

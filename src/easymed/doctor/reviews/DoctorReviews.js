@@ -18,9 +18,11 @@ const DoctorReviews = () => {
 
   if (reviewQuery.isError) {
     return (
-      <Typography p={2} variant={"h5"}>
-        Can't load reviews :/. Try again later!
-      </Typography>
+      <PageBox>
+        <Typography p={2} variant={"h5"}>
+          Can't load reviews :/. Try again later!
+        </Typography>
+      </PageBox>
     );
   }
 
