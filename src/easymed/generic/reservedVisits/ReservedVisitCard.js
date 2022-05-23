@@ -73,7 +73,7 @@ const ReservedVisitCard = ({ reservedVisit }) => {
           </Grid>,
         ])}
       </Grid>
-      {!reservedVisit.isCompleted && (
+      {!reservedVisit.completed && (
         <>
           <Divider flexItem sx={{ my: 2 }} />
           <Box
