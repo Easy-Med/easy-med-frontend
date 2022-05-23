@@ -35,7 +35,7 @@ const DailyInfo = () => {
           justifyContent={"space-between"}
           width={"100%"}
           gap={2}
-          paddingY={2}
+          py={2}
           flexWrap={"wrap"}
         >
           <DailyTile

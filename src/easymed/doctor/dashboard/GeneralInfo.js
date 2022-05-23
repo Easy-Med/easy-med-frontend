@@ -9,7 +9,7 @@ const GeneralInfo = () => {
     <>
       <Typography
         fontWeight={"bold"}
-        sx={{ color: "text.secondary" }}
+        sx={{ color: "text.secondary", mb: 2 }}
         variant={"h5"}
       >
         General info
@@ -18,10 +18,9 @@ const GeneralInfo = () => {
         display={"flex"}
         justifyContent={"space-between"}
         width={"100%"}
-        py={2}
         sx={{
           flexDirection: { xs: "column", md: "row" },
-          gap: { xs: 2, sm: 5, md: 10 },
+          gap: { xs: 2, sm: 5, md: 8 },
           height: { xs: "auto", md: "100%" },
         }}
       >
