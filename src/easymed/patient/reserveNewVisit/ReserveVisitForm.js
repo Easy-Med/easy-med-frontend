@@ -137,9 +137,7 @@ export default function ReserveVisitForm({
           valueChanger={formDataHandlers.term}
           options={formData.term ? [] : selectOptions}
           getOptionLabel={(option) =>
-            `${moment(option.visitDateTime).format("DD MMMM,  HH:mm")} (${
-              option.dayOfWeek
-            })`
+            moment(option.visitDateTime).utcOffset(4).format("HH:mm")
           }
           displayCondition={option === "date" ? formData.doctor : formData.date}
         />

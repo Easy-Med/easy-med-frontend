@@ -12,6 +12,13 @@ import ResultSnackbar from "../../generic/ResultSnackbar";
 import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
 
 const localizer = momentLocalizer(moment);
+const formats = {
+  eventTimeRangeFormat: range =>
+    `${moment(range.start).format('HH:mm')} – ${moment(range.end).format('HH:mm')}`,
+  timeGutterFormat: time =>
+    `${moment(time).format('HH:mm')}`,
+  selectRangeFormat: range => `${moment(range.start).format('HH:mm')} – ${moment(range.end).format('HH:mm')}`
+};
 
 const DoctorBookingCalendar = () => {
   const [fetchedAvailability, setFetchedAvailability] = useState([]);
@@ -72,23 +79,23 @@ const DoctorBookingCalendar = () => {
 
   const handleSelectSlot = useCallback(
     ({ start, end }) => {
-      const isEventNotInterfering = (start, end) => {
-        return !availabilityToSave.some(
-          (savedDate) =>
-            (savedDate.start < start && savedDate.end > start) ||
-            (savedDate.start < end && savedDate.end > end) ||
-            (+savedDate.start === +start && +savedDate.end === +end)
+      const isEventNotInterfering = (start, end, dates) => {
+        return !dates.some(
+          (dateItem) =>
+            (dateItem.start < start && dateItem.end > start) ||
+            (dateItem.start < end && dateItem.end > end) ||
+            (+dateItem.start === +start && +dateItem.end === +end)
         );
       };
 
-      if (isEventNotInterfering(start, end)) {
+      if (isEventNotInterfering(start, end, availabilityToSave) && isEventNotInterfering(start, end, fetchedAvailability)) {
         setAvailabilityToSave((prev) => [
           ...prev,
           { start, end, title: "Available" },
         ]);
       }
     },
-    [availabilityToSave]
+    [availabilityToSave, fetchedAvailability]
   );
 
   const handleSelectEvent = useCallback(
@@ -115,6 +122,7 @@ const DoctorBookingCalendar = () => {
   return (
     <Box sx={{ flex: 1, mt: 1 }}>
       <Calendar
+        formats={formats}
         dayLayoutAlgorithm={"no-overlap"}
         defaultDate={defaultDate}
         defaultView={Views.WEEK}

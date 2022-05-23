@@ -5,7 +5,7 @@ import ReserveVisitTitle from "./ReserveVisitTitle";
 import ChooseReserveVisitOption from "./ChooseReserveVisitOption";
 import ReserveVisitForm from "./ReserveVisitForm";
 import ReserveVisitService from "../../../app/api/ReserveVisitService";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import useAuth from "../../../app/auth/UseAuth";
 
 const initialState = {
@@ -25,6 +25,7 @@ function PatientReserveVisitPopup({
   const [formData, setFormData] = useState(initialState);
   const [data, setData] = useState([]);
   const auth = useAuth();
+  const queryClient = useQueryClient();
 
   const isAllDataComplete =
     formData.date &&
@@ -35,7 +36,7 @@ function PatientReserveVisitPopup({
   const { mutate, isLoading } = useMutation(() => {
     if (isAllDataComplete) {
       return ReserveVisitService.reserveVisit(
-        formData.date,
+        formData.term.visitDateTime,
         formData.doctor.id,
         auth.authData.id,
         {
@@ -99,6 +100,7 @@ function PatientReserveVisitPopup({
   };
 
   const handleSuccessfulVisitReservation = (response) => {
+    queryClient.invalidateQueries(`${auth.authData.role}Visits`);
     setShowSuccessAlert(true);
     handleClose();
   };

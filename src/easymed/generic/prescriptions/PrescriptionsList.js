@@ -31,6 +31,7 @@ const PrescriptionsList = () => {
         <Box display={"flex"} gap={2} flexWrap={"wrap"}>
           {prescriptionsQuery.data.map((prescription) => (
             <PrescriptionCard
+              key={prescription.id}
               isForPatient
               personOnPx={
                 role === "doctor"

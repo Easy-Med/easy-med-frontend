@@ -42,8 +42,8 @@ const PrescriptionCard = ({
         List of medicines:
       </Typography>
       <ul style={{ marginTop: 0 }}>
-        {listOfMedicines.map((medicine) => (
-          <li>
+        {listOfMedicines.map((medicine, index) => (
+          <li key={`${medicine}${index}`}>
             <Typography>{medicine}</Typography>
           </li>
         ))}

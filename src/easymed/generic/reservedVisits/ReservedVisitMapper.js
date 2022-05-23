@@ -10,13 +10,13 @@ export default class ReservedVisitMapper {
           telephone: reservedVisit.patient.telephoneNumber,
           date: moment(reservedVisit.startDate).format("DD.MM.YYYY HH:mm"),
           location: reservedVisit.location,
-          completed: reservedVisit.isCompleted ? "Yes" : "No",
+          completed: reservedVisit.completed ? "Yes" : "No",
         };
       case "patient":
         return {
-          date: moment(reservedVisit.date).format("DD.MM.YYYY HH:mm"),
+          date: moment(reservedVisit.startDate).format("DD.MM.YYYY HH:mm"),
           location: reservedVisit.location,
-          doctor: `Dr. ${reservedVisit.doctorName}\n${reservedVisit.medicalSpecialization}`,
+          doctor: `Dr. ${reservedVisit.doctorName} ${reservedVisit.medicalSpecialization}`,
           completed: reservedVisit.completed ? "Yes" : "No",
         };
       default:
