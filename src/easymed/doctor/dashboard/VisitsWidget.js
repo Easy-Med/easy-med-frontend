@@ -57,7 +57,7 @@ const VisitsWidget = () => {
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        sx={{ overflowY: "auto" }}
+        sx={{ overflowY: "auto", maxHeight: '600px' }}
       >
         {reservedVisitsQuery.isLoading && <CircularProgress sx={{ mt: 1 }} />}
         {reservedVisitsQuery.isError && (
