@@ -22,7 +22,7 @@ const ReviewCard = ({ review, sx = [] }) => {
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
-      <Box display={"flex"} flexDirection={"column"} p={2} mr={2}>
+      <Box display={"flex"} flexDirection={"column"} p={2} mr={2} minWidth={200}>
         <Typography variant={"h6"} mb={4}>
           {review.firstName} <strong>{review.lastName}</strong>
         </Typography>
