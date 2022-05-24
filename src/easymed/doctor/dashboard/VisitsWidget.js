@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import {
   CircularProgress,
-  IconButton,
   Paper,
   Typography,
   useMediaQuery,
@@ -14,6 +13,8 @@ import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
 import useAuth from "../../../app/auth/UseAuth";
 import moment from "moment";
 import { useTheme } from "@emotion/react";
+import PatientInfoDialog from "./PatientInfoDialog";
+import CompleteVisitDialog from "./CompleteVisitDialog";
 
 const VisitTile = styled(Paper)(({ theme }) => ({
   width: "100%",
@@ -35,8 +36,10 @@ const VisitsWidget = () => {
     ReservedVisitsService.getReservedVisitsFor("doctor", id, {})
   );
 
-  const filterOnlyTodayVisits = (visit) => {
-    return moment(visit.startDate).isSame(Date.now(), "day");
+  const filterOnlyTodayUncompletedVisits = (visit) => {
+    return (
+      moment(visit.startDate).isSame(Date.now(), "day") && !visit.completed
+    );
   };
 
   return (
@@ -50,14 +53,19 @@ const VisitsWidget = () => {
         Visits
       </Typography>
       <Divider />
-      <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+      <Box
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        sx={{ overflowY: "auto" }}
+      >
         {reservedVisitsQuery.isLoading && <CircularProgress sx={{ mt: 1 }} />}
         {reservedVisitsQuery.isError && (
           <Typography variant={"h5"}>Can't load visits</Typography>
         )}
         {reservedVisitsQuery.isSuccess &&
           reservedVisitsQuery.data.filter((visit) =>
-            filterOnlyTodayVisits(visit)
+            filterOnlyTodayUncompletedVisits(visit)
           ).length === 0 && (
             <Typography variant={"h6"} mt={1}>
               No visits for today! See you tomorrow 😊
@@ -65,10 +73,10 @@ const VisitsWidget = () => {
           )}
         {reservedVisitsQuery.isSuccess &&
           reservedVisitsQuery.data.filter((visit) =>
-            filterOnlyTodayVisits(visit)
+            filterOnlyTodayUncompletedVisits(visit)
           ).length !== 0 &&
           reservedVisitsQuery.data
-            .filter((visit) => filterOnlyTodayVisits(visit))
+            .filter((visit) => filterOnlyTodayUncompletedVisits(visit))
             .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
             .map((visit) => (
               <VisitTile key={visit.id}>
@@ -114,7 +122,7 @@ const VisitsWidget = () => {
                   m={1}
                 >
                   <Typography textAlign={"center"} variant={"body1"}>
-                    {visit.patient.firstName}
+                    {visit.patient.firstName}{" "}
                     <strong>{visit.patient.lastName}</strong>
                   </Typography>
                   <Typography textAlign={"center"} variant={"body2"}>
@@ -133,30 +141,8 @@ const VisitsWidget = () => {
                   flexWrap={"wrap"}
                   gap={1}
                 >
-                  <IconButton
-                    size={"small"}
-                    sx={{ height: "40px", width: "40px" }}
-                    color={"success"}
-                  >
-                    <img
-                      width={"40px"}
-                      height={"auto"}
-                      src={"/images/others/done-icon.png"}
-                      alt={""}
-                    />
-                  </IconButton>
-                  <IconButton
-                    size={"small"}
-                    sx={{ height: "40px", width: "40px" }}
-                    color={"info"}
-                  >
-                    <img
-                      width={"40px"}
-                      height={"auto"}
-                      src={"/images/others/info-icon.png"}
-                      alt={""}
-                    />
-                  </IconButton>
+                  <CompleteVisitDialog visitId={visit.id} />
+                  <PatientInfoDialog visit={visit} />
                 </Box>
               </VisitTile>
             ))}

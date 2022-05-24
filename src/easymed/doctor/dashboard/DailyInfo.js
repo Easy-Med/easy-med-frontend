@@ -4,6 +4,7 @@ import DailyTile from "./DailyTile";
 import { useQuery } from "react-query";
 import DashboardService from "../../../app/api/DashboardService";
 import useAuth from "../../../app/auth/UseAuth";
+import moment from "moment";
 
 const DailyInfo = () => {
   const auth = useAuth();
@@ -48,7 +49,12 @@ const DailyInfo = () => {
             name={"End of work at"}
             value={
               dailyInfoQuery.data.endOfWorkAt
-                ? dailyInfoQuery.data.endOfWorkAt
+                ? moment(dailyInfoQuery.data.endOfWorkAt, [
+                    moment.ISO_8601,
+                    "HH:mm",
+                  ])
+                    .utcOffset(4)
+                    .format("HH:mm")
                 : "Finished"
             }
             bgColor={"0, 170, 255"}
