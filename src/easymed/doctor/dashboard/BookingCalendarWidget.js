@@ -1,12 +1,12 @@
 import React from "react";
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
-import dayGridPlugin from "@fullcalendar/daygrid";
+import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import {Paper, useMediaQuery} from "@mui/material";
 import { useQuery } from "react-query";
 import ReservedVisitsService from "../../../app/api/ReservedVisitsService";
 import CalendarWidgetMapper from "./CalendarWidgetMapper";
 import useAuth from "../../../app/auth/UseAuth";
-import {useTheme} from "@emotion/react"; // a plugin!
+import {useTheme} from "@emotion/react";
 
 const eventTimeFormat = {
   hour: "2-digit",
