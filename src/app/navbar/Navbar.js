@@ -162,7 +162,7 @@ const Navbar = () => {
               display: { xs: "none", sm: "inherit" },
             }}
           >
-            A
+            {name.charAt(0)}
           </Avatar>
           <Typography
             sx={{

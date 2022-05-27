@@ -27,12 +27,12 @@ const ReservedVisits = () => {
     switch (sort) {
       case "oldest":
         visits.sort((a, b) => {
-          return moment(a.startDate).diff(moment(b.startDate));
+          return -moment(a.startDate).diff(moment(b.startDate));
         });
         break;
       case "latest":
         visits.sort((a, b) => {
-          return -moment(a.startDate).diff(moment(b.startDate));
+          return moment(a.startDate).diff(moment(b.startDate));
         });
         break;
       default:
@@ -88,9 +88,9 @@ const ReservedVisits = () => {
               reservedVisitsQuery.data.length === 0 && (
                 <Typography variant={"h4"}>
                   {role === "patient" &&
-                    "No reserved visits? Go and reserve one! 🎠"}
+                    "No reservations? Go and make one! 🎠"}
                   {role === "doctor" &&
-                    "No reserved visits. Go and persuade some patients for a visit with you! 🍀"}
+                    "No reservations? Go and persuade some patients for a visit with you! 🍀"}
                 </Typography>
               )}
             {reservedVisitsQuery.isSuccess &&

@@ -68,7 +68,7 @@ const DailyInfo = () => {
           />
           <DailyTile
             name={"Current rating"}
-            value={dailyInfoQuery.data.currentRating}
+            value={dailyInfoQuery.data.currentRating ? dailyInfoQuery.data.currentRating : 'Not rated'}
             bgColor={"242, 230, 0"}
             iconImgUrl={"/images/doctor/dashboard/stars-icon.png"}
           />

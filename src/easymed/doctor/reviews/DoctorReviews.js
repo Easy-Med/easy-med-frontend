@@ -52,7 +52,7 @@ const DoctorReviews = () => {
       <Typography variant={"h5"} mb={4}>
         Reviews about you ✨
       </Typography>
-      <Box display={"flex"} flexDirection={"column"} gap={4}>
+      <Box display={"flex"} flexDirection={"column"} gap={4} width={"100%"}>
         {reviewQuery.data.map((review) => (
           <ReviewCard key={review.id} review={ReviewMapper.map(review, role)} />
         ))}
