@@ -32,7 +32,7 @@ const PrescriptionsList = () => {
           {prescriptionsQuery.data.map((prescription) => (
             <PrescriptionCard
               key={prescription.id}
-              isForPatient
+              isForPatient={role === 'patient'}
               personOnPx={
                 role === "doctor"
                   ? prescription.patientName

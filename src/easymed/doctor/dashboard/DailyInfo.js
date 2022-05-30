@@ -49,12 +49,7 @@ const DailyInfo = () => {
             name={"End of work at"}
             value={
               dailyInfoQuery.data.endOfWorkAt
-                ? moment(dailyInfoQuery.data.endOfWorkAt, [
-                    moment.ISO_8601,
-                    "HH:mm",
-                  ])
-                    .utcOffset(4)
-                    .format("HH:mm")
+                ? moment(dailyInfoQuery.data.endOfWorkAt).format("HH:mm")
                 : "Finished"
             }
             bgColor={"0, 170, 255"}
@@ -68,7 +63,11 @@ const DailyInfo = () => {
           />
           <DailyTile
             name={"Current rating"}
-            value={dailyInfoQuery.data.currentRating}
+            value={
+              dailyInfoQuery.data.currentRating
+                ? dailyInfoQuery.data.currentRating
+                : "Not rated"
+            }
             bgColor={"242, 230, 0"}
             iconImgUrl={"/images/doctor/dashboard/stars-icon.png"}
           />

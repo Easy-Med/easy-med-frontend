@@ -14,6 +14,7 @@ export default function SelectOptionField({
   isOptionEqualToValue,
   displayCondition,
   disableDateFunc,
+  getOptionDisabled
 }) {
   return (
     <>
@@ -39,6 +40,7 @@ export default function SelectOptionField({
           getOptionLabel={getOptionLabel}
           isOptionEqualToValue={isOptionEqualToValue}
           disabled={!displayCondition}
+          getOptionDisabled={getOptionDisabled}
         />
       )}
     </>

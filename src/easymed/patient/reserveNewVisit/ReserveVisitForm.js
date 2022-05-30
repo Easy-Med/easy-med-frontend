@@ -88,7 +88,12 @@ export default function ReserveVisitForm({
               valueChanger={formDataHandlers.doctor}
               options={formData.doctor ? [] : selectOptions}
               getOptionLabel={(option) =>
-                `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
+                `${option.firstName} ${option.lastName}, address: ${
+                  option.officeLocation ? option.officeLocation : "Unknown"
+                }`
+              }
+              getOptionDisabled={(option) =>
+                option.officeLocation === null || option.officeLocation === ""
               }
               displayCondition={
                 !formData.doctor && formData.specialization && formData.date
@@ -113,7 +118,12 @@ export default function ReserveVisitForm({
               valueChanger={formDataHandlers.doctor}
               options={formData.doctor ? [] : selectOptions}
               getOptionLabel={(option) =>
-                `${option.firstName} ${option.lastName} , lok: ${option.officeLocation}`
+                `${option.firstName} ${option.lastName}, address: ${
+                  option.officeLocation ? option.officeLocation : "Unknown"
+                }`
+              }
+              getOptionDisabled={(option) =>
+                option.officeLocation === null || option.officeLocation === ""
               }
               displayCondition={!formData.doctor && formData.specialization}
             />

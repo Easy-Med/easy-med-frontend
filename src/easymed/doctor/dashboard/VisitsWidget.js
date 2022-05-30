@@ -67,7 +67,7 @@ const VisitsWidget = () => {
           reservedVisitsQuery.data.filter((visit) =>
             filterOnlyTodayUncompletedVisits(visit)
           ).length === 0 && (
-            <Typography variant={"h6"} mt={1}>
+            <Typography variant={"h6"} textAlign={"center"} mt={1}>
               No visits for today! See you tomorrow 😊
             </Typography>
           )}
